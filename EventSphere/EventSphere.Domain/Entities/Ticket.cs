@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace EventSphere.Domain.Entities
 {
-    public class Tickets
+    public class Ticket
     {
-        public int TicketId {  get; set; }
-        public Events EventId { get; set; }
-        public Users UserId { get; set; }
+        public int Id {  get; set; }
+        public Event EventId { get; set; }
+        public User UserId { get; set; }
         public string TicketType { get; set; }
         public double Price { get; set; }
         public DateTime DatePurchased { get; set; }
