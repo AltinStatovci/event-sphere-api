@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace EventSphere.Domain.Entities
 {
-    public class Roles
+    public class Role
     {
-        public int RoleId { get; set; }
+        public int Id { get; set; }
         public string RoleName { get; set; }
     }
 }
