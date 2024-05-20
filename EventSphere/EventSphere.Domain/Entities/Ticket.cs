@@ -1,19 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace EventSphere.Domain.Entities
+﻿namespace EventSphere.Domain.Entities
 {
     public class Ticket
     {
-        public int Id {  get; set; }
-        public Event EventId { get; set; }
-        public User UserId { get; set; }
+        public int ID { get; set; }
+        public int EventID { get; set; }
+        public Event Event { get; set; }
+        public int UserID { get; set; }
+        public User User { get; set; }
         public string TicketType { get; set; }
         public double Price { get; set; }
         public DateTime DatePurchased { get; set; }
         public string BookingReference { get; set; }
+        public ICollection<Payment> Payments { get; set; }
     }
 }
