@@ -1,5 +1,10 @@
+using EventSphere.Business.Services.Interfaces;
+using EventSphere.Business.Services;
+using EventSphere.Domain.Repositories;
 using EventSphere.Infrastructure;
+using EventSphere.Infrastructure.Repositories;
 using Microsoft.EntityFrameworkCore;
+using EventSphere.API;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -9,6 +14,8 @@ builder.Services.AddControllers();
 builder.Services.AddDbContext<EventSphereDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+
+builder.Services.AddEventSphereServices();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
