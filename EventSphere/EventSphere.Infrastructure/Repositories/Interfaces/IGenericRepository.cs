@@ -1,6 +1,6 @@
 ﻿using System.Linq.Expressions;
 
-namespace EventSphere.Infrastructure.Repositories
+namespace EventSphere.Infrastructure.Repositories.Interfaces
 {
     public interface IGenericRepository<TEntity> where TEntity : class
     {

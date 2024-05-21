@@ -25,10 +25,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Controllers\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\EventSphere.Business\EventSphere.Business.csproj" />
     <ProjectReference Include="..\EventSphere.Domain\EventSphere.Domain.csproj" />
   </ItemGroup>
