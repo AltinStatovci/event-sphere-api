@@ -1,7 +1,6 @@
 ﻿using EventSphere.Business.Services.Interfaces;
 using EventSphere.Domain.DTOs;
 using EventSphere.Domain.Entities;
-using EventSphere.Domain.IRepositories;
 using EventSphere.Infrastructure.Repositories;
 using System;
 using System.Collections.Generic;
