@@ -13,10 +13,10 @@ namespace EventSphere.Business.Services
 {
     public class TicketServices : ITicketServices
     {
-        private readonly ITicketRepository _ticketRepository;
-        public TicketServices(ITicketRepository ticketRepository)
+        private readonly IGenericRepository<Ticket> _genericRepository;
+        public TicketServices(IGenericRepository<Ticket> genericRepository)
         {
-            _ticketRepository = ticketRepository;
+            _genericRepository = genericRepository;
         }
         public async Task<Ticket> AddTicketAsync(TicketDTO Tid)
         {
@@ -30,36 +30,36 @@ namespace EventSphere.Business.Services
                 DatePurchased = Tid.DatePurchased
 
             };
-            await _ticketRepository.AddAsync(ticket);
+            await _genericRepository.AddAsync(ticket);
             return ticket;
             
         }
 
         public async Task DeleteTicketAsync(int id)
         {
-            await _ticketRepository.DeleteAsync(id);
+            await _genericRepository.DeleteAsync(id);
         }
 
-        public async Task<List<Ticket>> GetAllTicketsAsync()
+        public async Task<IEnumerable<Ticket>> GetAllTicketsAsync()
         {
-            return await _ticketRepository.GetAllAsync();
+            return await _genericRepository.GetAllAsync();
         }
 
         public async Task<Ticket> GetTicketByIdAsync(int id)
         {
-            return await _ticketRepository.GetByIdAsync(id);
+            return await _genericRepository.GetByIdAsync(id);
         }
 
         public async Task<Ticket> UdpateTicketAsync(int id, TicketDTO Tid)
         {
-            var tick = await _ticketRepository.GetByIdAsync(id);
+            var tick = await _genericRepository.GetByIdAsync(id);
             tick.ID = Tid.ID;
             tick.EventID = Tid.EventID;
             tick.UserID = Tid.UserID;
             tick.TicketType = Tid.TicketType;
             tick.Price = Tid.Price;
             tick.DatePurchased = Tid.DatePurchased;
-            await _ticketRepository.UdpateAsync(tick);
+            await _genericRepository.UpdateAsync(tick);
             return tick;
         }
     }

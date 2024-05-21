@@ -10,7 +10,7 @@ namespace EventSphere.Business.Services.Interfaces
 {
     public interface ITicketServices
     {
-        Task<List<Ticket>> GetAllTicketsAsync();
+        Task<IEnumerable<Ticket>> GetAllTicketsAsync();
         Task<Ticket> GetTicketByIdAsync(int id);
         Task<Ticket> AddTicketAsync(TicketDTO Tid);
         Task<Ticket> UdpateTicketAsync(int id, TicketDTO Tid);

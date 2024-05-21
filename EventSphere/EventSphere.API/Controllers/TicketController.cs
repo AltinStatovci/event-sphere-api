@@ -1,7 +1,6 @@
 ﻿using EventSphere.Business.Services.Interfaces;
 using EventSphere.Domain.DTOs;
 using EventSphere.Domain.Entities;
-using EventSphere.Domain.IRepositories;
 using EventSphere.Infrastructure;
 using Microsoft.AspNetCore.Mvc;
 
@@ -15,7 +14,7 @@ namespace EventSphere.API.Controllers
             _ticketServices = ticketServices;
         }
         [HttpGet]
-        public async Task<ActionResult<List<Ticket>>> GetTicketsAsync()
+        public async Task<ActionResult<IEnumerable<Ticket>>> GetTicketsAsync()
         {
             await _ticketServices.GetAllTicketsAsync();
             return Ok();
