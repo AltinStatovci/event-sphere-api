@@ -1,3 +1,6 @@
+using EventSphere.Business.Helper;
+using EventSphere.Business.Services;
+using EventSphere.Business.Services.Interfaces;
 using EventSphere.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 
@@ -12,7 +15,12 @@ builder.Services.AddDbContext<EventSphereDbContext>(options =>
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+builder.Services.Configure<EmailSettings>(builder.Configuration.GetSection("EmailSettings"));
+builder.Services.AddTransient<IEmailService, EmailService>();
+
 var app = builder.Build();
+
+
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
