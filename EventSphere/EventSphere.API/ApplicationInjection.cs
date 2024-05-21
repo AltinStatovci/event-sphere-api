@@ -2,6 +2,7 @@
 using EventSphere.Business.Services.Interfaces;
 using EventSphere.Domain.Entities;
 using EventSphere.Infrastructure.Repositories;
+using EventSphere.Domain.IRepositories;
 
 namespace EventSphere.API
 {
@@ -11,6 +12,9 @@ namespace EventSphere.API
         {
             services.AddScoped<ITicketServices, TicketServices>();
             services.AddScoped<IGenericRepository<Ticket>, GenericRepository<Ticket>>();
+            services.AddScoped<IEventRepository, EventRepository>();
+            services.AddScoped<IEventService, EventService>();
+
         }
     }
 }
