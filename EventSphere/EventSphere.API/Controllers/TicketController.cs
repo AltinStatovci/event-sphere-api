@@ -6,6 +6,8 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace EventSphere.API.Controllers
 {
+    [Route("api/[controller]")]
+    [ApiController]
     public class TicketController : Controller
     {
         private readonly ITicketServices _ticketServices;
@@ -30,12 +32,8 @@ namespace EventSphere.API.Controllers
             return Ok(ticket);
         }
         [HttpPost]
-        public async Task<ActionResult<Ticket>> CreateAsync([FromBody] TicketDTO ticketDto)
+        public async Task<ActionResult<Ticket>> CreateAsync(TicketDTO ticketDto)
         {
-            if(ticketDto == null)
-            {
-                return BadRequest();
-            }
             var ticket = await _ticketServices.AddTicketAsync(ticketDto);
             return CreatedAtAction(nameof(GetTicketAsync), new { id = ticket.ID }, ticket);
         }
