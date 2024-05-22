@@ -19,7 +19,7 @@ namespace EventSphere.API.Controllers
             await _ticketServices.GetAllTicketsAsync();
             return Ok();
         }
-        [HttpPost ("{id}")]
+        [HttpGet ("{id}")]
         public async Task<ActionResult<Ticket>> GetTicketAsync(int id)
         {
             var ticket = await _ticketServices.GetTicketByIdAsync(id);
