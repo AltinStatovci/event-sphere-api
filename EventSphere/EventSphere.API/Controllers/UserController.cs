@@ -42,8 +42,16 @@ namespace EventSphere.API.Controllers
         [HttpPut("updateUser")]
         public async Task<IActionResult> UpdateUser(UpdateUserDTO updateUserDto)
         {
-            var user = _mapper.Map<User>(updateUserDto);
-            await _userService.UpdateUserAsync(user);
+            var existingUser = await _userService.GetUserByIdAsync(updateUserDto.ID);
+            if (existingUser == null)
+            {
+                return NotFound();
+            }
+
+            var dateCreated = existingUser.DateCreated;
+            _mapper.Map(updateUserDto, existingUser);
+            existingUser.DateCreated = dateCreated;
+            await _userService.UpdateUserAsync(existingUser);
 
             return NoContent();
         }
