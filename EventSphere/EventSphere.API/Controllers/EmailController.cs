@@ -23,7 +23,7 @@ public class EmailController
 
             var mailRequest = new MailRequest
             {
-                ToEmail = "altinstatovci56@hotmail.com",
+                ToEmail = "blendibs2000@gmail.com",
                 Subject = "Test Email",
                 Body = @"
                          <p>Thank You <strong>UserName</strong> for buying a ticket to <strong>TestEvent</strong>.</p>
