@@ -19,6 +19,9 @@ namespace EventSphere.API
             services.AddScoped<IGenericRepository<EventCategory>, GenericRepository<EventCategory>>();
             services.AddScoped<IEventCategoryService, EventCategoryService>();
 
+            services.AddScoped<IRoleServices, RoleServices>();
+            services.AddScoped<IGenericRepository<Role>, GenericRepository<Role>>();
+
             services.AddTransient<IEmailService, EmailService>();
 
             services.Configure<EmailSettings>(configuration.GetSection("EmailSettings"));
