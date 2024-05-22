@@ -1,16 +1,15 @@
 ﻿using EventSphere.Business.Services.Interfaces;
 using EventSphere.Domain.DTOs;
 using EventSphere.Domain.Entities;
-using EventSphere.Domain.IRepositories;
 using EventSphere.Infrastructure.Repositories;
 
 namespace EventSphere.Business.Services
 {
     public class EventService : IEventService
     {
-        private readonly IEventRepository _eventRepository;
+        private readonly IGenericRepository<Event> _eventRepository;
 
-        public EventService(IEventRepository eventRepository)
+        public EventService(IGenericRepository<Event> eventRepository)
         {
             _eventRepository = eventRepository;
         }
