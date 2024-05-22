@@ -12,12 +12,17 @@ namespace EventSphere.API
         {
             services.AddScoped<ITicketServices, TicketServices>();
             services.AddScoped<IGenericRepository<Ticket>, GenericRepository<Ticket>>();
+
+            services.AddScoped<IGenericRepository<Event>, GenericRepository<Event>>();
+            services.AddScoped<IEventService, EventService>();
+
             services.AddScoped<IGenericRepository<EventCategory>, GenericRepository<EventCategory>>();
             services.AddScoped<IEventCategoryService, EventCategoryService>();
 
             services.AddTransient<IEmailService, EmailService>();
 
             services.Configure<EmailSettings>(configuration.GetSection("EmailSettings"));
+
         }
     }
 }
