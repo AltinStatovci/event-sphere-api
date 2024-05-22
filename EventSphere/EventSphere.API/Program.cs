@@ -1,4 +1,6 @@
-using EventSphere.API;
+using EventSphere.Business.Helper;
+using EventSphere.Business.Services;
+using EventSphere.Business.Services.Interfaces;
 using EventSphere.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 
@@ -10,11 +12,15 @@ builder.Services.AddControllers();
 builder.Services.AddDbContext<EventSphereDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-builder.Services.AddEventSphereServices();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+builder.Services.Configure<EmailSettings>(builder.Configuration.GetSection("EmailSettings"));
+builder.Services.AddTransient<IEmailService, EmailService>();
+
 var app = builder.Build();
+
+
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
