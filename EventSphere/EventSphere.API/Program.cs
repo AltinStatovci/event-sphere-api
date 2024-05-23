@@ -1,7 +1,4 @@
 using EventSphere.API;
-using EventSphere.Business.Helper;
-using EventSphere.Business.Services;
-using EventSphere.Business.Services.Interfaces;
 using EventSphere.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 

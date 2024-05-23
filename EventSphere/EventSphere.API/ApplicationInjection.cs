@@ -3,6 +3,9 @@ using EventSphere.Business.Services;
 using EventSphere.Business.Services.Interfaces;
 using EventSphere.Domain.Entities;
 using EventSphere.Infrastructure.Repositories;
+using EventSphere.Infrastructure.Repositories.UserRepository;
+using Mapster;
+using MapsterMapper;
 
 namespace EventSphere.API
 {
@@ -19,8 +22,20 @@ namespace EventSphere.API
             services.AddScoped<IGenericRepository<EventCategory>, GenericRepository<EventCategory>>();
             services.AddScoped<IEventCategoryService, EventCategoryService>();
 
+
+            services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
+            services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IAccountService, AccountService>();
+
+            var config = TypeAdapterConfig.GlobalSettings;
+            config.Scan(typeof(Program).Assembly);
+            services.AddSingleton(config);
+            services.AddScoped<IMapper, ServiceMapper>();
+
             services.AddScoped<IRoleServices, RoleServices>();
             services.AddScoped<IGenericRepository<Role>, GenericRepository<Role>>();
+
 
             services.AddTransient<IEmailService, EmailService>();
 
