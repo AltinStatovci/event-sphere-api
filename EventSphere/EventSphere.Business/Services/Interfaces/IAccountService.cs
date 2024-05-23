@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace EventSphere.Business.Services
+namespace EventSphere.Business.Services.Interfaces
 {
     public interface IAccountService
     {
