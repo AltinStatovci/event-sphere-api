@@ -15,8 +15,13 @@ namespace EventSphere.API
         {
             services.AddScoped<ITicketServices, TicketServices>();
             services.AddScoped<IGenericRepository<Ticket>, GenericRepository<Ticket>>();
+
+            services.AddScoped<IGenericRepository<Event>, GenericRepository<Event>>();
+            services.AddScoped<IEventService, EventService>();
+
             services.AddScoped<IGenericRepository<EventCategory>, GenericRepository<EventCategory>>();
             services.AddScoped<IEventCategoryService, EventCategoryService>();
+
 
             services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
             services.AddScoped<IUserRepository, UserRepository>();
@@ -28,9 +33,14 @@ namespace EventSphere.API
             services.AddSingleton(config);
             services.AddScoped<IMapper, ServiceMapper>();
 
+            services.AddScoped<IRoleServices, RoleServices>();
+            services.AddScoped<IGenericRepository<Role>, GenericRepository<Role>>();
+
+
             services.AddTransient<IEmailService, EmailService>();
 
             services.Configure<EmailSettings>(configuration.GetSection("EmailSettings"));
+
         }
     }
 }
