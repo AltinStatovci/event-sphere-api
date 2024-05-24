@@ -1,4 +1,5 @@
 using EventSphere.API;
+using EventSphere.API.Filters;
 using EventSphere.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 
@@ -9,6 +10,11 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 builder.Services.AddDbContext<EventSphereDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+builder.Services.AddControllers(options =>
+{
+    options.Filters.Add<GlobalExceptionFilter>();
+});
 
 builder.Services.AddEventSphereServices(builder.Configuration);  // Pass the configuration to the method
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
