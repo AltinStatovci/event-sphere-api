@@ -1,7 +1,5 @@
-﻿using EventSphere.Business.Services;
-using EventSphere.Domain.DTOs;
-using EventSphere.Domain.Entities;
-using MapsterMapper;
+﻿using EventSphere.Business.Services.Interfaces;
+using EventSphere.Domain.DTOs.User;
 using Microsoft.AspNetCore.Mvc;
 
 namespace EventSphere.API.Controllers
@@ -11,21 +9,24 @@ namespace EventSphere.API.Controllers
     public class AccountController : ControllerBase
     {
         private readonly IAccountService _accountService;
-        private readonly IMapper _mapper;
 
-        public AccountController(IAccountService accountService, IMapper mapper)
+        public AccountController(IAccountService accountService)
         {
             _accountService = accountService;
-            _mapper = mapper;
         }
 
         [HttpPost("register")]
         public async Task<IActionResult> Register(CreateUserDTO createUserDto)
         {
-            var user = _mapper.Map<User>(createUserDto);
-            var createdUser = await _accountService.AddUserAsync(user);
-            var userDto = _mapper.Map<UserDTO>(createdUser);
-            return Ok(userDto);
+            var createdUser = await _accountService.AddUserAsync(createUserDto);
+            return Ok(createdUser);
+        }
+
+        [HttpPost("authenticate")]
+        public async Task<IActionResult> Authenticate(LoginDTO loginDto)
+        {
+            var token = await _accountService.AuthenticateAsync(loginDto);
+            return Ok(token);
         }
     }
 }

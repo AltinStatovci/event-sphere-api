@@ -13,7 +13,14 @@ public class UserConfiguration : IEntityTypeConfiguration<User>
         builder.Property(u => u.Name).HasMaxLength(30);
         builder.Property(u => u.LastName).HasMaxLength(30);
         builder.Property(u => u.Email).IsRequired().HasMaxLength(50);
-        builder.Property(u => u.Password).IsRequired();
+
+        builder.Property(u => u.Password)
+               .IsRequired()
+               .HasColumnType("varbinary(64)");
+
+        builder.Property(u => u.Salt)
+               .IsRequired()
+               .HasColumnType("varbinary(64)");
 
         builder.HasOne(u => u.Role)
                .WithMany()

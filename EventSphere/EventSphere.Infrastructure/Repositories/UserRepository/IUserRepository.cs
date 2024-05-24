@@ -9,5 +9,6 @@ namespace EventSphere.Infrastructure.Repositories.UserRepository
 {
     public interface IUserRepository : IGenericRepository<User>
     {
+        Task<User> GetUserByEmailAsync(string email);
     }
 }

@@ -1,4 +1,5 @@
-﻿using EventSphere.Domain.Entities;
+﻿using EventSphere.Business.Services.Interfaces;
+using EventSphere.Domain.Entities;
 using EventSphere.Infrastructure.Repositories;
 using EventSphere.Infrastructure.Repositories.UserRepository;
 

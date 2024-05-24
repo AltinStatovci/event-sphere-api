@@ -46,7 +46,8 @@ namespace EventSphere.Infrastructure.Migrations
                     Name = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: true),
                     LastName = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: true),
                     Email = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    Password = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Password = table.Column<byte[]>(type: "varbinary(64)", nullable: false),
+                    Salt = table.Column<byte[]>(type: "varbinary(64)", nullable: false),
                     RoleID = table.Column<int>(type: "int", nullable: false),
                     DateCreated = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "GETDATE()")
                 },

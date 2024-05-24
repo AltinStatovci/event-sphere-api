@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace EventSphere.Domain.DTOs
+namespace EventSphere.Domain.DTOs.User
 {
     public class UpdateUserDTO
     {

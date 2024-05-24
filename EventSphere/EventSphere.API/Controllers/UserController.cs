@@ -1,11 +1,13 @@
-﻿using EventSphere.Business.Services;
-using EventSphere.Domain.DTOs;
-using EventSphere.Domain.Entities;
+﻿using EventSphere.Business.Services.Interfaces;
+using EventSphere.Domain.DTOs.User;
 using MapsterMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace EventSphere.API.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class UserController : ControllerBase
