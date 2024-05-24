@@ -1,4 +1,5 @@
 ﻿using EventSphere.Domain.Entities;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,6 +15,11 @@ namespace EventSphere.Infrastructure.Repositories.UserRepository
         public UserRepository(EventSphereDbContext context) : base(context)
         {
             _context = context;
+        }
+
+        public async Task<User> GetUserByEmailAsync(string email)
+        {
+            return await _context.Users.FirstOrDefaultAsync(u => u.Email == email);
         }
     }
 }

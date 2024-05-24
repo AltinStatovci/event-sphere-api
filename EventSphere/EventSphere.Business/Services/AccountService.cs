@@ -1,26 +1,97 @@
+﻿using EventSphere.Business.Helper;
+using EventSphere.Business.Services.Interfaces;
+using EventSphere.Domain.DTOs.User;
 ﻿using EventSphere.Business.Services.Interfaces;
 using EventSphere.Domain.Entities;
 using EventSphere.Infrastructure.Repositories.UserRepository;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+using MapsterMapper;
+using Microsoft.Extensions.Configuration;
+using Microsoft.IdentityModel.Tokens;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace EventSphere.Business.Services
 {
     public class AccountService : IAccountService
     {
         private readonly IUserRepository _userRepository;
+        private readonly IMapper _mapper;
+        private readonly IConfiguration _config;
 
-        public AccountService(IUserRepository userRepository)
+        public AccountService(IUserRepository userRepository, IConfiguration config, IMapper mapper)
         {
             _userRepository = userRepository;
+            _config = config;
+            _mapper = mapper;
         }
 
-        public async Task<User> AddUserAsync(User user)
+        public async Task<UserDTO> AddUserAsync(CreateUserDTO createUserDto)
+        {    
+            var user = _mapper.Map<User>(createUserDto);
+            var passwordSalt = PasswordGenerator.GenerateSalt();
+            var passwordHash = PasswordGenerator.GenerateHash(createUserDto.Password, passwordSalt);
+            user.Salt = passwordSalt;
+            user.Password = passwordHash;
+            var createdUser = await _userRepository.AddAsync(user);
+            return _mapper.Map<UserDTO>(createdUser);
+        }
+
+        public async Task<string> AuthenticateAsync(LoginDTO loginDto)
         {
-            return await _userRepository.AddAsync(user);
+            var user = await _userRepository.GetUserByEmailAsync(loginDto.Email);
+            if (user == null || !PasswordGenerator.VerifyPassword(loginDto.Password, user.Password, user.Salt))
+            {
+                return null; // Authentication failed
+            }
+
+            // Generate JWT token
+            return GenerateJwtToken(user);
+        }
+
+        private string GenerateJwtToken(User user)
+        {
+            //var tokenHandler = new JwtSecurityTokenHandler();
+            //var key = Encoding.UTF8.GetBytes(_config["Jwt:Key"]);
+
+            //var claims = new List<Claim> 
+            //{
+            //    new(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
+            //    new(JwtRegisteredClaimNames.Sub, user.Email),
+            //    new(JwtRegisteredClaimNames.Email, user.Email),
+            //    new("userId", user.ID.ToString())
+            //};
+
+            //var tokenDescriptor = new SecurityTokenDescriptor
+            //{
+            //    Subject = new ClaimsIdentity(claims),
+            //    Expires = DateTime.UtcNow.AddDays(7),
+            //    Issuer = _config["Jwt:Issuer"],
+            //    Audience = _config["Jwt:Issuer"],
+            //    SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
+            //};
+
+            //var token = tokenHandler.CreateToken(tokenDescriptor);
+            //var jwt = tokenHandler.WriteToken(token);
+            //return jwt;
+            SecurityKey key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Jwt:Key"]));
+            SigningCredentials credentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha256Signature);
+
+            var claims = new List<Claim>
+            {
+                new(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
+                new(JwtRegisteredClaimNames.Email, user.Email),
+            };
+
+            var token = new JwtSecurityToken(
+                _config["Jwt:Issuer"],
+                _config["Jwt:Issuer"],
+                claims,
+                expires: DateTime.Now.AddMinutes(120),
+                signingCredentials: credentials
+                );
+
+            return new JwtSecurityTokenHandler().WriteToken(token);
         }
     }
 }
