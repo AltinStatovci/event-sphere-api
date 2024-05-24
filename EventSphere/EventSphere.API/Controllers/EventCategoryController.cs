@@ -1,6 +1,11 @@
-﻿using EventSphere.Business.Services.Interfaces;
+﻿using EventSphere.API.Filters;
+using EventSphere.Business.Validator;
+using EventSphere.Business.Services.Interfaces;
 using EventSphere.Domain.DTOs.EventSphere.API.DTOs;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace EventSphere.API.Controllers
 {
@@ -9,10 +14,12 @@ namespace EventSphere.API.Controllers
     public class EventCategoryController : ControllerBase
     {
         private readonly IEventCategoryService _eventCategoryService;
+        private readonly EventCategoryValidator _validator;
 
         public EventCategoryController(IEventCategoryService eventCategoryService)
         {
             _eventCategoryService = eventCategoryService;
+            _validator = new EventCategoryValidator();
         }
 
         [HttpGet]
@@ -36,6 +43,13 @@ namespace EventSphere.API.Controllers
         [HttpPost]
         public async Task<ActionResult<EventCategoryDto>> AddCategory(EventCategoryDto categoryDTO)
         {
+            var validationResult = _validator.Validate(categoryDTO);
+            if (!validationResult.IsValid)
+            {
+                var errors = validationResult.Errors.Select(error => error.ErrorMessage).ToList();
+                throw new ValidationException(errors);
+            }
+
             var addedCategory = await _eventCategoryService.AddCategoryAsync(categoryDTO);
             return CreatedAtAction(nameof(GetCategoryById), new { id = addedCategory.ID }, addedCategory);
         }
