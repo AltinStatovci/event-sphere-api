@@ -1,5 +1,7 @@
 ﻿using EventSphere.Business.Services.Interfaces;
 using EventSphere.Domain.DTOs.User;
+using EventSphere.Domain.DTOs;
+using EventSphere.Domain.Entities;
 using MapsterMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
