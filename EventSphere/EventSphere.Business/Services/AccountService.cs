@@ -41,38 +41,14 @@ namespace EventSphere.Business.Services
             var user = await _userRepository.GetUserByEmailAsync(loginDto.Email);
             if (user == null || !PasswordGenerator.VerifyPassword(loginDto.Password, user.Password, user.Salt))
             {
-                return null; // Authentication failed
+                return null;
             }
 
-            // Generate JWT token
             return GenerateJwtToken(user);
         }
 
         private string GenerateJwtToken(User user)
         {
-            //var tokenHandler = new JwtSecurityTokenHandler();
-            //var key = Encoding.UTF8.GetBytes(_config["Jwt:Key"]);
-
-            //var claims = new List<Claim> 
-            //{
-            //    new(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
-            //    new(JwtRegisteredClaimNames.Sub, user.Email),
-            //    new(JwtRegisteredClaimNames.Email, user.Email),
-            //    new("userId", user.ID.ToString())
-            //};
-
-            //var tokenDescriptor = new SecurityTokenDescriptor
-            //{
-            //    Subject = new ClaimsIdentity(claims),
-            //    Expires = DateTime.UtcNow.AddDays(7),
-            //    Issuer = _config["Jwt:Issuer"],
-            //    Audience = _config["Jwt:Issuer"],
-            //    SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
-            //};
-
-            //var token = tokenHandler.CreateToken(tokenDescriptor);
-            //var jwt = tokenHandler.WriteToken(token);
-            //return jwt;
             SecurityKey key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Jwt:Key"]));
             SigningCredentials credentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha256Signature);
 
