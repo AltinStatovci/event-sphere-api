@@ -22,6 +22,8 @@ namespace EventSphere.API
 
             services.AddScoped<IGenericRepository<EventCategory>, GenericRepository<EventCategory>>();
             services.AddScoped<IEventCategoryService, EventCategoryService>();
+            services.AddScoped<IGenericRepository<Payment>, GenericRepository<Payment>>();
+            services.AddScoped<IPaymentService, PaymentServices>();
 
             services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
             services.AddScoped<IUserRepository, UserRepository>();
