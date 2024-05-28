@@ -15,11 +15,15 @@ namespace EventSphere.Business.Services
     public class PaymentServices : IPaymentService
     {
         private readonly IGenericRepository<Payment> _genericRepository;
-        public PaymentServices(IGenericRepository<Payment> genericRepository)
+        private readonly IGenericRepository<User> _userRepository;
+        private readonly IGenericRepository<Event> _eventRepository;
+        public PaymentServices(IGenericRepository<Payment> genericRepository, IGenericRepository<User> userRepository, IGenericRepository<Event> eventRepository)
         {
             _genericRepository = genericRepository;
+            _userRepository = userRepository;
+            _eventRepository = eventRepository;
         }
-        public async Task<Payment> AddPaymentAsync(PaymentDTO Pid)
+        public async Task<PaymentResponseDto> AddPaymentAsync(PaymentDTO Pid)
         {
             var payment = new Payment
             {
@@ -33,7 +37,18 @@ namespace EventSphere.Business.Services
                 PaymentDate = Pid.PaymentDate,
             };
             await _genericRepository.AddAsync(payment);
-            return payment;
+            
+            var user = await _userRepository.GetByIdAsync(Pid.UserID);
+            var eventt = await _eventRepository.GetByIdAsync(Pid.EventID); 
+            
+            var response = new PaymentResponseDto()
+            {
+                Payment = payment,
+                User = user,
+                Event = eventt
+            };
+            
+            return response;
 
         }
 
