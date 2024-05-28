@@ -29,9 +29,7 @@ public class UserConfiguration : IEntityTypeConfiguration<User>
         builder.Property(u => u.DateCreated)
                .HasDefaultValueSql("GETDATE()");
 
-        builder.HasMany(u => u.Tickets)
-               .WithOne(t => t.User)
-               .HasForeignKey(t => t.UserID);
+       
 
         builder.HasMany(u => u.Payments)
                .WithOne(p => p.User)

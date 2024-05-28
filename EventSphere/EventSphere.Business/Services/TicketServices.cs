@@ -23,10 +23,10 @@ namespace EventSphere.Business.Services
             {
                 ID = Tid.ID,
                 EventID = Tid.EventID,
-                UserID = Tid.UserID,
+             
                 TicketType = Tid.TicketType,
                 Price = Tid.Price,
-                DatePurchased = Tid.DatePurchased
+               
 
             };
             await _genericRepository.AddAsync(ticket);
@@ -54,10 +54,10 @@ namespace EventSphere.Business.Services
             var tick = await _genericRepository.GetByIdAsync(id);
             tick.ID = Tid.ID;
             tick.EventID = Tid.EventID;
-            tick.UserID = Tid.UserID;
+          
             tick.TicketType = Tid.TicketType;
             tick.Price = Tid.Price;
-            tick.DatePurchased = Tid.DatePurchased;
+           
             await _genericRepository.UpdateAsync(tick);
             return tick;
         }
