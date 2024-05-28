@@ -23,7 +23,7 @@ namespace EventSphere.Business.Services
             {
                 ID = Tid.ID,
                 EventID = Tid.EventID,
-             
+                BookingReference = Tid.BookingReference,
                 TicketType = Tid.TicketType,
                 Price = Tid.Price,
                
@@ -54,7 +54,7 @@ namespace EventSphere.Business.Services
             var tick = await _genericRepository.GetByIdAsync(id);
             tick.ID = Tid.ID;
             tick.EventID = Tid.EventID;
-          
+            tick.BookingReference = Tid.BookingReference;
             tick.TicketType = Tid.TicketType;
             tick.Price = Tid.Price;
            
