@@ -23,316 +23,298 @@ namespace EventSphere.Infrastructure.Migrations
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
             modelBuilder.Entity("EventSphere.Domain.Entities.Event", b =>
-            {
-                b.Property<int>("ID")
-                    .ValueGeneratedOnAdd()
-                    .HasColumnType("int");
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
 
-                SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
 
-                b.Property<int>("AvailableTickets")
-                    .HasColumnType("int");
+                    b.Property<int>("AvailableTickets")
+                        .HasColumnType("int");
 
-                b.Property<int>("CategoryID")
-                    .HasColumnType("int");
+                    b.Property<int>("CategoryID")
+                        .HasColumnType("int");
 
-                b.Property<DateTime>("DateCreated")
-                    .ValueGeneratedOnAdd()
-                    .HasColumnType("datetime2")
-                    .HasDefaultValueSql("GETDATE()");
+                    b.Property<DateTime>("DateCreated")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValueSql("GETDATE()");
 
-                b.Property<string>("Description")
-                    .IsRequired()
-                    .HasMaxLength(300)
-                    .HasColumnType("nvarchar(300)");
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasMaxLength(300)
+                        .HasColumnType("nvarchar(300)");
 
-                b.Property<DateTime>("EndDate")
-                    .HasColumnType("datetime2");
+                    b.Property<DateTime>("EndDate")
+                        .HasColumnType("datetime2");
 
-                b.Property<string>("EventName")
-                    .IsRequired()
-                    .HasMaxLength(100)
-                    .HasColumnType("nvarchar(100)");
+                    b.Property<string>("EventName")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
-                b.Property<string>("Location")
-                    .IsRequired()
-                    .HasMaxLength(200)
-                    .HasColumnType("nvarchar(200)");
+                    b.Property<string>("Location")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
 
-                b.Property<int>("MaxAttendance")
-                    .HasColumnType("int");
+                    b.Property<int>("MaxAttendance")
+                        .HasColumnType("int");
 
-                b.Property<int>("OrganizerID")
-                    .HasColumnType("int");
+                    b.Property<int>("OrganizerID")
+                        .HasColumnType("int");
 
-                b.Property<string>("PhotoData")
-                    .HasColumnType("nvarchar(max)");
+                    b.Property<string>("PhotoData")
+                        .HasColumnType("nvarchar(max)");
 
-                b.Property<DateTime>("StartDate")
-                    .HasColumnType("datetime2");
+                    b.Property<DateTime>("StartDate")
+                        .HasColumnType("datetime2");
 
-                b.HasKey("ID");
+                    b.HasKey("ID");
 
-                b.HasIndex("CategoryID");
+                    b.HasIndex("CategoryID");
 
-                b.HasIndex("OrganizerID");
+                    b.HasIndex("OrganizerID");
 
-                b.ToTable("Event", (string)null);
-            });
+                    b.ToTable("Event", (string)null);
+                });
 
             modelBuilder.Entity("EventSphere.Domain.Entities.EventCategory", b =>
-            {
-                b.Property<int>("ID")
-                    .ValueGeneratedOnAdd()
-                    .HasColumnType("int");
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
 
-                SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
 
-                b.Property<string>("CategoryName")
-                    .IsRequired()
-                    .HasMaxLength(50)
-                    .HasColumnType("nvarchar(50)");
+                    b.Property<string>("CategoryName")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
-                b.HasKey("ID");
+                    b.HasKey("ID");
 
-                b.ToTable("EventCategory", (string)null);
-            });
+                    b.ToTable("EventCategory", (string)null);
+                });
 
             modelBuilder.Entity("EventSphere.Domain.Entities.Payment", b =>
-            {
-                b.Property<int>("ID")
-                    .ValueGeneratedOnAdd()
-                    .HasColumnType("int");
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
 
-                SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
 
-                b.Property<int>("Amount")
-                    .HasColumnType("int");
+                    b.Property<int>("Amount")
+                        .HasColumnType("int");
 
-                b.Property<int>("EventID")
-                    .HasColumnType("int");
+                    b.Property<int>("EventID")
+                        .HasColumnType("int");
 
-                b.Property<DateTime>("PaymentDate")
-                    .HasColumnType("datetime2");
+                    b.Property<DateTime>("PaymentDate")
+                        .HasColumnType("datetime2");
 
-                b.Property<string>("PaymentMethod")
-                    .IsRequired()
-                    .HasMaxLength(50)
-                    .HasColumnType("nvarchar(50)");
+                    b.Property<string>("PaymentMethod")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
-                b.Property<bool>("PaymentStatus")
-                    .HasColumnType("bit");
+                    b.Property<bool>("PaymentStatus")
+                        .HasColumnType("bit");
 
-                b.Property<int>("TicketID")
-                    .HasColumnType("int");
+                    b.Property<int>("TicketID")
+                        .HasColumnType("int");
 
-                b.Property<int>("UserID")
-                    .HasColumnType("int");
+                    b.Property<int>("UserID")
+                        .HasColumnType("int");
 
-                b.HasKey("ID");
+                    b.HasKey("ID");
 
-                b.HasIndex("EventID");
+                    b.HasIndex("EventID");
 
-                b.HasIndex("TicketID");
+                    b.HasIndex("TicketID");
 
-                b.HasIndex("UserID");
+                    b.HasIndex("UserID");
 
-                b.ToTable("Payment", (string)null);
-            });
+                    b.ToTable("Payment", (string)null);
+                });
 
             modelBuilder.Entity("EventSphere.Domain.Entities.Role", b =>
-            {
-                b.Property<int>("ID")
-                    .ValueGeneratedOnAdd()
-                    .HasColumnType("int");
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
 
-                SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
 
-                b.Property<string>("RoleName")
-                    .IsRequired()
-                    .HasMaxLength(20)
-                    .HasColumnType("nvarchar(20)");
+                    b.Property<string>("RoleName")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
 
-                b.HasKey("ID");
+                    b.HasKey("ID");
 
-                b.ToTable("Role", (string)null);
-            });
+                    b.ToTable("Role", (string)null);
+                });
 
             modelBuilder.Entity("EventSphere.Domain.Entities.Ticket", b =>
-            {
-                b.Property<int>("ID")
-                    .ValueGeneratedOnAdd()
-                    .HasColumnType("int");
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
 
-                SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
 
-                b.Property<string>("BookingReference")
-                    .IsRequired()
-                    .HasMaxLength(100)
-                    .HasColumnType("nvarchar(100)");
+                    b.Property<string>("BookingReference")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
-                b.Property<DateTime>("DatePurchased")
-                    .HasColumnType("datetime2");
+                    b.Property<int>("EventID")
+                        .HasColumnType("int");
 
-                b.Property<int>("EventID")
-                    .HasColumnType("int");
+                    b.Property<double>("Price")
+                        .HasColumnType("float");
 
-                b.Property<double>("Price")
-                    .HasColumnType("float");
+                    b.Property<string>("TicketType")
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)");
 
-                b.Property<string>("TicketType")
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnType("nvarchar(30)");
+                    b.HasKey("ID");
 
-                b.Property<int>("UserID")
-                    .HasColumnType("int");
+                    b.HasIndex("EventID");
 
-                b.HasKey("ID");
-
-                b.HasIndex("EventID");
-
-                b.HasIndex("UserID");
-
-                b.ToTable("Ticket", (string)null);
-            });
+                    b.ToTable("Ticket", (string)null);
+                });
 
             modelBuilder.Entity("EventSphere.Domain.Entities.User", b =>
-            {
-                b.Property<int>("ID")
-                    .ValueGeneratedOnAdd()
-                    .HasColumnType("int");
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
 
-                SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
 
-                b.Property<DateTime>("DateCreated")
-                    .ValueGeneratedOnAdd()
-                    .HasColumnType("datetime2")
-                    .HasDefaultValueSql("GETDATE()");
+                    b.Property<DateTime>("DateCreated")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValueSql("GETDATE()");
 
-                b.Property<string>("Email")
-                    .IsRequired()
-                    .HasMaxLength(50)
-                    .HasColumnType("nvarchar(50)");
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
-                b.Property<string>("LastName")
-                    .HasMaxLength(30)
-                    .HasColumnType("nvarchar(30)");
+                    b.Property<string>("LastName")
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)");
 
-                b.Property<string>("Name")
-                    .HasMaxLength(30)
-                    .HasColumnType("nvarchar(30)");
+                    b.Property<string>("Name")
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)");
 
-                b.Property<byte[]>("Password")
-                    .IsRequired()
-                    .HasColumnType("varbinary(64)");
+                    b.Property<byte[]>("Password")
+                        .IsRequired()
+                        .HasColumnType("varbinary(64)");
 
-                b.Property<int>("RoleID")
-                    .HasColumnType("int");
+                    b.Property<int>("RoleID")
+                        .HasColumnType("int");
 
-                b.Property<byte[]>("Salt")
-                    .IsRequired()
-                    .HasColumnType("varbinary(64)");
+                    b.Property<byte[]>("Salt")
+                        .IsRequired()
+                        .HasColumnType("varbinary(64)");
 
-                b.HasKey("ID");
+                    b.HasKey("ID");
 
-                b.HasIndex("RoleID");
+                    b.HasIndex("RoleID");
 
-                b.ToTable("User", (string)null);
-            });
+                    b.ToTable("User", (string)null);
+                });
 
             modelBuilder.Entity("EventSphere.Domain.Entities.Event", b =>
-            {
-                b.HasOne("EventSphere.Domain.Entities.EventCategory", "Category")
-                    .WithMany()
-                    .HasForeignKey("CategoryID")
-                    .OnDelete(DeleteBehavior.Restrict)
-                    .IsRequired();
+                {
+                    b.HasOne("EventSphere.Domain.Entities.EventCategory", "Category")
+                        .WithMany()
+                        .HasForeignKey("CategoryID")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
 
-                b.HasOne("EventSphere.Domain.Entities.User", "Organizer")
-                    .WithMany()
-                    .HasForeignKey("OrganizerID")
-                    .OnDelete(DeleteBehavior.Restrict)
-                    .IsRequired();
+                    b.HasOne("EventSphere.Domain.Entities.User", "Organizer")
+                        .WithMany()
+                        .HasForeignKey("OrganizerID")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
 
-                b.Navigation("Category");
+                    b.Navigation("Category");
 
-                b.Navigation("Organizer");
-            });
+                    b.Navigation("Organizer");
+                });
 
             modelBuilder.Entity("EventSphere.Domain.Entities.Payment", b =>
-            {
-                b.HasOne("EventSphere.Domain.Entities.Event", "Event")
-                    .WithMany()
-                    .HasForeignKey("EventID")
-                    .OnDelete(DeleteBehavior.Cascade)
-                    .IsRequired();
+                {
+                    b.HasOne("EventSphere.Domain.Entities.Event", "Event")
+                        .WithMany()
+                        .HasForeignKey("EventID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
-                b.HasOne("EventSphere.Domain.Entities.Ticket", "Ticket")
-                    .WithMany("Payments")
-                    .HasForeignKey("TicketID")
-                    .OnDelete(DeleteBehavior.Restrict)
-                    .IsRequired();
+                    b.HasOne("EventSphere.Domain.Entities.Ticket", "Ticket")
+                        .WithMany("Payments")
+                        .HasForeignKey("TicketID")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
 
-                b.HasOne("EventSphere.Domain.Entities.User", "User")
-                    .WithMany("Payments")
-                    .HasForeignKey("UserID")
-                    .OnDelete(DeleteBehavior.Restrict)
-                    .IsRequired();
+                    b.HasOne("EventSphere.Domain.Entities.User", "User")
+                        .WithMany("Payments")
+                        .HasForeignKey("UserID")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
 
-                b.Navigation("Event");
+                    b.Navigation("Event");
 
-                b.Navigation("Ticket");
+                    b.Navigation("Ticket");
 
-                b.Navigation("User");
-            });
+                    b.Navigation("User");
+                });
 
             modelBuilder.Entity("EventSphere.Domain.Entities.Ticket", b =>
-            {
-                b.HasOne("EventSphere.Domain.Entities.Event", "Event")
-                    .WithMany("Tickets")
-                    .HasForeignKey("EventID")
-                    .OnDelete(DeleteBehavior.Restrict)
-                    .IsRequired();
+                {
+                    b.HasOne("EventSphere.Domain.Entities.Event", "Event")
+                        .WithMany("Tickets")
+                        .HasForeignKey("EventID")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
 
-                b.HasOne("EventSphere.Domain.Entities.User", "User")
-                    .WithMany("Tickets")
-                    .HasForeignKey("UserID")
-                    .OnDelete(DeleteBehavior.Restrict)
-                    .IsRequired();
-
-                b.Navigation("Event");
-
-                b.Navigation("User");
-            });
+                    b.Navigation("Event");
+                });
 
             modelBuilder.Entity("EventSphere.Domain.Entities.User", b =>
-            {
-                b.HasOne("EventSphere.Domain.Entities.Role", "Role")
-                    .WithMany()
-                    .HasForeignKey("RoleID")
-                    .OnDelete(DeleteBehavior.Cascade)
-                    .IsRequired();
+                {
+                    b.HasOne("EventSphere.Domain.Entities.Role", "Role")
+                        .WithMany()
+                        .HasForeignKey("RoleID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
-                b.Navigation("Role");
-            });
+                    b.Navigation("Role");
+                });
 
             modelBuilder.Entity("EventSphere.Domain.Entities.Event", b =>
-            {
-                b.Navigation("Tickets");
-            });
+                {
+                    b.Navigation("Tickets");
+                });
 
             modelBuilder.Entity("EventSphere.Domain.Entities.Ticket", b =>
-            {
-                b.Navigation("Payments");
-            });
+                {
+                    b.Navigation("Payments");
+                });
 
             modelBuilder.Entity("EventSphere.Domain.Entities.User", b =>
-            {
-                b.Navigation("Payments");
-
-                b.Navigation("Tickets");
-            });
+                {
+                    b.Navigation("Payments");
+                });
 #pragma warning restore 612, 618
         }
     }

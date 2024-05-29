@@ -19,13 +19,10 @@ namespace EventSphere.Infrastructure.EntityFramework
 
             builder.Property(t => t.TicketType).IsRequired().HasMaxLength(30);
             builder.Property(t => t.Price).IsRequired();
-            builder.Property(t => t.DatePurchased).IsRequired();
+         
             builder.Property(t => t.BookingReference).IsRequired().HasMaxLength(100);
 
-            builder.HasOne(t => t.User)
-                   .WithMany(u => u.Tickets)
-                   .HasForeignKey(t => t.UserID)
-                   .OnDelete(DeleteBehavior.Restrict);
+         
 
             builder.HasOne(t => t.Event)
                    .WithMany(e => e.Tickets)

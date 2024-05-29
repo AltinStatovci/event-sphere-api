@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace EventSphere.Infrastructure.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialCreate : Migration
+    public partial class InitCreate : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -104,10 +104,8 @@ namespace EventSphere.Infrastructure.Migrations
                     ID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     EventID = table.Column<int>(type: "int", nullable: false),
-                    UserID = table.Column<int>(type: "int", nullable: false),
                     TicketType = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false),
                     Price = table.Column<double>(type: "float", nullable: false),
-                    DatePurchased = table.Column<DateTime>(type: "datetime2", nullable: false),
                     BookingReference = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false)
                 },
                 constraints: table =>
@@ -117,12 +115,6 @@ namespace EventSphere.Infrastructure.Migrations
                         name: "FK_Ticket_Event_EventID",
                         column: x => x.EventID,
                         principalTable: "Event",
-                        principalColumn: "ID",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_Ticket_User_UserID",
-                        column: x => x.UserID,
-                        principalTable: "User",
                         principalColumn: "ID",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -193,11 +185,6 @@ namespace EventSphere.Infrastructure.Migrations
                 name: "IX_Ticket_EventID",
                 table: "Ticket",
                 column: "EventID");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Ticket_UserID",
-                table: "Ticket",
-                column: "UserID");
 
             migrationBuilder.CreateIndex(
                 name: "IX_User_RoleID",

@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EventSphere.Infrastructure.Migrations
 {
     [DbContext(typeof(EventSphereDbContext))]
-    [Migration("20240520115951_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20240528123947_InitCreate")]
+    partial class InitCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -174,9 +174,6 @@ namespace EventSphere.Infrastructure.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
-                    b.Property<DateTime>("DatePurchased")
-                        .HasColumnType("datetime2");
-
                     b.Property<int>("EventID")
                         .HasColumnType("int");
 
@@ -188,14 +185,9 @@ namespace EventSphere.Infrastructure.Migrations
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)");
 
-                    b.Property<int>("UserID")
-                        .HasColumnType("int");
-
                     b.HasKey("ID");
 
                     b.HasIndex("EventID");
-
-                    b.HasIndex("UserID");
 
                     b.ToTable("Ticket", (string)null);
                 });
@@ -226,12 +218,16 @@ namespace EventSphere.Infrastructure.Migrations
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)");
 
-                    b.Property<string>("Password")
+                    b.Property<byte[]>("Password")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("varbinary(64)");
 
                     b.Property<int>("RoleID")
                         .HasColumnType("int");
+
+                    b.Property<byte[]>("Salt")
+                        .IsRequired()
+                        .HasColumnType("varbinary(64)");
 
                     b.HasKey("ID");
 
@@ -294,15 +290,7 @@ namespace EventSphere.Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("EventSphere.Domain.Entities.User", "User")
-                        .WithMany("Tickets")
-                        .HasForeignKey("UserID")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
                     b.Navigation("Event");
-
-                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("EventSphere.Domain.Entities.User", b =>
@@ -329,8 +317,6 @@ namespace EventSphere.Infrastructure.Migrations
             modelBuilder.Entity("EventSphere.Domain.Entities.User", b =>
                 {
                     b.Navigation("Payments");
-
-                    b.Navigation("Tickets");
                 });
 #pragma warning restore 612, 618
         }
