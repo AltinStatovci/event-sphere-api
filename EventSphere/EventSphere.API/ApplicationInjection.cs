@@ -14,7 +14,7 @@ namespace EventSphere.API
     {
         public static void AddEventSphereServices(this IServiceCollection services, IConfiguration configuration)
         {
-            services.AddScoped<ITicketServices, TicketServices>();
+            services.AddScoped<ITicketService, TicketService>();
             services.AddScoped<IGenericRepository<Ticket>, GenericRepository<Ticket>>();
 
             services.AddScoped<IGenericRepository<Event>, GenericRepository<Event>>();

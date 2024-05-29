@@ -1,82 +1,46 @@
 ﻿using EventSphere.Business.Services.Interfaces;
 using EventSphere.Domain.DTOs;
-using EventSphere.Domain.Entities;
 using Microsoft.AspNetCore.Mvc;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 
 namespace EventSphere.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class TicketController : ControllerBase // Use ControllerBase instead of Controller for API controllers
+    public class TicketController : ControllerBase
     {
-        private readonly ITicketServices _ticketServices;
-
-        public TicketController(ITicketServices ticketServices)
+        private readonly ITicketService _ticketService;
+        public TicketController(ITicketService ticketService)
         {
-            _ticketServices = ticketServices;
+            _ticketService = ticketService;
         }
-
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Ticket>>> GetTicketsAsync()
+        public async Task<IActionResult> GetAllTickets()
         {
-            var tickets = await _ticketServices.GetAllTicketsAsync();
-            return Ok(tickets); // Return the list of tickets
-        }
-
-        [HttpGet("{id}")]
-        public async Task<ActionResult<Ticket>> GetTicketAsync(int id)
-        {
-            var ticket = await _ticketServices.GetTicketByIdAsync(id);
-            if (ticket == null)
-            {
-                return NotFound();
-            }
+            var ticket = await _ticketService.GetAllTicketsAsync();
             return Ok(ticket);
         }
-
-        [HttpPost]
-        public async Task<ActionResult<Ticket>> CreateAsync(TicketDTO ticketDto)
+        [HttpGet ("{id}")]
+        public async Task<IActionResult> GetTicketId(int id)
         {
-            if (ticketDto == null)
-            {
-                return BadRequest();
-            }
-
-            var ticket = await _ticketServices.AddTicketAsync(ticketDto);
-            // Ensure the route value key 'id' matches the parameter name in the GetTicketAsync method
-            return CreatedAtAction(nameof(GetTicketAsync), new { id = ticket.ID }, ticket);
+            var ticket = await _ticketService.GetTicketByIdAsync(id);
+            return Ok(ticket);
         }
-
-        [HttpPut("{id}")]
-        public async Task<ActionResult> EditAsync(int id, [FromBody] TicketDTO ticketDto)
+        [HttpPost]
+        public async Task<IActionResult> Create(TicketDTO ticketDTO)
         {
-            if (id == 0 || ticketDto == null)
-            {
-                return BadRequest();
-            }
-
-            var existingTicket = await _ticketServices.GetTicketByIdAsync(id);
-            if (existingTicket == null)
-            {
-                return NotFound();
-            }
-
-            await _ticketServices.UdpateTicketAsync(id, ticketDto);
+            var ticket = await _ticketService.CreateAsync(ticketDTO);
+            return CreatedAtAction(nameof(GetTicketId), new {id = ticketDTO.ID}, ticketDTO);
+        }
+        [HttpPut ("{id}")]
+        public async Task<IActionResult> Update(int id, TicketDTO ticketDTO)
+        {
+            await _ticketService.UpdateAsync(id, ticketDTO);
             return NoContent();
         }
-
-        [HttpDelete("{id}")]
-        public async Task<ActionResult> DeleteAsync(int id)
+        [HttpDelete ("{id}")]
+        public async Task<IActionResult> Delete(int id)
         {
-            var existingTicket = await _ticketServices.GetTicketByIdAsync(id);
-            if (existingTicket == null)
-            {
-                return NotFound();
-            }
-
-            await _ticketServices.DeleteTicketAsync(id);
+            await _ticketService.DeleteAsync(id);
             return NoContent();
         }
     }

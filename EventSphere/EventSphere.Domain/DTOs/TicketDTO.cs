@@ -1,4 +1,5 @@
-﻿using System;
+﻿using EventSphere.Domain.Entities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -13,6 +14,5 @@ namespace EventSphere.Domain.DTOs
         public string TicketType { get; set; }
         public double Price { get; set; }
         public string BookingReference { get; set; }
-        public DateTime DatePurchased { get; set; }
     }
 }
