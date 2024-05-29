@@ -5,8 +5,6 @@
         public int ID { get; set; }
         public User User { get; set; }
         public int UserID { get; set; }
-        public Event Event { get; set; }
-        public int EventID { get; set; }
         public Ticket Ticket { get; set; }
         public int TicketID { get; set; }
         public int Amount { get; set; }
