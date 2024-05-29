@@ -23,33 +23,26 @@ namespace EventSphere.Business.Services
             _userRepository = userRepository;
             _eventRepository = eventRepository;
         }
+
         public async Task<PaymentResponseDto> AddPaymentAsync(PaymentDTO Pid)
         {
             var payment = new Payment
             {
-                ID = Pid.ID,
                 UserID = Pid.UserID,
-                EventID = Pid.EventID,
                 TicketID = Pid.TicketID,
                 Amount = Pid.Amount,
                 PaymentMethod = Pid.PaymentMethod,
-                PaymentStatus = Pid.PaymentStatus,
                 PaymentDate = Pid.PaymentDate,
+                PaymentStatus = Pid.PaymentStatus,
             };
-            await _genericRepository.AddAsync(payment);
-            
             var user = await _userRepository.GetByIdAsync(Pid.UserID);
-            var eventt = await _eventRepository.GetByIdAsync(Pid.EventID); 
-            
-            var response = new PaymentResponseDto()
+            var response = new PaymentResponseDto
             {
                 Payment = payment,
                 User = user,
-                Event = eventt
             };
-            
+            await _genericRepository.AddAsync(payment);
             return response;
-
         }
 
         public async Task DeletePaymentAsync(int id)
@@ -59,30 +52,27 @@ namespace EventSphere.Business.Services
 
         public async Task<IEnumerable<Payment>> GetAllPaymentsAsync()
         {
-            return await _genericRepository.GetAllAsync();
+            var payment = await _genericRepository.GetAllAsync();
+            return payment;
         }
 
         public async Task<Payment> GetPaymentByIdAsync(int id)
         {
-            return await _genericRepository.GetByIdAsync(id);
-        }
-
-        public async Task<Payment> UdpatePaymentAsync(int id, PaymentDTO Pid)
-        {
             var payment = await _genericRepository.GetByIdAsync(id);
-            payment.ID = Pid.ID;
-            payment.UserID = Pid.UserID;
-            payment.EventID = Pid.EventID;
-            payment.TicketID = Pid.TicketID;
-            payment.Amount = Pid.Amount;
-            payment.PaymentMethod = Pid.PaymentMethod;
-            payment.PaymentStatus = Pid.PaymentStatus;
-            payment.PaymentDate = Pid.PaymentDate;
-
-            
-            await _genericRepository.UpdateAsync(payment);
             return payment;
         }
 
+        public async Task UpdatePaymentAsync(int id, PaymentDTO Pid)
+        {
+            var payment = await _genericRepository.GetByIdAsync(id);
+
+            payment.TicketID = Pid.TicketID;
+            payment.Amount = Pid.Amount;
+            payment.PaymentMethod = Pid.PaymentMethod;
+            payment.PaymentDate = Pid.PaymentDate;
+            payment.PaymentStatus = Pid.PaymentStatus;
+
+            await _genericRepository.UpdateAsync(payment);
+        }
     }
 }

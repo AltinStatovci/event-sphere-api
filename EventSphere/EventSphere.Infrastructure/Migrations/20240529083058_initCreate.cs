@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace EventSphere.Infrastructure.Migrations
 {
     /// <inheritdoc />
-    public partial class InitCreate : Migration
+    public partial class initCreate : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -126,7 +126,6 @@ namespace EventSphere.Infrastructure.Migrations
                     ID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     UserID = table.Column<int>(type: "int", nullable: false),
-                    EventID = table.Column<int>(type: "int", nullable: false),
                     TicketID = table.Column<int>(type: "int", nullable: false),
                     Amount = table.Column<int>(type: "int", nullable: false),
                     PaymentMethod = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
@@ -136,12 +135,6 @@ namespace EventSphere.Infrastructure.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Payment", x => x.ID);
-                    table.ForeignKey(
-                        name: "FK_Payment_Event_EventID",
-                        column: x => x.EventID,
-                        principalTable: "Event",
-                        principalColumn: "ID",
-                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Payment_Ticket_TicketID",
                         column: x => x.TicketID,
@@ -165,11 +158,6 @@ namespace EventSphere.Infrastructure.Migrations
                 name: "IX_Event_OrganizerID",
                 table: "Event",
                 column: "OrganizerID");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Payment_EventID",
-                table: "Payment",
-                column: "EventID");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Payment_TicketID",

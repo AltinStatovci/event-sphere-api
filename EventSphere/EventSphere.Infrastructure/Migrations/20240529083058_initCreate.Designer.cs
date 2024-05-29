@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EventSphere.Infrastructure.Migrations
 {
     [DbContext(typeof(EventSphereDbContext))]
-    [Migration("20240528123947_InitCreate")]
-    partial class InitCreate
+    [Migration("20240529083058_initCreate")]
+    partial class initCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -112,9 +112,6 @@ namespace EventSphere.Infrastructure.Migrations
                     b.Property<int>("Amount")
                         .HasColumnType("int");
 
-                    b.Property<int>("EventID")
-                        .HasColumnType("int");
-
                     b.Property<DateTime>("PaymentDate")
                         .HasColumnType("datetime2");
 
@@ -133,8 +130,6 @@ namespace EventSphere.Infrastructure.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("ID");
-
-                    b.HasIndex("EventID");
 
                     b.HasIndex("TicketID");
 
@@ -257,12 +252,6 @@ namespace EventSphere.Infrastructure.Migrations
 
             modelBuilder.Entity("EventSphere.Domain.Entities.Payment", b =>
                 {
-                    b.HasOne("EventSphere.Domain.Entities.Event", "Event")
-                        .WithMany()
-                        .HasForeignKey("EventID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("EventSphere.Domain.Entities.Ticket", "Ticket")
                         .WithMany("Payments")
                         .HasForeignKey("TicketID")
@@ -274,8 +263,6 @@ namespace EventSphere.Infrastructure.Migrations
                         .HasForeignKey("UserID")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
-
-                    b.Navigation("Event");
 
                     b.Navigation("Ticket");
 

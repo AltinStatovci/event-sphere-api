@@ -12,77 +12,48 @@ namespace EventSphere.API.Controllers
     {
         private readonly IPaymentService _paymentService;
         private readonly IEmailService _emailService;
-
         public PaymentController(IPaymentService paymentService, IEmailService emailService)
         {
             _paymentService = paymentService;
             _emailService = emailService;
         }
-
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Payment>>> GetPaymentsAsync()
+        public async Task<IActionResult> GetAllPayments()
         {
-            await _paymentService.GetAllPaymentsAsync();
-            return Ok();
+            var ticket = await _paymentService.GetAllPaymentsAsync();
+            return Ok(ticket);
         }
-
         [HttpGet("{id}")]
-        public async Task<ActionResult<Payment>> GetPaymentAsync(int id)
+        public async Task<IActionResult> GetPaymentId(int id)
         {
-            var payment = await _paymentService.GetPaymentByIdAsync(id);
-            if (payment == null)
-            {
-                return NotFound();
-            }
-
-            return Ok(payment);
+            var ticket = await _paymentService.GetPaymentByIdAsync(id);
+            return Ok(ticket);
         }
-
         [HttpPost]
-        public async Task<ActionResult<PaymentResponseDto>> CreateAsync(PaymentDTO paymentDto)
+        public async Task<IActionResult> Create(PaymentDTO PaymentDTO)
         {
-            try
+            var paymentResponse = await _paymentService.AddPaymentAsync(PaymentDTO);
+            var mailRequest = new MailRequest
             {
-                // Create the payment and retrieve user and event details
-                var paymentResponse = await _paymentService.AddPaymentAsync(paymentDto);
-
-                // Prepare the email details
-                var mailRequest = new MailRequest
-                {
-                    ToEmail = paymentResponse.User.Email, // Assume User object has an Email property
-                    Subject = "Payment Confirmation",
-                    Body = $@"
-                <p>Thank You <strong>{paymentResponse.User.Name}</strong> for buying a ticket to <strong>{paymentResponse.Event.EventName}</strong>.</p>
+                ToEmail = paymentResponse.User.Email, // Assume User object has an Email property
+                Subject = "Payment Confirmation",
+                Body = $@"
+                <p>Thank You <strong>{paymentResponse.User.Name}</strong> for buying a ticket to.</p>
                 <p>The price of the ticket is <strong>{paymentResponse.Payment.Amount:C}</strong>.</p>"
-                };
+            };
 
-                // Send the email
-                await _emailService.SendEmailAsync(mailRequest);
-
-                // Return the response
-                return CreatedAtAction(nameof(GetPaymentAsync), new { id = paymentResponse.Payment.ID },
-                    paymentResponse);
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e);
-                throw;
-            }
+            // Send the email
+            await _emailService.SendEmailAsync(mailRequest);
+            return CreatedAtAction(nameof(GetPaymentId), new { id = PaymentDTO.ID }, PaymentDTO);
         }
-    
-
-    [HttpPut("{id}")]
-        public async Task<ActionResult<Payment>> EditAsync(int id, [FromBody] PaymentDTO paymentDto)
+        [HttpPut("{id}")]
+        public async Task<IActionResult> Update(int id, PaymentDTO PaymentDTO)
         {
-            if (id == 0 || paymentDto == null)
-            {
-                return BadRequest();
-            }
-            await _paymentService.UdpatePaymentAsync(id, paymentDto);
+            await _paymentService.UpdatePaymentAsync(id, PaymentDTO);
             return NoContent();
         }
         [HttpDelete("{id}")]
-        public async Task<ActionResult> DeleteAsync(int id)
+        public async Task<IActionResult> Delete(int id)
         {
             await _paymentService.DeletePaymentAsync(id);
             return NoContent();
