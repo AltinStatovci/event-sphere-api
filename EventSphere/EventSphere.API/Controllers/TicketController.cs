@@ -1,5 +1,6 @@
 ﻿using EventSphere.Business.Services.Interfaces;
 using EventSphere.Domain.DTOs;
+using EventSphere.Infrastructure.Repositories.TicketRepository;
 using Microsoft.AspNetCore.Mvc;
 
 namespace EventSphere.API.Controllers
@@ -9,9 +10,11 @@ namespace EventSphere.API.Controllers
     public class TicketController : ControllerBase
     {
         private readonly ITicketService _ticketService;
-        public TicketController(ITicketService ticketService)
+        private readonly ITicketRepository _ticketRepository;
+        public TicketController(ITicketService ticketService, ITicketRepository ticketRepository)
         {
             _ticketService = ticketService;
+            _ticketRepository = ticketRepository;
         }
         [HttpGet]
         public async Task<IActionResult> GetAllTickets()
@@ -42,6 +45,12 @@ namespace EventSphere.API.Controllers
         {
             await _ticketService.DeleteAsync(id);
             return NoContent();
+        }
+        [HttpGet("{id}/event")]
+        public async Task<IActionResult> GetTicketByEventId(int id)
+        {
+            var ticket = await _ticketRepository.GetTicketByEvent(id);
+            return Ok(ticket);
         }
     }
 }
