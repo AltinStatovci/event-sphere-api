@@ -2,16 +2,19 @@
 using EventSphere.Domain.DTOs;
 using EventSphere.Domain.Entities;
 using EventSphere.Infrastructure.Repositories;
+using EventSphere.Infrastructure.Repositories.EventRepository;
 
 namespace EventSphere.Business.Services
 {
     public class EventService : IEventService
     {
         private readonly IGenericRepository<Event> _eventRepository;
+        private readonly IEventRepository _eventRepositori;
 
-        public EventService(IGenericRepository<Event> eventRepository)
+        public EventService(IGenericRepository<Event> eventRepository, IEventRepository eventRepositori)
         {
             _eventRepository = eventRepository;
+            _eventRepositori = eventRepositori;
         }
 
         public async Task<IEnumerable<Event>> GetAllEventsAsync()
@@ -67,6 +70,11 @@ namespace EventSphere.Business.Services
         public async Task DeleteEventsAsync(int id)
         {
             await _eventRepository.DeleteAsync(id);
+        }
+
+        public async Task<IEnumerable<Event>> GetEventByCategoryId(int id)
+        {
+            return await _eventRepositori.GetEventByCategoryId(id);
         }
     }
 }
