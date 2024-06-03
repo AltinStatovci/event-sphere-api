@@ -4,8 +4,6 @@ using EventSphere.Business.Services;
 using EventSphere.Business.Services.Interfaces;
 using EventSphere.Domain.Entities;
 using EventSphere.Infrastructure.Repositories;
-using EventSphere.Infrastructure.Repositories.EventRepository;
-using EventSphere.Infrastructure.Repositories.TicketRepository;
 using EventSphere.Infrastructure.Repositories.UserRepository;
 using Mapster;
 using MapsterMapper;
@@ -44,8 +42,6 @@ namespace EventSphere.API
 
             services.AddTransient<IEmailService, EmailService>();
 
-            services.AddScoped<ITicketRepository, TicketRepository>();
-            services.AddScoped<IEventRepository, EventRepository>();
 
 
             services.Configure<EmailSettings>(configuration.GetSection("EmailSettings"));
