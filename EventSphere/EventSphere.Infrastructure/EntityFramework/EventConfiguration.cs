@@ -32,10 +32,6 @@ namespace EventSphere.Infrastructure.EntityFramework
                    .HasForeignKey(e => e.CategoryID)
                    .OnDelete(DeleteBehavior.Restrict);
 
-            builder.HasOne(e => e.Organizer)
-                   .WithMany()
-                   .HasForeignKey(e => e.OrganizerID)
-                   .OnDelete(DeleteBehavior.Restrict);
         }
     }
 }

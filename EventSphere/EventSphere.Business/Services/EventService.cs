@@ -51,6 +51,7 @@ namespace EventSphere.Business.Services
                 EndDate = eventDto.EndDate,
                 CategoryID = eventDto.CategoryID,
                 OrganizerID = eventDto.OrganizerID,
+                Organizer = userName,
                 PhotoData = eventDto.PhotoData,
                 MaxAttendance = eventDto.MaxAttendance,
                 AvailableTickets = eventDto.AvailableTickets,
