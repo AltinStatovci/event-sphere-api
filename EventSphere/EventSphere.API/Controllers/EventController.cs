@@ -2,7 +2,6 @@
 using EventSphere.Domain.DTOs;
 using EventSphere.Domain.DTOs.EventSphere.API.DTOs;
 using EventSphere.Domain.Entities;
-using EventSphere.Infrastructure.Repositories.EventRepository;
 using Microsoft.AspNetCore.Mvc;
 
 namespace EventSphere.API.Controllers
@@ -12,12 +11,10 @@ namespace EventSphere.API.Controllers
     public class EventController : ControllerBase
     {
         private readonly IEventService _eventService;
-        private readonly IEventRepository _eventRepository;
 
-        public EventController(IEventService eventService, IEventRepository eventRepository)
+        public EventController(IEventService eventService)
         {
             _eventService = eventService;
-            _eventRepository = eventRepository;
         }
 
         [HttpGet]
@@ -70,7 +67,7 @@ namespace EventSphere.API.Controllers
         [HttpGet("{id}/eventCategory")]
         public async Task<ActionResult<IEnumerable<Event>>> GetEventByCategoryIdAsync(int id)
         {
-            var events = await _eventRepository.GetEventByCategoryId(id);
+            var events = await _eventService.GetEventByCategoryId(id);
             return Ok(events);
         }
     }

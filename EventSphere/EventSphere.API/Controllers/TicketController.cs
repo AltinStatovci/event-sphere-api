@@ -1,6 +1,5 @@
 ﻿using EventSphere.Business.Services.Interfaces;
 using EventSphere.Domain.DTOs;
-using EventSphere.Infrastructure.Repositories.TicketRepository;
 using Microsoft.AspNetCore.Mvc;
 
 namespace EventSphere.API.Controllers
@@ -10,11 +9,9 @@ namespace EventSphere.API.Controllers
     public class TicketController : ControllerBase
     {
         private readonly ITicketService _ticketService;
-        private readonly ITicketRepository _ticketRepository;
-        public TicketController(ITicketService ticketService, ITicketRepository ticketRepository)
+        public TicketController(ITicketService ticketService)
         {
             _ticketService = ticketService;
-            _ticketRepository = ticketRepository;
         }
         [HttpGet]
         public async Task<IActionResult> GetAllTickets()
@@ -22,7 +19,7 @@ namespace EventSphere.API.Controllers
             var ticket = await _ticketService.GetAllTicketsAsync();
             return Ok(ticket);
         }
-        [HttpGet ("{id}")]
+        [HttpGet("{id}")]
         public async Task<IActionResult> GetTicketId(int id)
         {
             var ticket = await _ticketService.GetTicketByIdAsync(id);
@@ -32,24 +29,24 @@ namespace EventSphere.API.Controllers
         public async Task<IActionResult> Create(TicketDTO ticketDTO)
         {
             var ticket = await _ticketService.CreateAsync(ticketDTO);
-            return CreatedAtAction(nameof(GetTicketId), new {id = ticketDTO.ID}, ticketDTO);
+            return CreatedAtAction(nameof(GetTicketId), new { id = ticketDTO.ID }, ticketDTO);
         }
-        [HttpPut ("{id}")]
+        [HttpPut("{id}")]
         public async Task<IActionResult> Update(int id, TicketDTO ticketDTO)
         {
             await _ticketService.UpdateAsync(id, ticketDTO);
             return NoContent();
         }
-        [HttpDelete ("{id}")]
+        [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {
             await _ticketService.DeleteAsync(id);
             return NoContent();
         }
         [HttpGet("{id}/event")]
-        public async Task<IActionResult> GetTicketByEventId(int id)
+        public async Task<IActionResult> GetTicketByEvent(int id)
         {
-            var ticket = await _ticketRepository.GetTicketByEvent(id);
+            var ticket = await _ticketService.GetTicketByEventId(id);
             return Ok(ticket);
         }
     }
