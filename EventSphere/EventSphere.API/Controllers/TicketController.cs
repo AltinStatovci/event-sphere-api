@@ -20,13 +20,16 @@ namespace EventSphere.API.Controllers
             var ticket = await _ticketService.GetAllTicketsAsync();
             return Ok(ticket);
         }
+
         [HttpGet("count")]
         public async Task<ActionResult<int>> GetTicketCount()
         {
             var count = await _ticketService.GetTicketCountAsync();
             return Ok(count);
         }
-        [HttpGet ("{id}")]
+    
+
+        [HttpGet("{id}")]
         public async Task<IActionResult> GetTicketId(int id)
         {
             var ticket = await _ticketService.GetTicketByIdAsync(id);
@@ -36,19 +39,25 @@ namespace EventSphere.API.Controllers
         public async Task<IActionResult> Create(TicketDTO ticketDTO)
         {
             var ticket = await _ticketService.CreateAsync(ticketDTO);
-            return CreatedAtAction(nameof(GetTicketId), new {id = ticketDTO.ID}, ticketDTO);
+            return CreatedAtAction(nameof(GetTicketId), new { id = ticketDTO.ID }, ticketDTO);
         }
-        [HttpPut ("{id}")]
+        [HttpPut("{id}")]
         public async Task<IActionResult> Update(int id, TicketDTO ticketDTO)
         {
             await _ticketService.UpdateAsync(id, ticketDTO);
             return NoContent();
         }
-        [HttpDelete ("{id}")]
+        [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {
             await _ticketService.DeleteAsync(id);
             return NoContent();
+        }
+        [HttpGet("{id}/event")]
+        public async Task<IActionResult> GetTicketByEvent(int id)
+        {
+            var ticket = await _ticketService.GetTicketByEventId(id);
+            return Ok(ticket);
         }
     }
 }

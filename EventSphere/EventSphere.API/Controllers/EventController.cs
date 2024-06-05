@@ -1,5 +1,6 @@
 ﻿using EventSphere.Business.Services.Interfaces;
 using EventSphere.Domain.DTOs;
+using EventSphere.Domain.DTOs.EventSphere.API.DTOs;
 using EventSphere.Domain.Entities;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -70,6 +71,12 @@ namespace EventSphere.API.Controllers
         {
             await _eventService.DeleteEventsAsync(id);
             return NoContent();
+        }
+        [HttpGet("{id}/eventCategory")]
+        public async Task<ActionResult<IEnumerable<Event>>> GetEventByCategoryIdAsync(int id)
+        {
+            var events = await _eventService.GetEventByCategoryId(id);
+            return Ok(events);
         }
     }
 }

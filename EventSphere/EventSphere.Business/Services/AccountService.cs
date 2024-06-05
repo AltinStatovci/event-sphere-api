@@ -57,6 +57,8 @@ namespace EventSphere.Business.Services
             {
                 new(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
                 new(JwtRegisteredClaimNames.Email, user.Email),
+                new Claim("ID", user.ID.ToString()),
+                new Claim("Role", user.RoleID.ToString())
             };
 
             var token = new JwtSecurityToken(

@@ -45,6 +45,7 @@ namespace EventSphere.API
             services.AddTransient<IEmailService, EmailService>();
 
 
+
             services.Configure<EmailSettings>(configuration.GetSection("EmailSettings"));
 
         }

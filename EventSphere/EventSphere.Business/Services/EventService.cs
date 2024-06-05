@@ -1,18 +1,32 @@
 ﻿using EventSphere.Business.Services.Interfaces;
 using EventSphere.Domain.DTOs;
 using EventSphere.Domain.Entities;
+using EventSphere.Infrastructure;
 using EventSphere.Infrastructure.Repositories;
+using EventSphere.Infrastructure.Repositories.UserRepository;
+
 using Microsoft.EntityFrameworkCore;
 
 namespace EventSphere.Business.Services
 {
-    public class EventService : IEventService
+    public class EventServiceBase
+    {
+        protected readonly EventSphereDbContext _context;
+
+        public EventServiceBase(EventSphereDbContext context)
+        {
+            _context = context;
+        }
+    }
+    public class EventService : EventServiceBase, IEventService
     {
         private readonly IGenericRepository<Event> _eventRepository;
+        private readonly IGenericRepository<User> _userRepository;
 
-        public EventService(IGenericRepository<Event> eventRepository)
+        public EventService(EventSphereDbContext context, IGenericRepository<Event> eventRepository, IGenericRepository<User> userRepository) : base(context)
         {
             _eventRepository = eventRepository;
+            _userRepository = userRepository;
         }
 
         public async Task<IEnumerable<Event>> GetAllEventsAsync()
@@ -27,6 +41,8 @@ namespace EventSphere.Business.Services
 
         public async Task<Event> CreateEventsAsync(EventDTO eventDto)
         {
+            var user = await _userRepository.GetByIdAsync(eventDto.OrganizerID);
+            var userName = user.Name;
             var events = new Event
             {
                 EventName = eventDto.EventName,
@@ -36,6 +52,7 @@ namespace EventSphere.Business.Services
                 EndDate = eventDto.EndDate,
                 CategoryID = eventDto.CategoryID,
                 OrganizerID = eventDto.OrganizerID,
+                Organizer = userName,
                 PhotoData = eventDto.PhotoData,
                 MaxAttendance = eventDto.MaxAttendance,
                 AvailableTickets = eventDto.AvailableTickets,
@@ -70,9 +87,17 @@ namespace EventSphere.Business.Services
             await _eventRepository.DeleteAsync(id);
         }
 
+
         public async Task<int> GetEventCountAsync()
         {
             return await _eventRepository.CountAsync();
         }
+
+        public async Task<IEnumerable<Event>> GetEventByCategoryId(int eventCategoryId)
+        {
+            return await _context.Events.Where(u => u.CategoryID == eventCategoryId).ToListAsync();
+        }
+
+
     }
 }

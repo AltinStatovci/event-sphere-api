@@ -15,6 +15,11 @@ namespace EventSphere.Business.Services.Interfaces
         Task<Ticket> CreateAsync(TicketDTO Tid);
         Task UpdateAsync(int id, TicketDTO Tid);
         Task DeleteAsync(int id);
+
         Task<int> GetTicketCountAsync();
+
+        Task<IEnumerable<Ticket>> GetTicketByEventId(int eventId);
+
+
     }
 }

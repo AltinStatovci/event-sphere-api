@@ -27,6 +27,7 @@ namespace EventSphere.API.Controllers
         [HttpGet("getUsers")]
         public async Task<IActionResult> GetUsers()
         {
+            var userClaims = User.Claims;
             var users = await _userService.GetAllUsersAsync();
             var userDtos = _mapper.Map<IEnumerable<UserDTO>>(users);
             return Ok(userDtos);

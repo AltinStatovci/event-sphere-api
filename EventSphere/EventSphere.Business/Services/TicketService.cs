@@ -1,7 +1,9 @@
 ﻿using EventSphere.Business.Services.Interfaces;
 using EventSphere.Domain.DTOs;
 using EventSphere.Domain.Entities;
+using EventSphere.Infrastructure;
 using EventSphere.Infrastructure.Repositories;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,10 +12,19 @@ using System.Threading.Tasks;
 
 namespace EventSphere.Business.Services
 {
-    public class TicketService: ITicketService
+    public class TicketServiceBase
+    {
+        protected readonly EventSphereDbContext _context;
+
+        public TicketServiceBase(EventSphereDbContext context)
+        {
+            _context = context;
+        }
+    }
+    public class TicketService : TicketServiceBase, ITicketService
     {
         private readonly IGenericRepository<Ticket> _ticketRepository;
-        public TicketService(IGenericRepository<Ticket> ticketRepository)
+        public TicketService(EventSphereDbContext context, IGenericRepository<Ticket> ticketRepository) : base(context)
         {
             _ticketRepository = ticketRepository;
         }
@@ -41,6 +52,11 @@ namespace EventSphere.Business.Services
             return await _ticketRepository.GetAllAsync();
         }
 
+        public async Task<IEnumerable<Ticket>> GetTicketByEventId(int eventId)
+        {
+            return await _context.Tickets.Where(u => u.EventID == eventId).ToListAsync();
+        }
+
         public async Task<Ticket> GetTicketByIdAsync(int id)
         {
             return await _ticketRepository.GetByIdAsync(id);
@@ -57,9 +73,13 @@ namespace EventSphere.Business.Services
 
             await _ticketRepository.UpdateAsync(ticket);
         }
+
         public async Task<int> GetTicketCountAsync()
         {
             return await _ticketRepository.CountAsync();
         }
+
+
+
     }
 }

@@ -10,6 +10,10 @@ namespace EventSphere.Business.Services.Interfaces
         Task<Event> CreateEventsAsync(EventDTO eventDto);
         Task UpdateEventsAsync(int id, EventDTO eventDto);
         Task DeleteEventsAsync(int id);
+
         Task<int> GetEventCountAsync();
+
+        Task<IEnumerable<Event>> GetEventByCategoryId(int id);
+
     }
 }
