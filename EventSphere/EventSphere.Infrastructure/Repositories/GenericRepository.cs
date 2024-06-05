@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Org.BouncyCastle.Asn1;
 using System.Linq.Expressions;
 
 namespace EventSphere.Infrastructure.Repositories
@@ -48,6 +49,10 @@ namespace EventSphere.Infrastructure.Repositories
                 _context.Set<TEntity>().Remove(entity);
                 await _context.SaveChangesAsync();
             }
+        }
+        public async Task<int> CountAsync()
+        {
+            return await _context.Set<TEntity>().CountAsync();
         }
     }
 }

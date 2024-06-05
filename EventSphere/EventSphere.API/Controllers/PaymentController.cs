@@ -1,4 +1,5 @@
 ﻿using EventSphere.Business.Helper;
+using EventSphere.Business.Services;
 using EventSphere.Business.Services.Interfaces;
 using EventSphere.Domain.DTOs;
 using EventSphere.Domain.Entities;
@@ -22,6 +23,12 @@ namespace EventSphere.API.Controllers
         {
             var ticket = await _paymentService.GetAllPaymentsAsync();
             return Ok(ticket);
+        }
+        [HttpGet("count")]
+        public async Task<ActionResult<int>> GetPaymentCount()
+        {
+            var count = await _paymentService.GetPaymentCountAsync();
+            return Ok(count);
         }
         [HttpGet("{id}")]
         public async Task<IActionResult> GetPaymentId(int id)

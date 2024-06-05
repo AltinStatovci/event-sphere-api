@@ -6,6 +6,7 @@ using MapsterMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
+using EventSphere.Business.Services;
 
 namespace EventSphere.API.Controllers
 {
@@ -30,6 +31,12 @@ namespace EventSphere.API.Controllers
             var users = await _userService.GetAllUsersAsync();
             var userDtos = _mapper.Map<IEnumerable<UserDTO>>(users);
             return Ok(userDtos);
+        }
+        [HttpGet("count")]
+        public async Task<ActionResult<int>> GetUserCount()
+        {
+            var count = await _userService.GetUserCountAsync();
+            return Ok(count);
         }
 
         [HttpGet("getUser/{id}")]

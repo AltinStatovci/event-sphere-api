@@ -74,5 +74,9 @@ namespace EventSphere.Business.Services
 
             await _genericRepository.UpdateAsync(payment);
         }
+        public async Task<int> GetPaymentCountAsync()
+        {
+            return await _genericRepository.CountAsync();
+        }
     }
 }

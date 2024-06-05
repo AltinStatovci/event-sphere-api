@@ -4,6 +4,7 @@ using EventSphere.Domain.Entities;
 using EventSphere.Infrastructure;
 using EventSphere.Infrastructure.Repositories;
 using EventSphere.Infrastructure.Repositories.UserRepository;
+
 using Microsoft.EntityFrameworkCore;
 
 namespace EventSphere.Business.Services
@@ -86,10 +87,17 @@ namespace EventSphere.Business.Services
             await _eventRepository.DeleteAsync(id);
         }
 
+
+        public async Task<int> GetEventCountAsync()
+        {
+            return await _eventRepository.CountAsync();
+        }
+
         public async Task<IEnumerable<Event>> GetEventByCategoryId(int eventCategoryId)
         {
             return await _context.Events.Where(u => u.CategoryID == eventCategoryId).ToListAsync();
         }
+
 
     }
 }

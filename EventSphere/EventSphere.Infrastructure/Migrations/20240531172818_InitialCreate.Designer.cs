@@ -4,6 +4,7 @@ using EventSphere.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EventSphere.Infrastructure.Migrations
 {
     [DbContext(typeof(EventSphereDbContext))]
-    partial class EventSphereDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240531172818_InitialCreate")]
+    partial class InitialCreate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -62,9 +65,6 @@ namespace EventSphere.Infrastructure.Migrations
                     b.Property<int>("MaxAttendance")
                         .HasColumnType("int");
 
-                    b.Property<string>("Organizer")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<int>("OrganizerID")
                         .HasColumnType("int");
 
@@ -77,6 +77,8 @@ namespace EventSphere.Infrastructure.Migrations
                     b.HasKey("ID");
 
                     b.HasIndex("CategoryID");
+
+                    b.HasIndex("OrganizerID");
 
                     b.ToTable("Event", (string)null);
                 });
@@ -277,7 +279,15 @@ namespace EventSphere.Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
+                    b.HasOne("EventSphere.Domain.Entities.User", "Organizer")
+                        .WithMany()
+                        .HasForeignKey("OrganizerID")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
                     b.Navigation("Category");
+
+                    b.Navigation("Organizer");
                 });
 
             modelBuilder.Entity("EventSphere.Domain.Entities.Payment", b =>
