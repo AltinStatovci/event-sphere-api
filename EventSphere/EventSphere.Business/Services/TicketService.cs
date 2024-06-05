@@ -57,5 +57,9 @@ namespace EventSphere.Business.Services
 
             await _ticketRepository.UpdateAsync(ticket);
         }
+        public async Task<int> GetTicketCountAsync()
+        {
+            return await _ticketRepository.CountAsync();
+        }
     }
 }

@@ -2,6 +2,7 @@
 using EventSphere.Domain.DTOs;
 using EventSphere.Domain.Entities;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace EventSphere.API.Controllers
 {
@@ -22,6 +23,12 @@ namespace EventSphere.API.Controllers
             var eventName = await _eventService.GetAllEventsAsync();
             return Ok(eventName);
         }
+        [HttpGet("count")]
+        public async Task<ActionResult<int>> GetEventCount()
+        {
+            var count = await _eventService.GetEventCountAsync();
+            return Ok(count);
+        }
 
         [HttpGet("{id}")]
         public async Task<ActionResult<Event>> GetEventName(int id)
@@ -33,6 +40,7 @@ namespace EventSphere.API.Controllers
             }
             return Ok(eventName);
         }
+        
 
         [HttpPost]
         public async Task<ActionResult> CreateEvents([FromBody] EventDTO eventDto)

@@ -2,6 +2,7 @@
 using EventSphere.Domain.DTOs;
 using EventSphere.Domain.Entities;
 using EventSphere.Infrastructure.Repositories;
+using Microsoft.EntityFrameworkCore;
 
 namespace EventSphere.Business.Services
 {
@@ -67,6 +68,11 @@ namespace EventSphere.Business.Services
         public async Task DeleteEventsAsync(int id)
         {
             await _eventRepository.DeleteAsync(id);
+        }
+
+        public async Task<int> GetEventCountAsync()
+        {
+            return await _eventRepository.CountAsync();
         }
     }
 }

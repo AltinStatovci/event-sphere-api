@@ -1,4 +1,5 @@
-﻿using EventSphere.Business.Services.Interfaces;
+﻿using EventSphere.Business.Services;
+using EventSphere.Business.Services.Interfaces;
 using EventSphere.Domain.DTOs;
 using Microsoft.AspNetCore.Mvc;
 
@@ -18,6 +19,12 @@ namespace EventSphere.API.Controllers
         {
             var ticket = await _ticketService.GetAllTicketsAsync();
             return Ok(ticket);
+        }
+        [HttpGet("count")]
+        public async Task<ActionResult<int>> GetTicketCount()
+        {
+            var count = await _ticketService.GetTicketCountAsync();
+            return Ok(count);
         }
         [HttpGet ("{id}")]
         public async Task<IActionResult> GetTicketId(int id)

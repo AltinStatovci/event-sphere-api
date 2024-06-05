@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace EventSphere.Infrastructure.Migrations
 {
     /// <inheritdoc />
-    public partial class initCreate : Migration
+    public partial class InitialCreate : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -22,6 +22,25 @@ namespace EventSphere.Infrastructure.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_EventCategory", x => x.ID);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Report",
+                columns: table => new
+                {
+                    reportId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    userId = table.Column<int>(type: "int", nullable: false),
+                    userName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    userlastName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    userEmail = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    reportName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    reportDesc = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    reportAnsw = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Report", x => x.reportId);
                 });
 
             migrationBuilder.CreateTable(
@@ -185,6 +204,9 @@ namespace EventSphere.Infrastructure.Migrations
         {
             migrationBuilder.DropTable(
                 name: "Payment");
+
+            migrationBuilder.DropTable(
+                name: "Report");
 
             migrationBuilder.DropTable(
                 name: "Ticket");

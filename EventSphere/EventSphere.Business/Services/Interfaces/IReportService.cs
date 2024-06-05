@@ -8,13 +8,13 @@ using System.Threading.Tasks;
 
 namespace EventSphere.Business.Services.Interfaces
 {
-    public interface ITicketService
+    public interface IReportService
     {
-        Task<IEnumerable<Ticket>> GetAllTicketsAsync();
-        Task<Ticket> GetTicketByIdAsync(int id);
-        Task<Ticket> CreateAsync(TicketDTO Tid);
-        Task UpdateAsync(int id, TicketDTO Tid);
+        Task<IEnumerable<Report>> GetAllReportsAsync();
+        Task<Report> GetReportByIdAsync(int id);
+        Task<Report> CreateAsync(ReportDTO Rid);
+        Task UpdateAsync(int id, ReportDTO Rid);
         Task DeleteAsync(int id);
-        Task<int> GetTicketCountAsync();
+        Task<int> GetReportCountAsync();
     }
 }
