@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EventSphere.Infrastructure.Migrations
 {
     [DbContext(typeof(EventSphereDbContext))]
-    [Migration("20240605121154_initCreate")]
+    [Migration("20240606125925_initCreate")]
     partial class initCreate
     {
         /// <inheritdoc />
@@ -72,6 +72,7 @@ namespace EventSphere.Infrastructure.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("PhotoData")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("StartDate")

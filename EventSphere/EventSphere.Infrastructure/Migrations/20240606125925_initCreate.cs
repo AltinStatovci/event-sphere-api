@@ -70,7 +70,7 @@ namespace EventSphere.Infrastructure.Migrations
                     CategoryID = table.Column<int>(type: "int", nullable: false),
                     OrganizerID = table.Column<int>(type: "int", nullable: false),
                     Organizer = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    PhotoData = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    PhotoData = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     MaxAttendance = table.Column<int>(type: "int", nullable: false),
                     AvailableTickets = table.Column<int>(type: "int", nullable: false),
                     DateCreated = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "GETDATE()")
