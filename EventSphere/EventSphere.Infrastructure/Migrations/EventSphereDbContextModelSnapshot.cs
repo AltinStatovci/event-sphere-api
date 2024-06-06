@@ -69,6 +69,7 @@ namespace EventSphere.Infrastructure.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("PhotoData")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("StartDate")

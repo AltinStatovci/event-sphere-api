@@ -11,7 +11,6 @@ namespace EventSphere.Domain.DTOs
         public DateTime EndDate { get; set; }
         public int CategoryID { get; set; }
         public int OrganizerID { get; set; }
-        public string? PhotoData { get; set; }
         public int MaxAttendance { get; set; }
         public int AvailableTickets { get; set; }
         public DateTime DateCreated { get; set; }
