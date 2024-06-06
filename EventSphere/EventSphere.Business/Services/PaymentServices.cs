@@ -2,7 +2,10 @@
 using EventSphere.Domain.DTOs;
 using EventSphere.Domain.Entities;
 using EventSphere.Infrastructure.Repositories;
+using EventSphere.Infrastructure.Settings;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
+using Stripe;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,34 +19,56 @@ namespace EventSphere.Business.Services
     {
         private readonly IGenericRepository<Payment> _genericRepository;
         private readonly IGenericRepository<User> _userRepository;
-        private readonly IGenericRepository<Event> _eventRepository;
-        public PaymentServices(IGenericRepository<Payment> genericRepository, IGenericRepository<User> userRepository, IGenericRepository<Event> eventRepository)
+        private readonly IGenericRepository<Domain.Entities.Event> _eventRepository;
+        private readonly StripeSettings _stripeSettings;
+        public PaymentServices(IGenericRepository<Payment> genericRepository, IGenericRepository<User> userRepository, IGenericRepository<Domain.Entities.Event> eventRepository, IOptions<StripeSettings> stripeSettings)
         {
             _genericRepository = genericRepository;
             _userRepository = userRepository;
             _eventRepository = eventRepository;
+            _stripeSettings = stripeSettings.Value;
         }
 
         public async Task<PaymentResponseDto> AddPaymentAsync(PaymentDTO Pid)
         {
-            var payment = new Payment
+            var options = new ChargeCreateOptions
             {
-                UserID = Pid.UserID,
-                TicketID = Pid.TicketID,
-                Amount = Pid.Amount,
-                PaymentMethod = Pid.PaymentMethod,
-                PaymentDate = Pid.PaymentDate,
-                PaymentStatus = Pid.PaymentStatus,
+                Amount = Pid.Amount * 100, // amount in cents
+                Currency = "usd",
+                Description = "Payment for ticket",
+                Source = Pid.StripeToken
             };
-            var user = await _userRepository.GetByIdAsync(Pid.UserID);
-            var response = new PaymentResponseDto
+
+            var service = new ChargeService();
+            Charge charge = await service.CreateAsync(options);
+
+            if (charge.Status == "succeeded")
             {
-                Payment = payment,
-                User = user,
-            };
-            await _genericRepository.AddAsync(payment);
-            return response;
+                var payment = new Payment
+                {
+                    UserID = Pid.UserID,
+                    TicketID = Pid.TicketID,
+                    Amount = Pid.Amount,
+                    PaymentMethod = Pid.PaymentMethod,
+                    PaymentDate = Pid.PaymentDate,
+                    PaymentStatus = true, // payment successful
+                };
+
+                var user = await _userRepository.GetByIdAsync(Pid.UserID);
+                var response = new PaymentResponseDto
+                {
+                    Payment = payment,
+                    User = user,
+                };
+                await _genericRepository.AddAsync(payment);
+                return response;
+            }
+            else
+            {
+                throw new Exception("Payment failed");
+            }
         }
+
 
         public async Task DeletePaymentAsync(int id)
         {
