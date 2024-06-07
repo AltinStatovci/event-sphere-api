@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EventSphere.Infrastructure.Migrations
 {
     [DbContext(typeof(EventSphereDbContext))]
-    [Migration("20240603135340_initCreate")]
+    [Migration("20240606125925_initCreate")]
     partial class initCreate
     {
         /// <inheritdoc />
@@ -65,10 +65,14 @@ namespace EventSphere.Infrastructure.Migrations
                     b.Property<int>("MaxAttendance")
                         .HasColumnType("int");
 
+                    b.Property<string>("Organizer")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int>("OrganizerID")
                         .HasColumnType("int");
 
                     b.Property<string>("PhotoData")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("StartDate")
@@ -134,6 +138,46 @@ namespace EventSphere.Infrastructure.Migrations
                     b.HasIndex("UserID");
 
                     b.ToTable("Payment", (string)null);
+                });
+
+            modelBuilder.Entity("EventSphere.Domain.Entities.Report", b =>
+                {
+                    b.Property<int>("reportId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("reportId"));
+
+                    b.Property<string>("reportAnsw")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("reportDesc")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("reportName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("userEmail")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("userId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("userName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("userlastName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("reportId");
+
+                    b.ToTable("Report", (string)null);
                 });
 
             modelBuilder.Entity("EventSphere.Domain.Entities.Role", b =>

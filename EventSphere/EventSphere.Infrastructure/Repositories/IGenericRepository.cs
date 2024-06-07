@@ -10,5 +10,6 @@ namespace EventSphere.Infrastructure.Repositories
         Task<TEntity> AddAsync(TEntity entity);
         Task UpdateAsync(TEntity entity);
         Task DeleteAsync(int id);
+        Task<int> CountAsync();
     }
 }

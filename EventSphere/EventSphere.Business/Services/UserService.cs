@@ -33,5 +33,9 @@ namespace EventSphere.Business.Services
         {
             await _userRepository.DeleteAsync(id);
         }
+        public async Task<int> GetUserCountAsync()
+        {
+            return await _userRepository.CountAsync();
+        }
     }
 }

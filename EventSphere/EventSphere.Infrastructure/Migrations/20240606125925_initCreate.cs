@@ -25,6 +25,25 @@ namespace EventSphere.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Report",
+                columns: table => new
+                {
+                    reportId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    userId = table.Column<int>(type: "int", nullable: false),
+                    userName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    userlastName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    userEmail = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    reportName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    reportDesc = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    reportAnsw = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Report", x => x.reportId);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Role",
                 columns: table => new
                 {
@@ -50,7 +69,8 @@ namespace EventSphere.Infrastructure.Migrations
                     EndDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     CategoryID = table.Column<int>(type: "int", nullable: false),
                     OrganizerID = table.Column<int>(type: "int", nullable: false),
-                    PhotoData = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Organizer = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    PhotoData = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     MaxAttendance = table.Column<int>(type: "int", nullable: false),
                     AvailableTickets = table.Column<int>(type: "int", nullable: false),
                     DateCreated = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "GETDATE()")
@@ -174,6 +194,9 @@ namespace EventSphere.Infrastructure.Migrations
         {
             migrationBuilder.DropTable(
                 name: "Payment");
+
+            migrationBuilder.DropTable(
+                name: "Report");
 
             migrationBuilder.DropTable(
                 name: "Ticket");

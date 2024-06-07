@@ -8,5 +8,6 @@ namespace EventSphere.Business.Services.Interfaces
         Task<User> GetUserByIdAsync(int id);
         Task UpdateUserAsync(User user);
         Task DeleteUserAsync(int id);
+        Task<int> GetUserCountAsync();
     }
 }
