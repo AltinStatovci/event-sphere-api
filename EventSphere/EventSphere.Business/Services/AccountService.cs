@@ -27,7 +27,12 @@ namespace EventSphere.Business.Services
         }
 
         public async Task<UserDTO> AddUserAsync(CreateUserDTO createUserDto)
-        {    
+        {
+            var existingUser = await _userRepository.GetUserByEmailAsync(createUserDto.Email.Trim().ToLower());
+            if (existingUser != null)
+            {
+                throw new ArgumentException("Email is already in use.", nameof(createUserDto.Email));
+            }
             var user = _mapper.Map<User>(createUserDto);
             var passwordSalt = PasswordGenerator.GenerateSalt();
             var passwordHash = PasswordGenerator.GenerateHash(createUserDto.Password, passwordSalt);
@@ -39,13 +44,22 @@ namespace EventSphere.Business.Services
 
         public async Task<string> AuthenticateAsync(LoginDTO loginDto)
         {
-            var user = await _userRepository.GetUserByEmailAsync(loginDto.Email);
-            if (user == null || !PasswordGenerator.VerifyPassword(loginDto.Password, user.Password, user.Salt))
+            try
             {
-                return null;
-            }
+                var user = await _userRepository.GetUserByEmailAsync(loginDto.Email);
+                if (user == null || !PasswordGenerator.VerifyPassword(loginDto.Password, user.Password, user.Salt))
+                {
+                    return null;
+                }
 
-            return GenerateJwtToken(user);
+                return GenerateJwtToken(user);
+            }
+            catch (Exception ex)
+            {
+                // Log the exception for debugging purposes
+                Console.WriteLine($"An error occurred during authentication: {ex.Message}");
+                throw; // Rethrow the exception to propagate it to the caller
+            }
         }
 
         private string GenerateJwtToken(User user)

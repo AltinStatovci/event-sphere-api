@@ -1,8 +1,10 @@
 ﻿using EventSphere.Business.Services.Interfaces;
+using EventSphere.Business.Validator;
 using EventSphere.Domain.DTOs;
 using EventSphere.Domain.DTOs.EventSphere.API.DTOs;
 using EventSphere.Domain.Entities;
 using Microsoft.AspNetCore.Mvc;
+
 
 namespace EventSphere.API.Controllers
 {
@@ -11,10 +13,11 @@ namespace EventSphere.API.Controllers
     public class EventController : ControllerBase
     {
         private readonly IEventService _eventService;
-
+        private readonly EventValidator _validator;
         public EventController(IEventService eventService)
         {
             _eventService = eventService;
+            _validator = new EventValidator();
         }
 
         [HttpGet]
@@ -41,6 +44,14 @@ namespace EventSphere.API.Controllers
             if (eventDto == null)
             {
                 return BadRequest();
+            }
+            var validationResult = _validator.Validate(eventDto);
+            if (!validationResult.IsValid)
+            {
+                // If validation fails, return BadRequest with the error messages        var errorMessages = validationResult.Errors.Select(error => error.ErrorMessage);        var errorMessages = validationResult.Errors.Select(error => error.ErrorMessage);
+                var errorMessages = validationResult.Errors.Select(error => error.ErrorMessage);
+
+                return BadRequest(errorMessages);
             }
 
             var createdEvent = await _eventService.CreateEventsAsync(eventDto);
