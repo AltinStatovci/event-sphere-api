@@ -53,12 +53,16 @@ namespace EventSphere.Business.Services
             SecurityKey key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Jwt:Key"]));
             SigningCredentials credentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha256Signature);
 
+            var expiration = DateTime.UtcNow.AddMinutes(120);
+
             var claims = new List<Claim>
             {
                 new(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
                 new(JwtRegisteredClaimNames.Email, user.Email),
                 new Claim("ID", user.ID.ToString()),
-                new Claim("Role", user.RoleID.ToString())
+                new Claim("Role", user.RoleID.ToString()),
+                new Claim("Username", user.Name),
+                new Claim(JwtRegisteredClaimNames.Exp, new DateTimeOffset(expiration).ToUnixTimeSeconds().ToString())
             };
 
             var token = new JwtSecurityToken(
