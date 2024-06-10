@@ -8,6 +8,10 @@ using EventSphere.Infrastructure;
 using EventSphere.Infrastructure.Repositories;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
+using SixLabors.ImageSharp;
+using SixLabors.ImageSharp.Formats.Jpeg;
+using SixLabors.ImageSharp.Processing;
+using SixLabors.ImageSharp.PixelFormats;
 
 namespace EventSphere.Business.Services
 {
@@ -51,7 +55,8 @@ namespace EventSphere.Business.Services
 
             try
             {
-                string base64Image = await ConvertToBase64Async(image);
+                // Resize and convert to Base64
+                string base64Image = await ResizeAndConvertToBase64Async(image);
 
                 var user = await _userRepository.GetByIdAsync(eventDto.OrganizerID);
                 var userName = user.Name;
@@ -66,7 +71,7 @@ namespace EventSphere.Business.Services
                     CategoryID = eventDto.CategoryID,
                     OrganizerID = eventDto.OrganizerID,
                     Organizer = userName,
-                    PhotoData = base64Image, 
+                    PhotoData = base64Image,
                     MaxAttendance = eventDto.MaxAttendance,
                     AvailableTickets = eventDto.AvailableTickets,
                     DateCreated = eventDto.DateCreated
@@ -81,7 +86,7 @@ namespace EventSphere.Business.Services
             }
         }
 
-        public static async Task<string> ConvertToBase64Async(IFormFile image)
+        public static async Task<string> ResizeAndConvertToBase64Async(IFormFile image)
         {
             if (image == null || image.Length == 0)
             {
@@ -93,17 +98,30 @@ namespace EventSphere.Business.Services
                 using (var memoryStream = new MemoryStream())
                 {
                     await image.CopyToAsync(memoryStream);
+                    memoryStream.Position = 0;
 
-                    byte[] imageBytes = memoryStream.ToArray();
+                    using (var img = Image.Load<Rgba32>(memoryStream))
+                    {
+                        img.Mutate(x => x.Resize(new ResizeOptions
+                        {
+                            Size = new Size(500, 500),
+                            Mode = ResizeMode.Max
+                        }));
 
-                    string base64String = Convert.ToBase64String(imageBytes);
+                        using (var outputMemoryStream = new MemoryStream())
+                        {
+                            img.Save(outputMemoryStream, new JpegEncoder { Quality = 100 });
 
-                    return base64String;
+                            byte[] imageBytes = outputMemoryStream.ToArray();
+                            string base64String = Convert.ToBase64String(imageBytes);
+                            return base64String;
+                        }
+                    }
                 }
             }
             catch (Exception ex)
             {
-                throw new Exception("Error occurred while converting the image to Base64.", ex);
+                throw new Exception("Error occurred while resizing and converting the image to Base64.", ex);
             }
         }
 
@@ -132,7 +150,7 @@ namespace EventSphere.Business.Services
 
                 if (newImage != null)
                 {
-                    string base64Image = await ConvertToBase64Async(newImage);
+                    string base64Image = await ResizeAndConvertToBase64Async(newImage);
                     eventById.PhotoData = base64Image;
                 }
                 else
