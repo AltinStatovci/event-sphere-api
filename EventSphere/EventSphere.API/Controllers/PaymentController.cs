@@ -37,22 +37,30 @@ namespace EventSphere.API.Controllers
             return Ok(ticket);
         }
         [HttpPost]
-        public async Task<IActionResult> Create(PaymentDTO PaymentDTO)
+        public async Task<IActionResult> Create(PaymentDTO paymentDTO)
         {
-            var paymentResponse = await _paymentService.AddPaymentAsync(PaymentDTO);
-            var mailRequest = new MailRequest
+            try
             {
-                ToEmail = paymentResponse.User.Email, // Assume User object has an Email property
-                Subject = "Payment Confirmation",
-                Body = $@"
-                <p>Thank You <strong>{paymentResponse.User.Name}</strong> for buying a ticket to.</p>
-                <p>The price of the ticket is <strong>{paymentResponse.Payment.Amount:C}</strong>.</p>"
-            };
+                var paymentResponse = await _paymentService.AddPaymentAsync(paymentDTO);
 
-            // Send the email
-            await _emailService.SendEmailAsync(mailRequest);
-            return CreatedAtAction(nameof(GetPaymentId), new { id = PaymentDTO.ID }, PaymentDTO);
+                var mailRequest = new MailRequest
+                {
+                    ToEmail = paymentResponse.User.Email,
+                    Subject = "Payment Confirmation",
+                    Body = $@"
+            <p>Thank you <strong>{paymentResponse.User.Name}</strong> for buying a ticket.</p>
+            <p>The price of the ticket is <strong>{paymentResponse.Payment.Amount:C}</strong>.</p>"
+                };
+
+                await _emailService.SendEmailAsync(mailRequest);
+                return CreatedAtAction(nameof(GetPaymentId), new { id = paymentDTO.ID }, paymentDTO);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
         }
+
         [HttpPut("{id}")]
         public async Task<IActionResult> Update(int id, PaymentDTO PaymentDTO)
         {
