@@ -41,29 +41,47 @@ namespace EventSphere.API.Controllers
             }
             return Ok(eventName);
         }
-        
+
 
         [HttpPost]
-        public async Task<ActionResult> CreateEvents([FromBody] EventDTO eventDto)
+        public async Task<ActionResult<Event>> CreateEvent([FromForm] EventDTO eventDto, IFormFile image)
         {
-            if (eventDto == null)
+            if (eventDto == null || image == null || image.Length == 0)
             {
                 return BadRequest();
             }
 
-            var createdEvent = await _eventService.CreateEventsAsync(eventDto);
-            return CreatedAtAction(nameof(GetEventName), new { id = createdEvent.ID }, createdEvent);
+            try
+            {
+                var createdEvent = await _eventService.CreateEventsAsync(eventDto, image);
+                return CreatedAtAction(nameof(GetEventName), new { id = createdEvent.ID }, createdEvent);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "Error occurred while creating the event.");
+            }
         }
         [HttpPut("{id}")]
-        public async Task<ActionResult> UpdateEvent(int id, [FromBody] EventDTO eventDto)
+        public async Task<ActionResult> UpdateEvent(int id, [FromForm] EventDTO eventDto, IFormFile newImage)
         {
             if (id == 0 || eventDto == null)
             {
-                return BadRequest();
+                return BadRequest("Invalid ID or event data.");
             }
 
-            await _eventService.UpdateEventsAsync(id, eventDto);
-            return NoContent();
+            try
+            {
+                await _eventService.UpdateEventsAsync(id, eventDto, newImage);
+                return NoContent();
+            }
+            catch (ArgumentException ex)
+            {
+                return NotFound(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, "An error occurred while updating the event. Please try again later.");
+            }
         }
 
         [HttpDelete("{id}")]
