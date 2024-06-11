@@ -96,5 +96,12 @@ namespace EventSphere.API.Controllers
             var events = await _eventService.GetEventByCategoryId(id);
             return Ok(events);
         }
+
+        [HttpGet("eventLocation/{location}")]
+        public async Task<ActionResult<IEnumerable<Event>>> GetEventsByLocation(string location)
+        {
+            var eventsByLocation = await _eventService.GetEventsByLocation(location);
+            return Ok(eventsByLocation);
+        }
     }
 }

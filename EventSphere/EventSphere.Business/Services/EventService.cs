@@ -55,7 +55,6 @@ namespace EventSphere.Business.Services
 
             try
             {
-                // Resize and convert to Base64
                 string base64Image = await ResizeAndConvertToBase64Async(image);
 
                 var user = await _userRepository.GetByIdAsync(eventDto.OrganizerID);
@@ -183,6 +182,11 @@ namespace EventSphere.Business.Services
         public async Task<IEnumerable<Event>> GetEventByCategoryId(int eventCategoryId)
         {
             return await _context.Events.Where(u => u.CategoryID == eventCategoryId).ToListAsync();
+        }
+
+        public async Task<IEnumerable<Event>> GetEventsByLocation(string Location)
+        {
+            return await _context.Events.Where(u => u.Location == Location).ToListAsync();
         }
     }
 }
