@@ -13,7 +13,6 @@ namespace EventSphere.Business.Services.Interfaces
         Task DeleteEventsAsync(int id);
         Task<int> GetEventCountAsync();
         Task<IEnumerable<Event>> GetEventByCategoryId(int id);
-        Task<IEnumerable<Event>> GetEventsByLocation(string Location);
 
     }
 }

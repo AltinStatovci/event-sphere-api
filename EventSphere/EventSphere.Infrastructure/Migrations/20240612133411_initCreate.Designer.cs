@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EventSphere.Infrastructure.Migrations
 {
     [DbContext(typeof(EventSphereDbContext))]
-    [Migration("20240606125925_initCreate")]
+    [Migration("20240612133411_initCreate")]
     partial class initCreate
     {
         /// <inheritdoc />
@@ -57,10 +57,8 @@ namespace EventSphere.Infrastructure.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
-                    b.Property<string>("Location")
-                        .IsRequired()
-                        .HasMaxLength(200)
-                        .HasColumnType("nvarchar(200)");
+                    b.Property<int>("LocationId")
+                        .HasColumnType("int");
 
                     b.Property<int>("MaxAttendance")
                         .HasColumnType("int");
@@ -82,6 +80,8 @@ namespace EventSphere.Infrastructure.Migrations
 
                     b.HasIndex("CategoryID");
 
+                    b.HasIndex("LocationId");
+
                     b.ToTable("Event", (string)null);
                 });
 
@@ -101,6 +101,31 @@ namespace EventSphere.Infrastructure.Migrations
                     b.HasKey("ID");
 
                     b.ToTable("EventCategory", (string)null);
+                });
+
+            modelBuilder.Entity("EventSphere.Domain.Entities.Location", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Address")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("City")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Country")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Location", (string)null);
                 });
 
             modelBuilder.Entity("EventSphere.Domain.Entities.Payment", b =>
@@ -281,7 +306,15 @@ namespace EventSphere.Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
+                    b.HasOne("EventSphere.Domain.Entities.Location", "Location")
+                        .WithMany()
+                        .HasForeignKey("LocationId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
                     b.Navigation("Category");
+
+                    b.Navigation("Location");
                 });
 
             modelBuilder.Entity("EventSphere.Domain.Entities.Payment", b =>

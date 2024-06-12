@@ -64,7 +64,7 @@ namespace EventSphere.Business.Services
                 {
                     EventName = eventDto.EventName,
                     Description = eventDto.Description,
-                    Location = eventDto.Location,
+                    LocationId = eventDto.Location,
                     StartDate = eventDto.StartDate,
                     EndDate = eventDto.EndDate,
                     CategoryID = eventDto.CategoryID,
@@ -138,7 +138,7 @@ namespace EventSphere.Business.Services
 
                 eventById.EventName = eventDto.EventName;
                 eventById.Description = eventDto.Description;
-                eventById.Location = eventDto.Location;
+                eventById.LocationId = eventDto.Location;
                 eventById.StartDate = eventDto.StartDate;
                 eventById.EndDate = eventDto.EndDate;
                 eventById.CategoryID = eventDto.CategoryID;
@@ -182,11 +182,6 @@ namespace EventSphere.Business.Services
         public async Task<IEnumerable<Event>> GetEventByCategoryId(int eventCategoryId)
         {
             return await _context.Events.Where(u => u.CategoryID == eventCategoryId).ToListAsync();
-        }
-
-        public async Task<IEnumerable<Event>> GetEventsByLocation(string Location)
-        {
-            return await _context.Events.Where(u => u.Location == Location).ToListAsync();
         }
     }
 }

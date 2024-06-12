@@ -32,6 +32,9 @@ namespace EventSphere.API
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IAccountService, AccountService>();
 
+            services.AddScoped<IGenericRepository<Location>, GenericRepository<Location>>();
+            services.AddScoped<ILocationServices, LocationServices>();
+
             var config = TypeAdapterConfig.GlobalSettings;
             config.Scan(typeof(Program).Assembly);
             services.AddSingleton(config);
