@@ -55,7 +55,6 @@ namespace EventSphere.Business.Services
 
             try
             {
-                // Resize and convert to Base64
                 string base64Image = await ResizeAndConvertToBase64Async(image);
 
                 var user = await _userRepository.GetByIdAsync(eventDto.OrganizerID);
@@ -65,7 +64,7 @@ namespace EventSphere.Business.Services
                 {
                     EventName = eventDto.EventName,
                     Description = eventDto.Description,
-                    Location = eventDto.Location,
+                    LocationId = eventDto.Location,
                     StartDate = eventDto.StartDate,
                     EndDate = eventDto.EndDate,
                     CategoryID = eventDto.CategoryID,
@@ -139,7 +138,7 @@ namespace EventSphere.Business.Services
 
                 eventById.EventName = eventDto.EventName;
                 eventById.Description = eventDto.Description;
-                eventById.Location = eventDto.Location;
+                eventById.LocationId = eventDto.Location;
                 eventById.StartDate = eventDto.StartDate;
                 eventById.EndDate = eventDto.EndDate;
                 eventById.CategoryID = eventDto.CategoryID;

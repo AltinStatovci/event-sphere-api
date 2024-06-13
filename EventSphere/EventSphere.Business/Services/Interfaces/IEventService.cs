@@ -11,9 +11,7 @@ namespace EventSphere.Business.Services.Interfaces
         Task<Event> CreateEventsAsync(EventDTO eventDto, IFormFile image);
         Task<Event> UpdateEventsAsync(int id, EventDTO eventDto, IFormFile newImage = null);
         Task DeleteEventsAsync(int id);
-
         Task<int> GetEventCountAsync();
-
         Task<IEnumerable<Event>> GetEventByCategoryId(int id);
 
     }

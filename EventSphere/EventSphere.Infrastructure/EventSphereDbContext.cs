@@ -18,6 +18,7 @@ namespace EventSphere.Infrastructure
         public DbSet<Payment> Payments { get; set; }
         public DbSet<EventCategory> EventCategories { get; set; }
         public DbSet<Report> Reports { get; set; }
+        public DbSet<Location> Locations { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -29,6 +30,7 @@ namespace EventSphere.Infrastructure
             modelBuilder.ApplyConfiguration(new EventCategoryConfiguration());
             modelBuilder.ApplyConfiguration(new EventConfiguration());
             modelBuilder.ApplyConfiguration(new ReportConfiguration());
+            modelBuilder.ApplyConfiguration(new LocationConfiguration());
         }
     }
 }
