@@ -42,20 +42,19 @@ namespace EventSphere.Business.Services
             return await _locationRepository.GetAllAsync();
         }
 
-        public async Task<Location> GetLocationByCity(string city)
+        public async Task<IEnumerable<Location>> GetLocationsByCity(string city)
         {
-            //return await _context.Location.Where(u => u.City == city).ToListAsync();
-            throw new NotImplementedException();
+            return await _context.Locations.Where(u => u.City == city).ToListAsync();
         }
 
-        public Task<Location> GetLocationByCountry(string country)
+        public async Task<IEnumerable<Location>> GetLocationsByCountry(string country)
         {
-            throw new NotImplementedException();
+            return await _context.Locations.Where(u => u.Country == country).ToListAsync();
         }
 
-        public Task<Location> GetLocationById(int id)
+        public async Task<Location> GetLocationById(int id)
         {
-            throw new NotImplementedException();
+            return await _locationRepository.GetByIdAsync(id);
         }
 
         public async Task UpdateLocation(Location location)

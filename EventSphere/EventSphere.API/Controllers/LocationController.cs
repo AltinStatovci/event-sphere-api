@@ -2,6 +2,7 @@
 using EventSphere.Business.Services.Interfaces;
 using EventSphere.Domain.Entities;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System.Reflection.Metadata.Ecma335;
 
 namespace EventSphere.API.Controllers
@@ -59,6 +60,19 @@ namespace EventSphere.API.Controllers
         {
             await _locationServices.DeleteLocation(id);
             return NoContent();
+        }
+
+        [HttpGet("city/{city}")]
+        public async Task<ActionResult<IEnumerable<Location>>> GetLocationsByCity(string city)
+        {
+            var locations = await _locationServices.GetLocationsByCity(city);
+            return Ok(locations);
+        }
+        [HttpGet("country/{country}")]
+        public async Task<ActionResult<IEnumerable<Location>>> GetLocationsByCountry(string country)
+        {
+            var locations = await _locationServices.GetLocationsByCountry(country);
+            return Ok(locations);
         }
     }
 }

@@ -14,8 +14,8 @@ namespace EventSphere.Business.Services.Interfaces
         Task DeleteLocation(int id);
         Task<IEnumerable<Location>> GetAllLocations();
         Task<Location> GetLocationById(int id);
-        Task<Location> GetLocationByCity(string city);
-        Task<Location> GetLocationByCountry(string country);
+        Task<IEnumerable<Location>> GetLocationsByCity(string city);
+        Task<IEnumerable<Location>> GetLocationsByCountry(string country);
 
     }
 }
