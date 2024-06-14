@@ -24,16 +24,24 @@ namespace EventSphere.Business.Services
     public class TicketService : TicketServiceBase, ITicketService
     {
         private readonly IGenericRepository<Ticket> _ticketRepository;
-        public TicketService(EventSphereDbContext context, IGenericRepository<Ticket> ticketRepository) : base(context)
+        private readonly IGenericRepository<Event> _eventRepository;
+        public TicketService(EventSphereDbContext context,
+            IGenericRepository<Ticket> ticketRepository,
+            IGenericRepository<Event> eventRepository) : base(context)
         {
             _ticketRepository = ticketRepository;
+            _eventRepository = eventRepository;
         }
 
         public async Task<Ticket> CreateAsync(TicketDTO Tid)
         {
+            var test = await _eventRepository.GetByIdAsync(Tid.EventID);
+            var testName = test.EventName;
+            
             var ticket = new Ticket
             {
                 EventID = Tid.EventID,
+                EventName = testName,
                 TicketType = Tid.TicketType,
                 Price = Tid.Price,
                 BookingReference = Tid.BookingReference,

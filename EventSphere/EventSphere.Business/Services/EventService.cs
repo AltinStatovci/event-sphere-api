@@ -29,11 +29,16 @@ namespace EventSphere.Business.Services
     {
         private readonly IGenericRepository<Event> _eventRepository;
         private readonly IGenericRepository<User> _userRepository;
+        private readonly IGenericRepository<EventCategory> _eventCategoryRepository;
 
-        public EventService(EventSphereDbContext context, IGenericRepository<Event> eventRepository, IGenericRepository<User> userRepository) : base(context)
+        public EventService(EventSphereDbContext context,
+            IGenericRepository<Event> eventRepository,
+            IGenericRepository<User> userRepository,
+            IGenericRepository<EventCategory> eventCategoryRepository) : base(context)
         {
             _eventRepository = eventRepository;
             _userRepository = userRepository;
+            _eventCategoryRepository = eventCategoryRepository;
         }
 
         public async Task<IEnumerable<Event>> GetAllEventsAsync()
@@ -58,7 +63,9 @@ namespace EventSphere.Business.Services
                 string base64Image = await ResizeAndConvertToBase64Async(image);
 
                 var user = await _userRepository.GetByIdAsync(eventDto.OrganizerID);
-                var userName = user.Name;
+                var userName = user.Name;  
+                var category = await _eventCategoryRepository.GetByIdAsync(eventDto.CategoryID);
+                var categoryName = category.CategoryName;
 
                 var events = new Event
                 {
@@ -68,6 +75,7 @@ namespace EventSphere.Business.Services
                     StartDate = eventDto.StartDate,
                     EndDate = eventDto.EndDate,
                     CategoryID = eventDto.CategoryID,
+                    CategoryName = categoryName,
                     OrganizerID = eventDto.OrganizerID,
                     Organizer = userName,
                     PhotoData = base64Image,
