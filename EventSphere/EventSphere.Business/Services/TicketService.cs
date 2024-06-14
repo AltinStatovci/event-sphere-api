@@ -35,13 +35,13 @@ namespace EventSphere.Business.Services
 
         public async Task<Ticket> CreateAsync(TicketDTO Tid)
         {
-            var test = await _eventRepository.GetByIdAsync(Tid.EventID);
-            var testName = test.EventName;
+            var events = await _eventRepository.GetByIdAsync(Tid.EventID);
+            var eventsName = events.EventName;
             
             var ticket = new Ticket
             {
                 EventID = Tid.EventID,
-                EventName = testName,
+                EventName = eventsName,
                 TicketType = Tid.TicketType,
                 Price = Tid.Price,
                 BookingReference = Tid.BookingReference,
