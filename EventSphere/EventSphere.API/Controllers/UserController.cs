@@ -30,7 +30,7 @@ namespace EventSphere.API.Controllers
         {
             var userClaims = User.Claims;
             var users = await _userService.GetAllUsersAsync();
-            var userDtos = _mapper.Map<IEnumerable<UserDTO>>(users);
+            var userDtos = _mapper.Map<IEnumerable<UpdateUserDTO>>(users);
             return Ok(userDtos);
         }
         [HttpGet("count")]
@@ -48,7 +48,7 @@ namespace EventSphere.API.Controllers
             {
                 return NotFound();
             }
-            var userDto = _mapper.Map<UserDTO>(user);
+            var userDto = _mapper.Map<UpdateUserDTO>(user);
             return Ok(userDto);
         }
 
