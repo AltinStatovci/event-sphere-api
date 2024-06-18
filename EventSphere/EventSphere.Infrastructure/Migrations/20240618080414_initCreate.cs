@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace EventSphere.Infrastructure.Migrations
 {
     /// <inheritdoc />
-    public partial class InitCrete : Migration
+    public partial class initCreate : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -22,6 +22,21 @@ namespace EventSphere.Infrastructure.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_EventCategory", x => x.ID);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Location",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Address = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    City = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Country = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Location", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -57,36 +72,6 @@ namespace EventSphere.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Event",
-                columns: table => new
-                {
-                    ID = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    EventName = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
-                    Description = table.Column<string>(type: "nvarchar(300)", maxLength: 300, nullable: false),
-                    Location = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
-                    StartDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    EndDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    CategoryID = table.Column<int>(type: "int", nullable: false),
-                    OrganizerID = table.Column<int>(type: "int", nullable: false),
-                    Organizer = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    PhotoData = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    MaxAttendance = table.Column<int>(type: "int", nullable: false),
-                    AvailableTickets = table.Column<int>(type: "int", nullable: false),
-                    DateCreated = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "GETDATE()")
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Event", x => x.ID);
-                    table.ForeignKey(
-                        name: "FK_Event_EventCategory_CategoryID",
-                        column: x => x.CategoryID,
-                        principalTable: "EventCategory",
-                        principalColumn: "ID",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "User",
                 columns: table => new
                 {
@@ -98,6 +83,7 @@ namespace EventSphere.Infrastructure.Migrations
                     Password = table.Column<byte[]>(type: "varbinary(64)", nullable: false),
                     Salt = table.Column<byte[]>(type: "varbinary(64)", nullable: false),
                     RoleID = table.Column<int>(type: "int", nullable: false),
+                    RoleName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     DateCreated = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "GETDATE()")
                 },
                 constraints: table =>
@@ -112,12 +98,57 @@ namespace EventSphere.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Event",
+                columns: table => new
+                {
+                    ID = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    EventName = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(300)", maxLength: 300, nullable: false),
+                    LocationId = table.Column<int>(type: "int", nullable: false),
+                    LocationAdress = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    StartDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    EndDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    CategoryID = table.Column<int>(type: "int", nullable: false),
+                    CategoryName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    OrganizerID = table.Column<int>(type: "int", nullable: false),
+                    OrganizerName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    PhotoData = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    MaxAttendance = table.Column<int>(type: "int", nullable: false),
+                    AvailableTickets = table.Column<int>(type: "int", nullable: false),
+                    DateCreated = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "GETDATE()")
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Event", x => x.ID);
+                    table.ForeignKey(
+                        name: "FK_Event_EventCategory_CategoryID",
+                        column: x => x.CategoryID,
+                        principalTable: "EventCategory",
+                        principalColumn: "ID",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Event_Location_LocationId",
+                        column: x => x.LocationId,
+                        principalTable: "Location",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Event_User_OrganizerID",
+                        column: x => x.OrganizerID,
+                        principalTable: "User",
+                        principalColumn: "ID",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Ticket",
                 columns: table => new
                 {
                     ID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     EventID = table.Column<int>(type: "int", nullable: false),
+                    EventName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     TicketType = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false),
                     Price = table.Column<double>(type: "float", nullable: false),
                     BookingReference = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false)
@@ -141,6 +172,7 @@ namespace EventSphere.Infrastructure.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     UserID = table.Column<int>(type: "int", nullable: false),
                     TicketID = table.Column<int>(type: "int", nullable: false),
+                    TicketName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Amount = table.Column<int>(type: "int", nullable: false),
                     PaymentMethod = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     PaymentStatus = table.Column<bool>(type: "bit", nullable: false),
@@ -167,6 +199,16 @@ namespace EventSphere.Infrastructure.Migrations
                 name: "IX_Event_CategoryID",
                 table: "Event",
                 column: "CategoryID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Event_LocationId",
+                table: "Event",
+                column: "LocationId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Event_OrganizerID",
+                table: "Event",
+                column: "OrganizerID");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Payment_TicketID",
@@ -202,16 +244,19 @@ namespace EventSphere.Infrastructure.Migrations
                 name: "Ticket");
 
             migrationBuilder.DropTable(
-                name: "User");
-
-            migrationBuilder.DropTable(
                 name: "Event");
 
             migrationBuilder.DropTable(
-                name: "Role");
+                name: "EventCategory");
 
             migrationBuilder.DropTable(
-                name: "EventCategory");
+                name: "Location");
+
+            migrationBuilder.DropTable(
+                name: "User");
+
+            migrationBuilder.DropTable(
+                name: "Role");
         }
     }
 }

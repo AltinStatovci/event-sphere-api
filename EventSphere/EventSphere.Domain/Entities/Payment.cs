@@ -7,6 +7,7 @@
         public int UserID { get; set; }
         public Ticket Ticket { get; set; }
         public int TicketID { get; set; }
+        public string? TicketName { get; set; }
         public int Amount { get; set; }
         public string PaymentMethod { get; set; }
         public bool PaymentStatus { get; set; }

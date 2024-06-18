@@ -5,6 +5,7 @@
         public int ID { get; set; }
         public int EventID { get; set; }
         public Event Event { get; set; }
+        public string? EventName { get; set; }
       
         public string TicketType { get; set; }
         public double Price { get; set; }

@@ -36,6 +36,9 @@ namespace EventSphere.Infrastructure.Migrations
                     b.Property<int>("CategoryID")
                         .HasColumnType("int");
 
+                    b.Property<string>("CategoryName")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<DateTime>("DateCreated")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
@@ -54,17 +57,20 @@ namespace EventSphere.Infrastructure.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
+                    b.Property<string>("LocationAdress")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int>("LocationId")
                         .HasColumnType("int");
 
                     b.Property<int>("MaxAttendance")
                         .HasColumnType("int");
 
-                    b.Property<string>("Organizer")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<int>("OrganizerID")
                         .HasColumnType("int");
+
+                    b.Property<string>("OrganizerName")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("PhotoData")
                         .IsRequired()
@@ -78,6 +84,8 @@ namespace EventSphere.Infrastructure.Migrations
                     b.HasIndex("CategoryID");
 
                     b.HasIndex("LocationId");
+
+                    b.HasIndex("OrganizerID");
 
                     b.ToTable("Event", (string)null);
                 });
@@ -149,6 +157,9 @@ namespace EventSphere.Infrastructure.Migrations
 
                     b.Property<int>("TicketID")
                         .HasColumnType("int");
+
+                    b.Property<string>("TicketName")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("UserID")
                         .HasColumnType("int");
@@ -236,6 +247,9 @@ namespace EventSphere.Infrastructure.Migrations
                     b.Property<int>("EventID")
                         .HasColumnType("int");
 
+                    b.Property<string>("EventName")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<double>("Price")
                         .HasColumnType("float");
 
@@ -284,6 +298,9 @@ namespace EventSphere.Infrastructure.Migrations
                     b.Property<int>("RoleID")
                         .HasColumnType("int");
 
+                    b.Property<string>("RoleName")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<byte[]>("Salt")
                         .IsRequired()
                         .HasColumnType("varbinary(64)");
@@ -309,9 +326,17 @@ namespace EventSphere.Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
+                    b.HasOne("EventSphere.Domain.Entities.User", "Organizer")
+                        .WithMany()
+                        .HasForeignKey("OrganizerID")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
                     b.Navigation("Category");
 
                     b.Navigation("Location");
+
+                    b.Navigation("Organizer");
                 });
 
             modelBuilder.Entity("EventSphere.Domain.Entities.Payment", b =>

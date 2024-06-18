@@ -21,12 +21,18 @@ namespace EventSphere.Business.Services
         private readonly IGenericRepository<User> _userRepository;
         private readonly IGenericRepository<Domain.Entities.Event> _eventRepository;
         private readonly StripeSettings _stripeSettings;
-        public PaymentServices(IGenericRepository<Payment> genericRepository, IGenericRepository<User> userRepository, IGenericRepository<Domain.Entities.Event> eventRepository, IOptions<StripeSettings> stripeSettings)
+        private readonly IGenericRepository<Ticket> _ticketRepository;
+        public PaymentServices(IGenericRepository<Payment> genericRepository,
+            IGenericRepository<User> userRepository,
+            IGenericRepository<Domain.Entities.Event> eventRepository,
+            IOptions<StripeSettings> stripeSettings,
+            IGenericRepository<Ticket> ticketRepository)
         {
             _genericRepository = genericRepository;
             _userRepository = userRepository;
             _eventRepository = eventRepository;
             _stripeSettings = stripeSettings.Value;
+            _ticketRepository = ticketRepository;
         }
 
         public async Task<PaymentResponseDto> AddPaymentAsync(PaymentDTO Pid)
@@ -44,14 +50,17 @@ namespace EventSphere.Business.Services
 
             if (charge.Status == "succeeded")
             {
+                var ticket = await _ticketRepository.GetByIdAsync(Pid.TicketID);
+                var ticketName = ticket.TicketType;
                 var payment = new Payment
                 {
                     UserID = Pid.UserID,
                     TicketID = Pid.TicketID,
+                    TicketName = ticketName,
                     Amount = Pid.Amount,
                     PaymentMethod = Pid.PaymentMethod,
                     PaymentDate = Pid.PaymentDate,
-                    PaymentStatus = true, // payment successful
+                    PaymentStatus = true, 
                 };
 
                 var user = await _userRepository.GetByIdAsync(Pid.UserID);
