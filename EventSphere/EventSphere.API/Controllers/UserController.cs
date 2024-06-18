@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 using EventSphere.Business.Services;
+using EventSphere.Business.Helper;
 
 namespace EventSphere.API.Controllers
 {
@@ -54,17 +55,7 @@ namespace EventSphere.API.Controllers
         [HttpPut("updateUser")]
         public async Task<IActionResult> UpdateUser(UpdateUserDTO updateUserDto)
         {
-            var existingUser = await _userService.GetUserByIdAsync(updateUserDto.ID);
-            if (existingUser == null)
-            {
-                return NotFound();
-            }
-
-            var dateCreated = existingUser.DateCreated;
-            _mapper.Map(updateUserDto, existingUser);
-            existingUser.DateCreated = dateCreated;
-            await _userService.UpdateUserAsync(existingUser);
-
+            await _userService.UpdateUserAsync(updateUserDto);
             return NoContent();
         }
 

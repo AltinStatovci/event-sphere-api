@@ -15,6 +15,10 @@ namespace EventSphere.Business.Mappings
                 .Ignore(dest => dest.Role);
             config.NewConfig<User, CreateUserDTO>().TwoWays();
             config.NewConfig<User, UpdateUserDTO>().TwoWays();
+
+            config.NewConfig<UpdateUserDTO, User>()
+                .Ignore(dest => dest.Password)
+                .Ignore(dest => dest.Salt);
         }
     }
 
