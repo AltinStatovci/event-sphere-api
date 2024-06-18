@@ -14,7 +14,8 @@
         public EventCategory Category { get; set; }
         public string? CategoryName { get; set; }
         public int OrganizerID { get; set; }
-        public string? Organizer {  get; set; }
+        public User Organizer { get; set; }
+        public string? OrganizerName {  get; set; }
         public string PhotoData { get; set; }
         public int MaxAttendance { get; set; }
         public int AvailableTickets { get; set; }

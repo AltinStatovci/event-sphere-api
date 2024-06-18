@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EventSphere.Infrastructure.Migrations
 {
     [DbContext(typeof(EventSphereDbContext))]
-    [Migration("20240614123903_initCreate")]
+    [Migration("20240618080414_initCreate")]
     partial class initCreate
     {
         /// <inheritdoc />
@@ -69,11 +69,11 @@ namespace EventSphere.Infrastructure.Migrations
                     b.Property<int>("MaxAttendance")
                         .HasColumnType("int");
 
-                    b.Property<string>("Organizer")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<int>("OrganizerID")
                         .HasColumnType("int");
+
+                    b.Property<string>("OrganizerName")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("PhotoData")
                         .IsRequired()
@@ -87,6 +87,8 @@ namespace EventSphere.Infrastructure.Migrations
                     b.HasIndex("CategoryID");
 
                     b.HasIndex("LocationId");
+
+                    b.HasIndex("OrganizerID");
 
                     b.ToTable("Event", (string)null);
                 });
@@ -327,9 +329,17 @@ namespace EventSphere.Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
+                    b.HasOne("EventSphere.Domain.Entities.User", "Organizer")
+                        .WithMany()
+                        .HasForeignKey("OrganizerID")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
                     b.Navigation("Category");
 
                     b.Navigation("Location");
+
+                    b.Navigation("Organizer");
                 });
 
             modelBuilder.Entity("EventSphere.Domain.Entities.Payment", b =>

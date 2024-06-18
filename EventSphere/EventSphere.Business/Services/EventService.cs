@@ -77,7 +77,7 @@ namespace EventSphere.Business.Services
                     CategoryID = eventDto.CategoryID,
                     CategoryName = categoryName,
                     OrganizerID = eventDto.OrganizerID,
-                    Organizer = userName,
+                    OrganizerName = userName,
                     PhotoData = base64Image,
                     MaxAttendance = eventDto.MaxAttendance,
                     AvailableTickets = eventDto.AvailableTickets,
