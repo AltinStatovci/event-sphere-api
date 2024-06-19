@@ -57,9 +57,6 @@ namespace EventSphere.Infrastructure.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
-                    b.Property<string>("LocationAdress")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<int>("LocationId")
                         .HasColumnType("int");
 
@@ -82,8 +79,6 @@ namespace EventSphere.Infrastructure.Migrations
                     b.HasKey("ID");
 
                     b.HasIndex("CategoryID");
-
-                    b.HasIndex("LocationId");
 
                     b.HasIndex("OrganizerID");
 
@@ -111,10 +106,7 @@ namespace EventSphere.Infrastructure.Migrations
             modelBuilder.Entity("EventSphere.Domain.Entities.Location", b =>
                 {
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Address")
                         .IsRequired()
@@ -320,12 +312,6 @@ namespace EventSphere.Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("EventSphere.Domain.Entities.Location", "Location")
-                        .WithMany()
-                        .HasForeignKey("LocationId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
                     b.HasOne("EventSphere.Domain.Entities.User", "Organizer")
                         .WithMany()
                         .HasForeignKey("OrganizerID")
@@ -334,9 +320,16 @@ namespace EventSphere.Infrastructure.Migrations
 
                     b.Navigation("Category");
 
-                    b.Navigation("Location");
-
                     b.Navigation("Organizer");
+                });
+
+            modelBuilder.Entity("EventSphere.Domain.Entities.Location", b =>
+                {
+                    b.HasOne("EventSphere.Domain.Entities.Event", null)
+                        .WithOne("Location")
+                        .HasForeignKey("EventSphere.Domain.Entities.Location", "Id")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("EventSphere.Domain.Entities.Payment", b =>
@@ -382,6 +375,9 @@ namespace EventSphere.Infrastructure.Migrations
 
             modelBuilder.Entity("EventSphere.Domain.Entities.Event", b =>
                 {
+                    b.Navigation("Location")
+                        .IsRequired();
+
                     b.Navigation("Tickets");
                 });
 

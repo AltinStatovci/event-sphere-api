@@ -7,7 +7,6 @@
         public string Description { get; set; }
         public int LocationId { get; set; }
         public Location Location { get; set; }
-        public string? LocationAdress { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
         public int CategoryID { get; set; }

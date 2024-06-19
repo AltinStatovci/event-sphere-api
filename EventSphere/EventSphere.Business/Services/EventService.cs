@@ -30,15 +30,18 @@ namespace EventSphere.Business.Services
         private readonly IGenericRepository<Event> _eventRepository;
         private readonly IGenericRepository<User> _userRepository;
         private readonly IGenericRepository<EventCategory> _eventCategoryRepository;
+        private readonly IGenericRepository<Location> _locationRepository;
 
         public EventService(EventSphereDbContext context,
             IGenericRepository<Event> eventRepository,
             IGenericRepository<User> userRepository,
-            IGenericRepository<EventCategory> eventCategoryRepository) : base(context)
+            IGenericRepository<EventCategory> eventCategoryRepository,
+            IGenericRepository<Location> locationRepository) : base(context)
         {
             _eventRepository = eventRepository;
             _userRepository = userRepository;
             _eventCategoryRepository = eventCategoryRepository;
+            _locationRepository = locationRepository;
         }
 
         public async Task<IEnumerable<Event>> GetAllEventsAsync()
@@ -60,28 +63,44 @@ namespace EventSphere.Business.Services
 
             try
             {
+                // Convert the image to base64
                 string base64Image = await ResizeAndConvertToBase64Async(image);
 
+                // Retrieve user and category details
                 var user = await _userRepository.GetByIdAsync(eventDto.OrganizerID);
-                var userName = user.Name;  
+                var userName = user.Name;
                 var category = await _eventCategoryRepository.GetByIdAsync(eventDto.CategoryID);
                 var categoryName = category.CategoryName;
 
+                // Create location entity
+                var location = new Location
+                {
+                    Address = eventDto.Location.Address,
+                    City = eventDto.Location.City,
+                    Country = eventDto.Location.Country
+                };
+                await _locationRepository.AddAsync(location);
+
+                // Create event entity
                 var events = new Event
                 {
                     EventName = eventDto.EventName,
                     Description = eventDto.Description,
-                    LocationId = eventDto.Location,
+                    LocationId = location.Id,
+                    Location = location,
                     StartDate = eventDto.StartDate,
                     EndDate = eventDto.EndDate,
                     CategoryID = eventDto.CategoryID,
+                    Category = category,
                     CategoryName = categoryName,
                     OrganizerID = eventDto.OrganizerID,
+                    Organizer = user,
                     OrganizerName = userName,
                     PhotoData = base64Image,
                     MaxAttendance = eventDto.MaxAttendance,
                     AvailableTickets = eventDto.AvailableTickets,
-                    DateCreated = eventDto.DateCreated
+                    DateCreated = DateTime.UtcNow,  // Usually, DateCreated is set to the current time
+                    Tickets = new List<Ticket>()  // Initialize with an empty list
                 };
 
                 await _eventRepository.AddAsync(events);
@@ -92,6 +111,7 @@ namespace EventSphere.Business.Services
                 throw new Exception("Error occurred while creating the event.", ex);
             }
         }
+
 
         public static async Task<string> ResizeAndConvertToBase64Async(IFormFile image)
         {
@@ -146,7 +166,7 @@ namespace EventSphere.Business.Services
 
                 eventById.EventName = eventDto.EventName;
                 eventById.Description = eventDto.Description;
-                eventById.LocationId = eventDto.Location;
+                //eventById.LocationId = eventDto.Location;
                 eventById.StartDate = eventDto.StartDate;
                 eventById.EndDate = eventDto.EndDate;
                 eventById.CategoryID = eventDto.CategoryID;
