@@ -8,13 +8,13 @@ namespace EventSphere.Domain.DTOs
 {
     public class ReportDTO
     {
-        public int reportId { get; set; }
-        public int userId { get; set; }
-        public string userName { get; set; }
-        public string userlastName { get; set; }
-        public string userEmail { get; set; }
-        public string reportName { get; set; }
-        public string reportDesc { get; set; }
-        public string reportAnsw { get; set; } = "Waiting for Respond";
+        public int ReportId { get; set; }
+        public int UserId { get; set; }
+        public string UserName { get; set; }
+        public string UserLastName { get; set; }
+        public string UserEmail { get; set; }
+        public string ReportName { get; set; }
+        public string ReportDesc { get; set; }
+        public string ReportAnsw { get; set; } = "Waiting for Respond";
     }
 }

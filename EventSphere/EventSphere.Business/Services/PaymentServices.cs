@@ -21,18 +21,12 @@ namespace EventSphere.Business.Services
         private readonly IGenericRepository<User> _userRepository;
         private readonly IGenericRepository<Domain.Entities.Event> _eventRepository;
         private readonly StripeSettings _stripeSettings;
-        private readonly IGenericRepository<Ticket> _ticketRepository;
-        public PaymentServices(IGenericRepository<Payment> genericRepository,
-            IGenericRepository<User> userRepository,
-            IGenericRepository<Domain.Entities.Event> eventRepository,
-            IOptions<StripeSettings> stripeSettings,
-            IGenericRepository<Ticket> ticketRepository)
+        public PaymentServices(IGenericRepository<Payment> genericRepository, IGenericRepository<User> userRepository, IGenericRepository<Domain.Entities.Event> eventRepository, IOptions<StripeSettings> stripeSettings)
         {
             _genericRepository = genericRepository;
             _userRepository = userRepository;
             _eventRepository = eventRepository;
             _stripeSettings = stripeSettings.Value;
-            _ticketRepository = ticketRepository;
         }
 
         public async Task<PaymentResponseDto> AddPaymentAsync(PaymentDTO Pid)
@@ -50,20 +44,17 @@ namespace EventSphere.Business.Services
 
             if (charge.Status == "succeeded")
             {
-                var ticket = await _ticketRepository.GetByIdAsync(Pid.TicketID);
-                var ticketName = ticket.TicketType;
                 var payment = new Payment
                 {
-                    UserID = Pid.UserID,
-                    TicketID = Pid.TicketID,
-                    TicketName = ticketName,
+                    UserId = Pid.UserId,
+                    TicketId = Pid.TicketId,
                     Amount = Pid.Amount,
                     PaymentMethod = Pid.PaymentMethod,
                     PaymentDate = Pid.PaymentDate,
-                    PaymentStatus = true, 
+                    PaymentStatus = true, // payment successful
                 };
 
-                var user = await _userRepository.GetByIdAsync(Pid.UserID);
+                var user = await _userRepository.GetByIdAsync(Pid.UserId);
                 var response = new PaymentResponseDto
                 {
                     Payment = payment,
@@ -100,7 +91,7 @@ namespace EventSphere.Business.Services
         {
             var payment = await _genericRepository.GetByIdAsync(id);
 
-            payment.TicketID = Pid.TicketID;
+            payment.TicketId = Pid.TicketId;
             payment.Amount = Pid.Amount;
             payment.PaymentMethod = Pid.PaymentMethod;
             payment.PaymentDate = Pid.PaymentDate;

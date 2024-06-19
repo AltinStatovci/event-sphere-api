@@ -37,7 +37,7 @@ namespace EventSphere.Business.Services
             user.Salt = passwordSalt;
             user.Password = passwordHash;
 
-            var role = await _roleRepository.GetByIdAsync(createUserDto.RoleID);
+            var role = await _roleRepository.GetByIdAsync(createUserDto.RoleId);
             var roleName = role.RoleName;
 
             user.RoleName = roleName;
@@ -68,8 +68,8 @@ namespace EventSphere.Business.Services
             {
                 new(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
                 new(JwtRegisteredClaimNames.Email, user.Email),
-                new Claim("ID", user.ID.ToString()),
-                new Claim("Role", user.RoleID.ToString()),
+                new Claim("ID", user.Id.ToString()),
+                new Claim("Role", user.RoleId.ToString()),
                 new Claim("Username", user.Name),
                 new Claim(JwtRegisteredClaimNames.Exp, new DateTimeOffset(expiration).ToUnixTimeSeconds().ToString())
             };

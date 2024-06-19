@@ -9,9 +9,9 @@ namespace EventSphere.Domain.DTOs
 {
     public class PaymentDTO
     {
-        public int ID { get; set; }
-        public int UserID { get; set; }
-        public int TicketID { get; set; }
+        public int Id { get; set; }
+        public int UserId { get; set; }
+        public int TicketId { get; set; }
         public int Amount { get; set; }
         public string PaymentMethod { get; set; }
         public bool PaymentStatus { get; set; }

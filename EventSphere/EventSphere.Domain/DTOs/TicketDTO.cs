@@ -9,8 +9,8 @@ namespace EventSphere.Domain.DTOs
 {
     public class TicketDTO
     {
-        public int ID {  get; set; }
-        public int EventID { get; set; }
+        public int Id {  get; set; }
+        public int EventId { get; set; }
         public string TicketType { get; set; }
         public double Price { get; set; }
         public string BookingReference { get; set; }

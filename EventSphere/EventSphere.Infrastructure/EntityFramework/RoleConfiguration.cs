@@ -9,7 +9,7 @@ namespace EventSphere.Infrastructure.EntityFramework
         public void Configure(EntityTypeBuilder<Role> builder)
         {
             builder.ToTable("Role");
-            builder.HasKey(r => r.ID);
+            builder.HasKey(r => r.Id);
             builder.Property(r => r.RoleName).IsRequired().HasMaxLength(20);
         }
     }

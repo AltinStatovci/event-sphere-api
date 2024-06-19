@@ -39,7 +39,7 @@ namespace EventSphere.API.Controllers
         public async Task<IActionResult> Create(TicketDTO ticketDTO)
         {
             var ticket = await _ticketService.CreateAsync(ticketDTO);
-            return CreatedAtAction(nameof(GetTicketId), new { id = ticketDTO.ID }, ticketDTO);
+            return CreatedAtAction(nameof(GetTicketId), new { id = ticketDTO.Id }, ticketDTO);
         }
         [HttpPut("{id}")]
         public async Task<IActionResult> Update(int id, TicketDTO ticketDTO)

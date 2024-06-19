@@ -12,7 +12,7 @@ namespace EventSphere.Domain.DTOs.User
         public string? LastName { get; set; }
         public string Email { get; set; }
         public string Password { get; set; }
-        public int RoleID { get; set; }
+        public int RoleId { get; set; }
     }
 
 }

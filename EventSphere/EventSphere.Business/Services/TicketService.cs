@@ -35,12 +35,12 @@ namespace EventSphere.Business.Services
 
         public async Task<Ticket> CreateAsync(TicketDTO Tid)
         {
-            var events = await _eventRepository.GetByIdAsync(Tid.EventID);
+            var events = await _eventRepository.GetByIdAsync(Tid.EventId);
             var eventsName = events.EventName;
             
             var ticket = new Ticket
             {
-                EventID = Tid.EventID,
+                EventId = Tid.EventId,
                 EventName = eventsName,
                 TicketType = Tid.TicketType,
                 Price = Tid.Price,
@@ -62,7 +62,7 @@ namespace EventSphere.Business.Services
 
         public async Task<IEnumerable<Ticket>> GetTicketByEventId(int eventId)
         {
-            return await _context.Tickets.Where(u => u.EventID == eventId).ToListAsync();
+            return await _context.Tickets.Where(u => u.EventId == eventId).ToListAsync();
         }
 
         public async Task<Ticket> GetTicketByIdAsync(int id)
@@ -74,7 +74,7 @@ namespace EventSphere.Business.Services
         {
             var ticket = await _ticketRepository.GetByIdAsync(id);
 
-            ticket.EventID = Tid.EventID;
+            ticket.EventId = Tid.EventId;
             ticket.TicketType = Tid.TicketType;
             ticket.Price = Tid.Price;
             ticket.BookingReference = Tid.BookingReference;

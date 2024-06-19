@@ -62,9 +62,9 @@ namespace EventSphere.Business.Services
             {
                 string base64Image = await ResizeAndConvertToBase64Async(image);
 
-                var user = await _userRepository.GetByIdAsync(eventDto.OrganizerID);
+                var user = await _userRepository.GetByIdAsync(eventDto.OrganizerId);
                 var userName = user.Name;  
-                var category = await _eventCategoryRepository.GetByIdAsync(eventDto.CategoryID);
+                var category = await _eventCategoryRepository.GetByIdAsync(eventDto.CategoryId);
                 var categoryName = category.CategoryName;
 
                 var events = new Event
@@ -74,9 +74,9 @@ namespace EventSphere.Business.Services
                     LocationId = eventDto.Location,
                     StartDate = eventDto.StartDate,
                     EndDate = eventDto.EndDate,
-                    CategoryID = eventDto.CategoryID,
+                    CategoryId = eventDto.CategoryId,
                     CategoryName = categoryName,
-                    OrganizerID = eventDto.OrganizerID,
+                    OrganizerId = eventDto.OrganizerId,
                     OrganizerName = userName,
                     PhotoData = base64Image,
                     MaxAttendance = eventDto.MaxAttendance,
@@ -149,8 +149,8 @@ namespace EventSphere.Business.Services
                 eventById.LocationId = eventDto.Location;
                 eventById.StartDate = eventDto.StartDate;
                 eventById.EndDate = eventDto.EndDate;
-                eventById.CategoryID = eventDto.CategoryID;
-                eventById.OrganizerID = eventDto.OrganizerID;
+                eventById.CategoryId = eventDto.CategoryId;
+                eventById.OrganizerId = eventDto.OrganizerId;
                 eventById.MaxAttendance = eventDto.MaxAttendance;
                 eventById.AvailableTickets = eventDto.AvailableTickets;
                 eventById.DateCreated = eventDto.DateCreated;
@@ -189,7 +189,7 @@ namespace EventSphere.Business.Services
 
         public async Task<IEnumerable<Event>> GetEventByCategoryId(int eventCategoryId)
         {
-            return await _context.Events.Where(u => u.CategoryID == eventCategoryId).ToListAsync();
+            return await _context.Events.Where(u => u.CategoryId == eventCategoryId).ToListAsync();
         }
     }
 }

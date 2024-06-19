@@ -8,12 +8,12 @@ namespace EventSphere.Domain.DTOs.User
 {
     public class UpdateUserDTO
     {
-        public int ID { get; set; }
+        public int Id { get; set; }
         public string? Name { get; set; }
         public string? LastName { get; set; }
         public string Email { get; set; }
         public string Password { get; set; }
-        public int RoleID { get; set; }
+        public int RoleId { get; set; }
     }
 
 }

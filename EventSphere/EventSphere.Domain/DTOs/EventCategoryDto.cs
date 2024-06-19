@@ -10,7 +10,7 @@ namespace EventSphere.Domain.DTOs
     {
         public class EventCategoryDto
         {
-            public int ID { get; set; }
+            public int Id { get; set; }
             public string CategoryName { get; set; }
         }
     }

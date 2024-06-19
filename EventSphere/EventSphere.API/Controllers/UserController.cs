@@ -54,7 +54,7 @@ namespace EventSphere.API.Controllers
         [HttpPut("updateUser")]
         public async Task<IActionResult> UpdateUser(UpdateUserDTO updateUserDto)
         {
-            var existingUser = await _userService.GetUserByIdAsync(updateUserDto.ID);
+            var existingUser = await _userService.GetUserByIdAsync(updateUserDto.Id);
             if (existingUser == null)
             {
                 return NotFound();

@@ -24,13 +24,13 @@ namespace EventSphere.Business.Services
         {
             var report = new Report
             {
-                userId = Rid.userId,
-                userName = Rid.userName,
-                userlastName = Rid.userlastName,
-                userEmail = Rid.userEmail,
-                reportName = Rid.reportName,
-                reportDesc = Rid.reportDesc,
-                reportAnsw=Rid.reportAnsw
+                UserId = Rid.UserId,
+                UserName = Rid.UserName,
+                UserLastName = Rid.UserLastName,
+                UserEmail = Rid.UserEmail,
+                ReportName = Rid.ReportName,
+                ReportDesc = Rid.ReportDesc,
+                ReportAnsw=Rid.ReportAnsw
             };
             await _reportRepository.AddAsync(report);
             return report;
@@ -55,13 +55,13 @@ namespace EventSphere.Business.Services
         {
             var report = await _reportRepository.GetByIdAsync(id);
 
-            report.userId = Rid.userId;
-            report.userName = Rid.userName;
-            report.userlastName = Rid.userlastName;
-            report.userEmail = Rid.userEmail;
-            report.reportName = Rid.reportName;
-            report.reportDesc = Rid.reportDesc;
-            report.reportAnsw = Rid.reportAnsw;
+            report.UserId = Rid.UserId;
+            report.UserName = Rid.UserName;
+            report.UserLastName = Rid.UserLastName;
+            report.UserEmail = Rid.UserEmail;
+            report.ReportName = Rid.ReportName;
+            report.ReportDesc = Rid.ReportDesc;
+            report.ReportAnsw = Rid.ReportAnsw;
 
 
 
