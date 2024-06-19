@@ -45,6 +45,7 @@ namespace EventSphere.Business.Services
                 Source = Pid.StripeToken
             };
 
+            var user = await _userRepository.GetByIdAsync(Pid.UserID);
             var service = new ChargeService();
             Charge charge = await service.CreateAsync(options);
 
@@ -57,13 +58,12 @@ namespace EventSphere.Business.Services
                     UserID = Pid.UserID,
                     TicketID = Pid.TicketID,
                     TicketName = ticketName,
+                    UserName = user.Name + " " + user.LastName,
                     Amount = Pid.Amount,
                     PaymentMethod = Pid.PaymentMethod,
                     PaymentDate = Pid.PaymentDate,
                     PaymentStatus = true, 
                 };
-
-                var user = await _userRepository.GetByIdAsync(Pid.UserID);
                 var response = new PaymentResponseDto
                 {
                     Payment = payment,
