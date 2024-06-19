@@ -32,9 +32,9 @@ namespace EventSphere.Infrastructure.EntityFramework
                    .OnDelete(DeleteBehavior.Restrict);
 
             builder.HasOne(e => e.Location)
-                .WithOne()
-                .HasForeignKey<Event>(e => e.LocationId)
-                .OnDelete(DeleteBehavior.Cascade);
+                    .WithMany()
+                    .HasForeignKey(e => e.LocationId)
+                    .OnDelete(DeleteBehavior.Restrict);
         }
     }
 }

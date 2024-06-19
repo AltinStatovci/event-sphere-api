@@ -5,6 +5,7 @@
         public int ID { get; set; }
         public string EventName { get; set; }
         public string Description { get; set; }
+        public string Address { get; set; }
         public int LocationId { get; set; }
         public Location Location { get; set; }
         public DateTime StartDate { get; set; }

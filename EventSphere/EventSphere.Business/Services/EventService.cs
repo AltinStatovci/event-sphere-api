@@ -63,30 +63,19 @@ namespace EventSphere.Business.Services
 
             try
             {
-                // Convert the image to base64
                 string base64Image = await ResizeAndConvertToBase64Async(image);
 
-                // Retrieve user and category details
                 var user = await _userRepository.GetByIdAsync(eventDto.OrganizerID);
                 var userName = user.Name;
                 var category = await _eventCategoryRepository.GetByIdAsync(eventDto.CategoryID);
                 var categoryName = category.CategoryName;
+                var location = await _locationRepository.GetByIdAsync(eventDto.LocationId);
 
-                // Create location entity
-                var location = new Location
-                {
-                    Address = eventDto.Location.Address,
-                    City = eventDto.Location.City,
-                    Country = eventDto.Location.Country
-                };
-                await _locationRepository.AddAsync(location);
-
-                // Create event entity
                 var events = new Event
                 {
                     EventName = eventDto.EventName,
                     Description = eventDto.Description,
-                    LocationId = location.Id,
+                    Address = eventDto.Address,
                     Location = location,
                     StartDate = eventDto.StartDate,
                     EndDate = eventDto.EndDate,
@@ -99,8 +88,6 @@ namespace EventSphere.Business.Services
                     PhotoData = base64Image,
                     MaxAttendance = eventDto.MaxAttendance,
                     AvailableTickets = eventDto.AvailableTickets,
-                    DateCreated = DateTime.UtcNow,  // Usually, DateCreated is set to the current time
-                    Tickets = new List<Ticket>()  // Initialize with an empty list
                 };
 
                 await _eventRepository.AddAsync(events);
@@ -166,7 +153,7 @@ namespace EventSphere.Business.Services
 
                 eventById.EventName = eventDto.EventName;
                 eventById.Description = eventDto.Description;
-                //eventById.LocationId = eventDto.Location;
+                eventById.LocationId = eventDto.LocationId;
                 eventById.StartDate = eventDto.StartDate;
                 eventById.EndDate = eventDto.EndDate;
                 eventById.CategoryID = eventDto.CategoryID;

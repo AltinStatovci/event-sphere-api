@@ -1,5 +1,4 @@
-﻿using EventSphere.Domain.DTOs;
-using EventSphere.Domain.Entities;
+﻿using EventSphere.Domain.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
