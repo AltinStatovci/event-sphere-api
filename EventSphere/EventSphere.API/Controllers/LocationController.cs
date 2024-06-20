@@ -1,5 +1,6 @@
 ﻿using EventSphere.Business.Services;
 using EventSphere.Business.Services.Interfaces;
+using EventSphere.Domain.DTOs;
 using EventSphere.Domain.Entities;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;

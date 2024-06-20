@@ -1,4 +1,5 @@
 ﻿using EventSphere.Business.Services.Interfaces;
+using EventSphere.Domain.DTOs;
 using EventSphere.Domain.Entities;
 using EventSphere.Infrastructure;
 using EventSphere.Infrastructure.Repositories;

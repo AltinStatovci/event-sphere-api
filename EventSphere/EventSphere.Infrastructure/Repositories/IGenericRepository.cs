@@ -1,4 +1,6 @@
-﻿using System.Linq.Expressions;
+﻿using EventSphere.Domain.DTOs;
+using EventSphere.Domain.Entities;
+using System.Linq.Expressions;
 
 namespace EventSphere.Infrastructure.Repositories
 {
