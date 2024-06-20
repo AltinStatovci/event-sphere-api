@@ -37,11 +37,17 @@ namespace EventSphere.Business.Services
 
         public async Task<PaymentResponseDto> AddPaymentAsync(PaymentDTO Pid)
         {
+            var ticket = await _ticketRepository.GetByIdAsync(Pid.TicketID);
+            if (ticket == null)
+            {
+                throw new Exception("Ticket not found");
+            }
+
             var options = new ChargeCreateOptions
             {
-                Amount = Pid.Amount * 100, // amount in cents
+                Amount = (int)(ticket.Price * Pid.Amount * 100), // Calculate the total price in cents
                 Currency = "usd",
-                Description = "Payment for ticket",
+                Description = $"Payment for {Pid.Amount} ticket(s)",
                 Source = Pid.StripeToken
             };
 
@@ -51,24 +57,24 @@ namespace EventSphere.Business.Services
 
             if (charge.Status == "succeeded")
             {
-                var ticket = await _ticketRepository.GetByIdAsync(Pid.TicketID);
-                var ticketName = ticket.TicketType;
                 var payment = new Payment
                 {
                     UserID = Pid.UserID,
                     TicketID = Pid.TicketID,
-                    TicketName = ticketName,
+                    TicketName = ticket.TicketType,
                     UserName = user.Name + " " + user.LastName,
                     Amount = Pid.Amount,
                     PaymentMethod = Pid.PaymentMethod,
                     PaymentDate = Pid.PaymentDate,
-                    PaymentStatus = true, 
+                    PaymentStatus = true,
                 };
+
                 var response = new PaymentResponseDto
                 {
                     Payment = payment,
                     User = user,
                 };
+
                 await _genericRepository.AddAsync(payment);
                 return response;
             }
