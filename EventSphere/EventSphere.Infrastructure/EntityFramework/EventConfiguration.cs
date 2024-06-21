@@ -24,17 +24,17 @@ namespace EventSphere.Infrastructure.EntityFramework
             builder.HasOne(e => e.Category)
                    .WithMany()
                    .HasForeignKey(e => e.CategoryID)
-                   .OnDelete(DeleteBehavior.Restrict);
+                   .OnDelete(DeleteBehavior.Cascade);
 
             builder.HasOne(e => e.Organizer)
                    .WithMany()
                    .HasForeignKey(e => e.OrganizerID)
-                   .OnDelete(DeleteBehavior.Restrict);
+                   .OnDelete(DeleteBehavior.Cascade);
 
             builder.HasOne(e => e.Location)
                     .WithMany()
                     .HasForeignKey(e => e.LocationId)
-                    .OnDelete(DeleteBehavior.Restrict);
+                    .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }
