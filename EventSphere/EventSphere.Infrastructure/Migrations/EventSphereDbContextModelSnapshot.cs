@@ -318,19 +318,19 @@ namespace EventSphere.Infrastructure.Migrations
                     b.HasOne("EventSphere.Domain.Entities.EventCategory", "Category")
                         .WithMany()
                         .HasForeignKey("CategoryID")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("EventSphere.Domain.Entities.Location", "Location")
                         .WithMany()
                         .HasForeignKey("LocationId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("EventSphere.Domain.Entities.User", "Organizer")
                         .WithMany()
                         .HasForeignKey("OrganizerID")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Category");
@@ -345,13 +345,13 @@ namespace EventSphere.Infrastructure.Migrations
                     b.HasOne("EventSphere.Domain.Entities.Ticket", "Ticket")
                         .WithMany("Payments")
                         .HasForeignKey("TicketID")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("EventSphere.Domain.Entities.User", "User")
                         .WithMany("Payments")
                         .HasForeignKey("UserID")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Ticket");
@@ -364,7 +364,7 @@ namespace EventSphere.Infrastructure.Migrations
                     b.HasOne("EventSphere.Domain.Entities.Event", "Event")
                         .WithMany("Tickets")
                         .HasForeignKey("EventID")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Event");
