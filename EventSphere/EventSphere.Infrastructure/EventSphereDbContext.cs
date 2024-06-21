@@ -31,6 +31,19 @@ namespace EventSphere.Infrastructure
             modelBuilder.ApplyConfiguration(new EventConfiguration());
             modelBuilder.ApplyConfiguration(new ReportConfiguration());
             modelBuilder.ApplyConfiguration(new LocationConfiguration());
+
+            modelBuilder.Entity<Role>().HasData(
+            new Role { ID = 1, RoleName = "Admin" },
+            new Role { ID = 2, RoleName = "Organizer" },
+            new Role { ID = 3, RoleName = "User" }
+            );
+
+            modelBuilder.Entity<EventCategory>().HasData(
+                new EventCategory { ID = 1, CategoryName = "Concerts" },
+                new EventCategory { ID = 2, CategoryName = "Sports" },
+                new EventCategory { ID = 3, CategoryName = "Outside Activities" }
+            );
+
         }
     }
 }
