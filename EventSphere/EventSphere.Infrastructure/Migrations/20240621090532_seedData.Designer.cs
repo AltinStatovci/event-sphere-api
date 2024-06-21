@@ -4,6 +4,7 @@ using EventSphere.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EventSphere.Infrastructure.Migrations
 {
     [DbContext(typeof(EventSphereDbContext))]
-    partial class EventSphereDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240621090532_seedData")]
+    partial class seedData
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -145,50 +148,6 @@ namespace EventSphere.Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Location", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            City = "Prishtina",
-                            Country = "Kosovo"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            City = "Fushe Kosove",
-                            Country = "Kosovo"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            City = "Prizren",
-                            Country = "Kosovo"
-                        },
-                        new
-                        {
-                            Id = 4,
-                            City = "Gjilan",
-                            Country = "Kosovo"
-                        },
-                        new
-                        {
-                            Id = 5,
-                            City = "Ferizaj",
-                            Country = "Kosovo"
-                        },
-                        new
-                        {
-                            Id = 6,
-                            City = "Peje",
-                            Country = "Kosovo"
-                        },
-                        new
-                        {
-                            Id = 7,
-                            City = "Mitrovice",
-                            Country = "Kosovo"
-                        });
                 });
 
             modelBuilder.Entity("EventSphere.Domain.Entities.Payment", b =>
