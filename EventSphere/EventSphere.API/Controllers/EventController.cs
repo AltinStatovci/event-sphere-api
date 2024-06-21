@@ -96,5 +96,13 @@ namespace EventSphere.API.Controllers
             var events = await _eventService.GetEventByCategoryId(id);
             return Ok(events);
         }
+
+        [HttpGet("{id}/organizer")]
+        public async Task<ActionResult<IEnumerable<Event>>> GetEventByOrganizerIdAsync(int id)
+        {
+            var events = await _eventService.GetEventByOrganizerId(id);
+            return Ok(events);
+        }
+        
     }
 }

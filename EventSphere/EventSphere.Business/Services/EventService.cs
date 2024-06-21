@@ -198,5 +198,10 @@ namespace EventSphere.Business.Services
         {
             return await _context.Events.Where(u => u.CategoryID == eventCategoryId).ToListAsync();
         }
+        
+        public async Task<IEnumerable<Event>> GetEventByOrganizerId(int organizerId)
+        {
+            return await _context.Events.Where(u => u.OrganizerID == organizerId).ToListAsync();
+        }
     }
 }
