@@ -45,7 +45,7 @@ namespace EventSphere.Business.Services
 
             var options = new ChargeCreateOptions
             {
-                Amount = (int)(ticket.Price * Pid.Amount * 100), // Calculate the total price in cents
+                Amount = (int)(ticket.Price * Pid.Amount * 100),
                 Currency = "usd",
                 Description = $"Payment for {Pid.Amount} ticket(s)",
                 Source = Pid.StripeToken
@@ -69,10 +69,18 @@ namespace EventSphere.Business.Services
                     PaymentStatus = true,
                 };
 
+                var availableTick = await _eventRepository.GetByIdAsync(ticket.EventID);
+                if (availableTick != null)
+                {
+                    availableTick.AvailableTickets -= Pid.Amount;
+                    await _eventRepository.UpdateAsync(availableTick);
+                }
+
                 var response = new PaymentResponseDto
                 {
                     Payment = payment,
                     User = user,
+                    Ticket = ticket,
                 };
 
                 await _genericRepository.AddAsync(payment);
@@ -83,6 +91,7 @@ namespace EventSphere.Business.Services
                 throw new Exception("Payment failed");
             }
         }
+
 
 
         public async Task DeletePaymentAsync(int id)

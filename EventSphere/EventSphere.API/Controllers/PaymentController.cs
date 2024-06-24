@@ -49,7 +49,7 @@ namespace EventSphere.API.Controllers
                     Subject = "Payment Confirmation",
                     Body = $@"
             <p>Thank you <strong>{paymentResponse.User.Name}</strong> for buying a ticket.</p>
-            <p>The price of the ticket is <strong>{paymentResponse.Payment.Amount:C}</strong>.</p>"
+            <p>The price of the ticket is <strong>{paymentResponse.Ticket.Price:C}</strong>.</p>"
                 };
 
                 await _emailService.SendEmailAsync(mailRequest);
