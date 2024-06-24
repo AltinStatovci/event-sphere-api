@@ -32,6 +32,12 @@ namespace EventSphere.API.Controllers
             var report = await _reportService.GetReportByIdAsync(id);
             return Ok(report);
         }
+        [HttpGet("GetReportByUserId/{userId}")]
+        public async Task<IActionResult> GetReportByUserId(int userId)
+        {
+            var reports = await _reportService.GetReportByUserIdAsync(userId);
+            return Ok(reports);
+        }
         [HttpPost]
         public async Task<IActionResult> Create(ReportDTO reportDTO)
         {
@@ -50,5 +56,6 @@ namespace EventSphere.API.Controllers
             await _reportService.DeleteAsync(id);
             return NoContent();
         }
+        
     }
 }
