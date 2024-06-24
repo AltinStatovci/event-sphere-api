@@ -8,7 +8,11 @@ namespace EventSphere.Business.Services.Interfaces
         Task<IEnumerable<User>> GetAllUsersAsync();
         Task<User> GetUserByIdAsync(int id);
         Task UpdateUserAsync(UpdateUserDTO updateUserDto);
+
+        Task UpdateUserPasswordAsync( int id,UpdatePasswordDto updatePasswordDto);
         Task DeleteUserAsync(int id);
         Task<int> GetUserCountAsync();
+        
+        
     }
 }

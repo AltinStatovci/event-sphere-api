@@ -11,8 +11,12 @@
   <component name="ChangeListManager">
     <list default="true" id="c85145b6-99f5-46d8-b5ce-9fdbb86b216d" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.EventSphere/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.EventSphere/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/EventSphere.API/Controllers/UserController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/EventSphere.API/Controllers/UserController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/EventSphere.API/appsettings.json" beforeDir="false" afterPath="$PROJECT_DIR$/EventSphere.API/appsettings.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/EventSphere.Business/Services/UserService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/EventSphere.Business/Services/UserService.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/EventSphere.Domain/DTOs/User/UpdateUserDTO.cs" beforeDir="false" afterPath="$PROJECT_DIR$/EventSphere.Domain/DTOs/User/UpdateUserDTO.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/EventSphere.Infrastructure/Migrations/20240620145403_InitialCreate.cs" beforeDir="false" afterPath="$PROJECT_DIR$/EventSphere.Infrastructure/Migrations/20240620145403_InitialCreate.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/EventSphere.Infrastructure/Migrations/20240621082558_initCreate.Designer.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/EventSphere.Infrastructure/Migrations/20240621082558_initCreate.cs" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -99,6 +103,7 @@
       <updated>1716276311178</updated>
       <workItem from="1716276314923" duration="7604000" />
       <workItem from="1716366031451" duration="519000" />
+      <workItem from="1719231398900" duration="1205000" />
     </task>
     <servers />
   </component>

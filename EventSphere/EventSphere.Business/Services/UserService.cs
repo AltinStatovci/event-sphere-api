@@ -37,19 +37,34 @@ namespace EventSphere.Business.Services
             }
 
             _mapper.Map(updateUserDto, existingUser);
-
-            if (!string.IsNullOrWhiteSpace(updateUserDto.Password))
-            {
-                var passwordSalt = PasswordGenerator.GenerateSalt();
-                var passwordHash = PasswordGenerator.GenerateHash(updateUserDto.Password, passwordSalt);
-                existingUser.Salt = passwordSalt;
-                existingUser.Password = passwordHash;
-            }
-
+            
             existingUser.DateCreated = existingUser.DateCreated;
             await _userRepository.UpdateAsync(existingUser);
         }
 
+        public async Task UpdateUserPasswordAsync(int id, UpdatePasswordDto updatePasswordDto)
+        {
+            var existingUser = await _userRepository.GetByIdAsync(id);
+            if (existingUser == null)
+            {
+                throw new Exception("User does not exist!");
+            }
+           
+            
+            if (!PasswordGenerator.VerifyPassword(updatePasswordDto.CurrentPassword, existingUser.Password, existingUser.Salt))
+            {
+                throw new UnauthorizedAccessException("Current password is incorrect");
+            }
+
+           
+            var newSalt = PasswordGenerator.GenerateSalt();
+            var newHashedPassword = PasswordGenerator.GenerateHash(updatePasswordDto.NewPassword, newSalt);
+            
+            existingUser.Password = newHashedPassword;
+            existingUser.Salt = newSalt;
+
+            await _userRepository.UpdateAsync(existingUser);
+        }
 
         public async Task DeleteUserAsync(int id)
         {
