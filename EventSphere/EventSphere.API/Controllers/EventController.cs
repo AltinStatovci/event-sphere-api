@@ -103,6 +103,17 @@ namespace EventSphere.API.Controllers
             var events = await _eventService.GetEventByOrganizerId(id);
             return Ok(events);
         }
-        
+        [HttpGet("{city}/city")]
+        public async Task<ActionResult<IEnumerable<Event>>> GetEventsByCityAsync(string city)
+        {
+            var events = await _eventService.GetEventsByCity(city);
+            return Ok(events);
+        }
+        [HttpGet("{country}/country")]
+        public async Task<ActionResult<IEnumerable<Event>>> GetEventsByCountryAsync(string country)
+        {
+            var events = await _eventService.GetEventsByCountry(country);
+            return Ok(events);
+        }
     }
 }

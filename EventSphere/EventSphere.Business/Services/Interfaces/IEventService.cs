@@ -14,6 +14,8 @@ namespace EventSphere.Business.Services.Interfaces
         Task<int> GetEventCountAsync();
         Task<IEnumerable<Event>> GetEventByCategoryId(int id);
         Task<IEnumerable<Event>> GetEventByOrganizerId(int id);
+        Task<IEnumerable<Event>> GetEventsByCity(string city);
+        Task<IEnumerable<Event>> GetEventsByCountry(string country);
 
     }
 }
