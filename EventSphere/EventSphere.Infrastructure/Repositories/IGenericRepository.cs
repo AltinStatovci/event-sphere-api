@@ -13,5 +13,6 @@ namespace EventSphere.Infrastructure.Repositories
         Task UpdateAsync(TEntity entity);
         Task DeleteAsync(int id);
         Task<int> CountAsync();
+        Task<IEnumerable<TEntity>> FindAsync(Expression<Func<TEntity, bool>> predicate);
     }
 }
