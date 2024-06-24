@@ -16,7 +16,7 @@ namespace EventSphere.Domain.DTOs
         public string PaymentMethod { get; set; }
         public bool PaymentStatus { get; set; }
         public DateTime PaymentDate { get; set; }
-        public string StripeToken { get; set; } // New field for Stripe token
+        public string StripeToken { get; set; } 
     }
 
 }
