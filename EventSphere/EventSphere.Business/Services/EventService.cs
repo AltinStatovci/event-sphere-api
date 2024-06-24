@@ -203,5 +203,15 @@ namespace EventSphere.Business.Services
         {
             return await _context.Events.Where(u => u.OrganizerID == organizerId).ToListAsync();
         }
+
+        public async Task<IEnumerable<Event>> GetEventsByCity(string city)
+        {
+            return await _context.Events.Include(e => e.Location).Where(e => e.Location.City == city).ToListAsync();
+        }
+
+        public async Task<IEnumerable<Event>> GetEventsByCountry(string country)
+        {
+            return await _context.Events.Include(e => e.Location).Where(e => e.Location.Country == country).ToListAsync();
+        }
     }
 }
