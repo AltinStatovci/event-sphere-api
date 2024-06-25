@@ -2,6 +2,7 @@
 using EventSphere.Domain.DTOs;
 using EventSphere.Domain.DTOs.EventSphere.API.DTOs;
 using EventSphere.Domain.Entities;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -113,6 +114,14 @@ namespace EventSphere.API.Controllers
         public async Task<ActionResult<IEnumerable<Event>>> GetEventsByCountryAsync(string country)
         {
             var events = await _eventService.GetEventsByCountry(country);
+            return Ok(events);
+        }
+
+        [AllowAnonymous]
+        [HttpGet("getEventsByName")]
+        public async Task<ActionResult<IEnumerable<Event>>> GetEventsByName([FromQuery] string name)
+        {
+            var events = await _eventService.GetEventsByNameAsync(name);
             return Ok(events);
         }
     }

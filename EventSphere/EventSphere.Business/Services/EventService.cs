@@ -44,6 +44,16 @@ namespace EventSphere.Business.Services
             _locationRepository = locationRepository;
         }
 
+        public async Task<IEnumerable<Event>> GetEventsByNameAsync(string name)
+        {
+            if (string.IsNullOrEmpty(name))
+            {
+                return await _eventRepository.GetAllAsync();
+            }
+
+            return await _eventRepository.GetAsync(e => e.EventName.Contains(name));
+        }
+
         public async Task<IEnumerable<Event>> GetAllEventsAsync()
         {
             return await _eventRepository.GetAllAsync();
