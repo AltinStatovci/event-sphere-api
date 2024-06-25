@@ -72,8 +72,15 @@ namespace EventSphere.Business.Services
                 var availableTick = await _eventRepository.GetByIdAsync(ticket.EventID);
                 if (availableTick != null)
                 {
-                    availableTick.AvailableTickets -= Pid.Amount;
-                    await _eventRepository.UpdateAsync(availableTick);
+                    if(availableTick.AvailableTickets == 0 || Pid.Amount >= availableTick.AvailableTickets)
+                    {
+                        throw new Exception("There are not enough tickets available");
+                    }
+                    else
+                    {
+                        availableTick.AvailableTickets -= Pid.Amount;
+                        await _eventRepository.UpdateAsync(availableTick);
+                    }
                 }
 
                 var response = new PaymentResponseDto
