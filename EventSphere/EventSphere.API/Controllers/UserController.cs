@@ -58,6 +58,23 @@ namespace EventSphere.API.Controllers
             await _userService.UpdateUserAsync(updateUserDto);
             return NoContent();
         }
+        
+
+        [HttpPatch("updateUserPassword/{id}")]
+        public async Task<IActionResult> UpdateUserPassword(int id, UpdatePasswordDto updatePasswordDto)
+        {
+            try
+            {
+                await _userService.UpdateUserPasswordAsync(id, updatePasswordDto);
+                return NoContent();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
+         
+        }
 
         [HttpDelete("deleteUser/{id}")]
         public async Task<IActionResult> DeleteUser(int id)

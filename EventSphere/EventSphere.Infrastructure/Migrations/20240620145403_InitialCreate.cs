@@ -192,7 +192,7 @@ namespace EventSphere.Infrastructure.Migrations
                         column: x => x.UserID,
                         principalTable: "User",
                         principalColumn: "ID",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.NoAction);
                 });
 
             migrationBuilder.CreateIndex(
