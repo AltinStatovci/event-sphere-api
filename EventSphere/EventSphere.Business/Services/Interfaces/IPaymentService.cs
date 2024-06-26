@@ -16,6 +16,8 @@ namespace EventSphere.Business.Services.Interfaces
         Task UpdatePaymentAsync(int id, PaymentDTO Pid);
         Task DeletePaymentAsync(int id);
         Task<int> GetPaymentCountAsync();
+        Task<IEnumerable<Payment>> GetPaymentsByUserIdAsync(int userId);
+        Task<IEnumerable<Payment>> GetPaymentsByEventIdAsync(int eventId);
 
     }
 }

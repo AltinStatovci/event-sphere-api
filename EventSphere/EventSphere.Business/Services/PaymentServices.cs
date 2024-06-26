@@ -134,5 +134,14 @@ namespace EventSphere.Business.Services
         {
             return await _genericRepository.CountAsync();
         }
+        public async Task<IEnumerable<Payment>> GetPaymentsByUserIdAsync(int userId)
+        {
+            return await _genericRepository.GetAsync(p => p.UserID == userId);
+        }
+        public async Task<IEnumerable<Payment>> GetPaymentsByEventIdAsync(int eventId)
+        {
+            return await _genericRepository.FindByConditionAsync(p => p.Ticket.EventID == eventId);
+        }
+
     }
 }

@@ -39,6 +39,19 @@ namespace EventSphere.API.Controllers
             var ticket = await _paymentService.GetPaymentByIdAsync(id);
             return Ok(ticket);
         }
+        [HttpGet("user/{userId}")]
+        public async Task<IActionResult> GetPaymentsByUserId(int userId)
+        {
+            var payments = await _paymentService.GetPaymentsByUserIdAsync(userId);
+            return Ok(payments);
+        }
+
+        [HttpGet("event/{eventId}")]
+        public async Task<IActionResult> GetPaymentsByEventId(int eventId)
+        {
+            var payments = await _paymentService.GetPaymentsByEventIdAsync(eventId);
+            return Ok(payments);
+        }
         [HttpPost]
         public async Task<IActionResult> Create(PaymentDTO paymentDTO)
         {

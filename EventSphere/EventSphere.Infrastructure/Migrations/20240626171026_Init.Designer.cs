@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EventSphere.Infrastructure.Migrations
 {
     [DbContext(typeof(EventSphereDbContext))]
-    [Migration("20240621132306_modifyEventDescription")]
-    partial class modifyEventDescription
+    [Migration("20240626171026_Init")]
+    partial class Init
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -53,8 +53,8 @@ namespace EventSphere.Infrastructure.Migrations
 
                     b.Property<string>("Description")
                         .IsRequired()
-                        .HasMaxLength(1000)
-                        .HasColumnType("nvarchar(1000)");
+                        .HasMaxLength(300)
+                        .HasColumnType("nvarchar(300)");
 
                     b.Property<DateTime>("EndDate")
                         .HasColumnType("datetime2");

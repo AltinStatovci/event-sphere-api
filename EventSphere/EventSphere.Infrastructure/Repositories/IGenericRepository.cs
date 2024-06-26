@@ -14,5 +14,6 @@ namespace EventSphere.Infrastructure.Repositories
         Task DeleteAsync(int id);
         Task<int> CountAsync();
         Task<IEnumerable<TEntity>> FindAsync(Expression<Func<TEntity, bool>> predicate);
+        Task<IEnumerable<TEntity>> FindByConditionAsync(Expression<Func<TEntity, bool>> expression);
     }
 }
