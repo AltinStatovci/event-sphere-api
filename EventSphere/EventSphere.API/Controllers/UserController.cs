@@ -25,7 +25,9 @@ namespace EventSphere.API.Controllers
             _mapper = mapper;
         }
 
+        
         [HttpGet("getUsers")]
+        [Authorize (Policy = "Admin"  )]
         public async Task<IActionResult> GetUsers()
         {
             var userClaims = User.Claims;
@@ -41,6 +43,7 @@ namespace EventSphere.API.Controllers
         }
 
         [HttpGet("getUser/{id}")]
+        [Authorize(Policy = "All")]
         public async Task<IActionResult> GetUser(int id)
         {
             var user = await _userService.GetUserByIdAsync(id);
@@ -53,6 +56,7 @@ namespace EventSphere.API.Controllers
         }
 
         [HttpPut("updateUser")]
+        [Authorize(Policy = "All")]
         public async Task<IActionResult> UpdateUser(UpdateUserDTO updateUserDto)
         {
             await _userService.UpdateUserAsync(updateUserDto);
@@ -61,6 +65,7 @@ namespace EventSphere.API.Controllers
         
 
         [HttpPatch("updateUserPassword/{id}")]
+        [Authorize(Policy = "All")]
         public async Task<IActionResult> UpdateUserPassword(int id, UpdatePasswordDto updatePasswordDto)
         {
             try
@@ -77,6 +82,7 @@ namespace EventSphere.API.Controllers
         }
 
         [HttpDelete("deleteUser/{id}")]
+        [Authorize(Policy = "Admin")]
         public async Task<IActionResult> DeleteUser(int id)
         {
             await _userService.DeleteUserAsync(id);
