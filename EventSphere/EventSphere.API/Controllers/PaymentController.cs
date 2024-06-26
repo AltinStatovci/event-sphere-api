@@ -26,6 +26,8 @@ namespace EventSphere.API.Controllers
             var ticket = await _paymentService.GetAllPaymentsAsync();
             return Ok(ticket);
         }
+       
+
         [HttpGet("count")]
         public async Task<ActionResult<int>> GetPaymentCount()
         {
