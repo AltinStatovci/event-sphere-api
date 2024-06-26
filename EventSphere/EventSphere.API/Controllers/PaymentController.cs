@@ -40,7 +40,6 @@ namespace EventSphere.API.Controllers
             return Ok(ticket);
         }
         [HttpPost]
-        [Authorize(Policy = "All")]
         public async Task<IActionResult> Create(PaymentDTO paymentDTO)
         {
             try
@@ -66,7 +65,7 @@ namespace EventSphere.API.Controllers
         }
 
         [HttpPut("{id}")]
-        [Authorize(Policy = "All")]
+       
         public async Task<IActionResult> Update(int id, PaymentDTO PaymentDTO)
         {
             await _paymentService.UpdatePaymentAsync(id, PaymentDTO);
