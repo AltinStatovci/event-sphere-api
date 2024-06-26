@@ -11,16 +11,7 @@
   <component name="ChangeListManager">
     <list default="true" id="c85145b6-99f5-46d8-b5ce-9fdbb86b216d" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.EventSphere/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.EventSphere/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/EventSphere.API/Controllers/EmailController.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/EventSphere.API/Controllers/EventCategoryController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/EventSphere.API/Controllers/EventCategoryController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/EventSphere.API/Controllers/EventController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/EventSphere.API/Controllers/EventController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/EventSphere.API/Controllers/LocationController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/EventSphere.API/Controllers/LocationController.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/EventSphere.API/Controllers/PaymentController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/EventSphere.API/Controllers/PaymentController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/EventSphere.API/Controllers/ReportController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/EventSphere.API/Controllers/ReportController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/EventSphere.API/Controllers/RoleController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/EventSphere.API/Controllers/RoleController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/EventSphere.API/Controllers/TicketController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/EventSphere.API/Controllers/TicketController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/EventSphere.API/Controllers/UserController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/EventSphere.API/Controllers/UserController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/EventSphere.API/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/EventSphere.API/Program.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
