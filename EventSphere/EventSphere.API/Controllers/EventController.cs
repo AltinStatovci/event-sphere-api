@@ -33,6 +33,7 @@ namespace EventSphere.API.Controllers
         }
 
         [HttpGet("{id}")]
+        
         public async Task<ActionResult<Event>> GetEventName(int id)
         {
             var eventName = await _eventService.GetEventsByIdAsync(id);
@@ -45,6 +46,7 @@ namespace EventSphere.API.Controllers
 
 
         [HttpPost]
+        [Authorize (Policy = "AdminOrOrganizer")]
         public async Task<ActionResult<Event>> CreateEvent([FromForm] EventDTO eventDto, IFormFile image)
         {
             if (eventDto == null || image == null || image.Length == 0)
@@ -63,6 +65,7 @@ namespace EventSphere.API.Controllers
             }
         }
         [HttpPut("{id}")]
+        [Authorize (Policy = "AdminOrOrganizer")]
         public async Task<ActionResult> UpdateEvent(int id, [FromForm] EventDTO eventDto, IFormFile newImage)
         {
             if (id == 0 || eventDto == null)
@@ -86,6 +89,7 @@ namespace EventSphere.API.Controllers
         }
 
         [HttpDelete("{id}")]
+        [Authorize (Policy = "AdminOrOrganizer")]
         public async Task<ActionResult> DeleteCategory(int id)
         {
             await _eventService.DeleteEventsAsync(id);
@@ -99,6 +103,7 @@ namespace EventSphere.API.Controllers
         }
 
         [HttpGet("{id}/organizer")]
+        [Authorize (Policy = "AdminOrOrganizer")]
         public async Task<ActionResult<IEnumerable<Event>>> GetEventByOrganizerIdAsync(int id)
         {
             var events = await _eventService.GetEventByOrganizerId(id);

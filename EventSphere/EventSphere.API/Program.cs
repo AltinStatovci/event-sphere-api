@@ -38,9 +38,19 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJw
         ValidateIssuer = true,
         ValidateAudience = true,
         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"])),
+        RoleClaimType = "Role"
     };
 });
-builder.Services.AddAuthorization();
+builder.Services.AddAuthorization(options =>
+{
+    options.AddPolicy("Admin", policy => policy.RequireRole("1"));
+    options.AddPolicy("Organizer", policy => policy.RequireClaim("2"));
+    options.AddPolicy("User", policy => policy.RequireRole("3"));
+    
+    options.AddPolicy("AdminOrOrganizer", policy => policy.RequireRole("1", "2"));
+    options.AddPolicy("All", policy => policy.RequireRole("1", "2","3"));
+   
+});
 
 builder.Services.Configure<StripeSettings>(builder.Configuration.GetSection("Stripe"));
 

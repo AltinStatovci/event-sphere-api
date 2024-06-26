@@ -5,6 +5,7 @@ using EventSphere.Domain.Entities;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Reflection.Metadata.Ecma335;
+using Microsoft.AspNetCore.Authorization;
 
 namespace EventSphere.API.Controllers
 {
@@ -38,6 +39,7 @@ namespace EventSphere.API.Controllers
         }
 
         [HttpPost]
+        [Authorize (Policy = "Admin")]
         public async Task<IActionResult> AddLocation(Location location)
         {
             var createdLocation = await _locationServices.AddLocation(location);
@@ -45,6 +47,7 @@ namespace EventSphere.API.Controllers
         }
 
         [HttpPut("{id}")]
+        [Authorize(Policy = "Admin")]
         public async Task<IActionResult> UpdateLocation(int id, Location location)
         {
             if (id != location.Id)
@@ -57,6 +60,7 @@ namespace EventSphere.API.Controllers
         }
 
         [HttpDelete("{id}")]
+        [Authorize(Policy = "Admin")]
         public async Task<IActionResult> DeleteLocation(int id)
         {
             await _locationServices.DeleteLocation(id);
