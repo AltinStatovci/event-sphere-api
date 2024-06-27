@@ -20,7 +20,7 @@ namespace EventSphere.API.Controllers
             _emailService = emailService;
         }
         [HttpGet]
-        //[Authorize(Policy = "Admin")]
+        [Authorize(Policy = "Admin")]
         public async Task<IActionResult> GetAllPayments()
         {
             var ticket = await _paymentService.GetAllPaymentsAsync();
@@ -41,7 +41,9 @@ namespace EventSphere.API.Controllers
             var ticket = await _paymentService.GetPaymentByIdAsync(id);
             return Ok(ticket);
         }
+
         [HttpGet("user/{userId}")]
+        [Authorize(Policy = "User")]
         public async Task<IActionResult> GetPaymentsByUserId(int userId)
         {
             var payments = await _paymentService.GetPaymentsByUserIdAsync(userId);
@@ -49,6 +51,7 @@ namespace EventSphere.API.Controllers
         }
 
         [HttpGet("event/{eventId}")]
+        [Authorize(Policy = "Organizer")]
         public async Task<IActionResult> GetPaymentsByEventId(int eventId)
         {
             var payments = await _paymentService.GetPaymentsByEventIdAsync(eventId);
