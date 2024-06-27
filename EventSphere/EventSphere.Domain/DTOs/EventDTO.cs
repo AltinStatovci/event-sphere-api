@@ -8,9 +8,9 @@ namespace EventSphere.Domain.DTOs
         public string EventName { get; set; }
 
         public string Description { get; set; }
-
-        public string Location { get; set; }
-
+      
+        public string Address { get; set; }
+        public int LocationId { get; set; }
         public DateTime StartDate { get; set; }
 
         public DateTime EndDate { get; set; }
@@ -18,8 +18,6 @@ namespace EventSphere.Domain.DTOs
         public int CategoryID { get; set; }
 
         public int OrganizerID { get; set; }
-
-        public string? PhotoData { get; set; }
 
         public int MaxAttendance { get; set; }
 

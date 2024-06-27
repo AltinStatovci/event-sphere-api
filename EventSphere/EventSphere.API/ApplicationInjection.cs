@@ -24,11 +24,16 @@ namespace EventSphere.API
             services.AddScoped<IEventCategoryService, EventCategoryService>();
             services.AddScoped<IGenericRepository<Payment>, GenericRepository<Payment>>();
             services.AddScoped<IPaymentService, PaymentServices>();
+            services.AddScoped<IReportService, ReportService>();
+            services.AddScoped<IGenericRepository<Report>, GenericRepository<Report>>();
 
             services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IAccountService, AccountService>();
+
+            services.AddScoped<IGenericRepository<Location>, GenericRepository<Location>>();
+            services.AddScoped<ILocationServices, LocationServices>();
 
             var config = TypeAdapterConfig.GlobalSettings;
             config.Scan(typeof(Program).Assembly);

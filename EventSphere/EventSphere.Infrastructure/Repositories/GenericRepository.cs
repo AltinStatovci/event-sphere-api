@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Org.BouncyCastle.Asn1;
 using System.Linq.Expressions;
 
 namespace EventSphere.Infrastructure.Repositories
@@ -49,5 +50,18 @@ namespace EventSphere.Infrastructure.Repositories
                 await _context.SaveChangesAsync();
             }
         }
+        public async Task<int> CountAsync()
+        {
+            return await _context.Set<TEntity>().CountAsync();
+        }
+        public async Task<IEnumerable<TEntity>> FindAsync(Expression<Func<TEntity, bool>> predicate)
+        {
+            return await _context.Set<TEntity>().Where(predicate).ToListAsync();
+        }
+        public async Task<IEnumerable<TEntity>> FindByConditionAsync(Expression<Func<TEntity, bool>> expression) 
+        {
+            return await _context.Set<TEntity>().Where(expression).ToListAsync();
+        }
+
     }
 }

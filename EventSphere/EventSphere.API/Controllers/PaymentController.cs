@@ -1,7 +1,9 @@
 ﻿using EventSphere.Business.Helper;
+using EventSphere.Business.Services;
 using EventSphere.Business.Services.Interfaces;
 using EventSphere.Domain.DTOs;
 using EventSphere.Domain.Entities;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace EventSphere.API.Controllers
@@ -18,41 +20,77 @@ namespace EventSphere.API.Controllers
             _emailService = emailService;
         }
         [HttpGet]
+        [Authorize(Policy = "Admin")]
         public async Task<IActionResult> GetAllPayments()
         {
             var ticket = await _paymentService.GetAllPaymentsAsync();
             return Ok(ticket);
         }
+       
+
+        [HttpGet("count")]
+        public async Task<ActionResult<int>> GetPaymentCount()
+        {
+            var count = await _paymentService.GetPaymentCountAsync();
+            return Ok(count);
+        }
         [HttpGet("{id}")]
+        [Authorize(Policy = "All")]
         public async Task<IActionResult> GetPaymentId(int id)
         {
             var ticket = await _paymentService.GetPaymentByIdAsync(id);
             return Ok(ticket);
         }
-        [HttpPost]
-        public async Task<IActionResult> Create(PaymentDTO PaymentDTO)
-        {
-            var paymentResponse = await _paymentService.AddPaymentAsync(PaymentDTO);
-            var mailRequest = new MailRequest
-            {
-                ToEmail = paymentResponse.User.Email, // Assume User object has an Email property
-                Subject = "Payment Confirmation",
-                Body = $@"
-                <p>Thank You <strong>{paymentResponse.User.Name}</strong> for buying a ticket to.</p>
-                <p>The price of the ticket is <strong>{paymentResponse.Payment.Amount:C}</strong>.</p>"
-            };
 
-            // Send the email
-            await _emailService.SendEmailAsync(mailRequest);
-            return CreatedAtAction(nameof(GetPaymentId), new { id = PaymentDTO.ID }, PaymentDTO);
+        [HttpGet("user/{userId}")]
+        [Authorize(Policy = "User")]
+        public async Task<IActionResult> GetPaymentsByUserId(int userId)
+        {
+            var payments = await _paymentService.GetPaymentsByUserIdAsync(userId);
+            return Ok(payments);
         }
+
+        [HttpGet("event/{eventId}")]
+        [Authorize(Policy = "Organizer")]
+        public async Task<IActionResult> GetPaymentsByEventId(int eventId)
+        {
+            var payments = await _paymentService.GetPaymentsByEventIdAsync(eventId);
+            return Ok(payments);
+        }
+        [HttpPost]
+        public async Task<IActionResult> Create(PaymentDTO paymentDTO)
+        {
+            try
+            {
+                var paymentResponse = await _paymentService.AddPaymentAsync(paymentDTO);
+
+                var mailRequest = new MailRequest
+                {
+                    ToEmail = paymentResponse.User.Email,
+                    Subject = "Payment Confirmation",
+                    Body = $@"
+            <p>Thank you <strong>{paymentResponse.User.Name}</strong> for buying a ticket.</p>
+            <p>The price of the ticket is <strong>{paymentResponse.Ticket.Price * paymentDTO.Amount:C}</strong>.</p>"
+                };
+
+                await _emailService.SendEmailAsync(mailRequest);
+                return CreatedAtAction(nameof(GetPaymentId), new { id = paymentDTO.ID }, paymentDTO);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
+        }
+
         [HttpPut("{id}")]
+       
         public async Task<IActionResult> Update(int id, PaymentDTO PaymentDTO)
         {
             await _paymentService.UpdatePaymentAsync(id, PaymentDTO);
             return NoContent();
         }
         [HttpDelete("{id}")]
+        [Authorize(Policy = "Admin")]
         public async Task<IActionResult> Delete(int id)
         {
             await _paymentService.DeletePaymentAsync(id);

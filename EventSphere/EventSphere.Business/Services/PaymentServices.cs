@@ -2,7 +2,10 @@
 using EventSphere.Domain.DTOs;
 using EventSphere.Domain.Entities;
 using EventSphere.Infrastructure.Repositories;
+using EventSphere.Infrastructure.Settings;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
+using Stripe;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,34 +19,87 @@ namespace EventSphere.Business.Services
     {
         private readonly IGenericRepository<Payment> _genericRepository;
         private readonly IGenericRepository<User> _userRepository;
-        private readonly IGenericRepository<Event> _eventRepository;
-        public PaymentServices(IGenericRepository<Payment> genericRepository, IGenericRepository<User> userRepository, IGenericRepository<Event> eventRepository)
+        private readonly IGenericRepository<Domain.Entities.Event> _eventRepository;
+        private readonly StripeSettings _stripeSettings;
+        private readonly IGenericRepository<Ticket> _ticketRepository;
+        public PaymentServices(IGenericRepository<Payment> genericRepository,
+            IGenericRepository<User> userRepository,
+            IGenericRepository<Domain.Entities.Event> eventRepository,
+            IOptions<StripeSettings> stripeSettings,
+            IGenericRepository<Ticket> ticketRepository)
         {
             _genericRepository = genericRepository;
             _userRepository = userRepository;
             _eventRepository = eventRepository;
+            _stripeSettings = stripeSettings.Value;
+            _ticketRepository = ticketRepository;
         }
 
         public async Task<PaymentResponseDto> AddPaymentAsync(PaymentDTO Pid)
         {
-            var payment = new Payment
+            var ticket = await _ticketRepository.GetByIdAsync(Pid.TicketID);
+            if (ticket == null)
             {
-                UserID = Pid.UserID,
-                TicketID = Pid.TicketID,
-                Amount = Pid.Amount,
-                PaymentMethod = Pid.PaymentMethod,
-                PaymentDate = Pid.PaymentDate,
-                PaymentStatus = Pid.PaymentStatus,
+                throw new Exception("Ticket not found");
+            }
+
+            var options = new ChargeCreateOptions
+            {
+                Amount = (int)(ticket.Price * Pid.Amount * 100),
+                Currency = "usd",
+                Description = $"Payment for {Pid.Amount} ticket(s)",
+                Source = Pid.StripeToken
             };
+
             var user = await _userRepository.GetByIdAsync(Pid.UserID);
-            var response = new PaymentResponseDto
+            var service = new ChargeService();
+            Charge charge = await service.CreateAsync(options);
+
+            if (charge.Status == "succeeded")
             {
-                Payment = payment,
-                User = user,
-            };
-            await _genericRepository.AddAsync(payment);
-            return response;
+                var payment = new Payment
+                {
+                    UserID = Pid.UserID,
+                    TicketID = Pid.TicketID,
+                    TicketName = ticket.TicketType,
+                    UserName = user.Name + " " + user.LastName,
+                    Amount = Pid.Amount,
+                    PaymentMethod = Pid.PaymentMethod,
+                    PaymentDate = Pid.PaymentDate,
+                    PaymentStatus = true,
+                };
+
+                var availableTick = await _eventRepository.GetByIdAsync(ticket.EventID);
+                if (availableTick != null)
+                {
+                    if(availableTick.AvailableTickets == 0 || Pid.Amount >= availableTick.AvailableTickets)
+                    {
+                        throw new Exception("There are not enough tickets available");
+                    }
+                    else
+                    {
+                        availableTick.AvailableTickets -= Pid.Amount;
+                        await _eventRepository.UpdateAsync(availableTick);
+                    }
+                }
+
+                var response = new PaymentResponseDto
+                {
+                    Payment = payment,
+                    User = user,
+                    Ticket = ticket,
+                };
+
+                await _genericRepository.AddAsync(payment);
+                return response;
+            }
+            else
+            {
+                throw new Exception("Payment failed");
+            }
         }
+
+
 
         public async Task DeletePaymentAsync(int id)
         {
@@ -74,5 +130,18 @@ namespace EventSphere.Business.Services
 
             await _genericRepository.UpdateAsync(payment);
         }
+        public async Task<int> GetPaymentCountAsync()
+        {
+            return await _genericRepository.CountAsync();
+        }
+        public async Task<IEnumerable<Payment>> GetPaymentsByUserIdAsync(int userId)
+        {
+            return await _genericRepository.GetAsync(p => p.UserID == userId);
+        }
+        public async Task<IEnumerable<Payment>> GetPaymentsByEventIdAsync(int eventId)
+        {
+            return await _genericRepository.FindByConditionAsync(p => p.Ticket.EventID == eventId);
+        }
+
     }
 }

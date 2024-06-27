@@ -6,6 +6,8 @@ using MapsterMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
+using EventSphere.Business.Services;
+using EventSphere.Business.Helper;
 
 namespace EventSphere.API.Controllers
 {
@@ -23,15 +25,25 @@ namespace EventSphere.API.Controllers
             _mapper = mapper;
         }
 
+        
         [HttpGet("getUsers")]
+        [Authorize (Policy = "Admin"  )]
         public async Task<IActionResult> GetUsers()
         {
+            var userClaims = User.Claims;
             var users = await _userService.GetAllUsersAsync();
-            var userDtos = _mapper.Map<IEnumerable<UserDTO>>(users);
+            var userDtos = _mapper.Map<IEnumerable<UpdateUserDTO>>(users);
             return Ok(userDtos);
+        }
+        [HttpGet("count")]
+        public async Task<ActionResult<int>> GetUserCount()
+        {
+            var count = await _userService.GetUserCountAsync();
+            return Ok(count);
         }
 
         [HttpGet("getUser/{id}")]
+        [Authorize(Policy = "All")]
         public async Task<IActionResult> GetUser(int id)
         {
             var user = await _userService.GetUserByIdAsync(id);
@@ -39,28 +51,38 @@ namespace EventSphere.API.Controllers
             {
                 return NotFound();
             }
-            var userDto = _mapper.Map<UserDTO>(user);
+            var userDto = _mapper.Map<UpdateUserDTO>(user);
             return Ok(userDto);
         }
 
         [HttpPut("updateUser")]
+        [Authorize(Policy = "All")]
         public async Task<IActionResult> UpdateUser(UpdateUserDTO updateUserDto)
         {
-            var existingUser = await _userService.GetUserByIdAsync(updateUserDto.ID);
-            if (existingUser == null)
-            {
-                return NotFound();
-            }
-
-            var dateCreated = existingUser.DateCreated;
-            _mapper.Map(updateUserDto, existingUser);
-            existingUser.DateCreated = dateCreated;
-            await _userService.UpdateUserAsync(existingUser);
-
+            await _userService.UpdateUserAsync(updateUserDto);
             return NoContent();
+        }
+        
+
+        [HttpPatch("updateUserPassword/{id}")]
+        [Authorize(Policy = "All")]
+        public async Task<IActionResult> UpdateUserPassword(int id, UpdatePasswordDto updatePasswordDto)
+        {
+            try
+            {
+                await _userService.UpdateUserPasswordAsync(id, updatePasswordDto);
+                return NoContent();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
+         
         }
 
         [HttpDelete("deleteUser/{id}")]
+        [Authorize(Policy = "Admin")]
         public async Task<IActionResult> DeleteUser(int id)
         {
             await _userService.DeleteUserAsync(id);

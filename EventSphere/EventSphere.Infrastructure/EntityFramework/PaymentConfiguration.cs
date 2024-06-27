@@ -25,12 +25,12 @@ namespace EventSphere.Infrastructure.EntityFramework
             builder.HasOne(p => p.User)
                    .WithMany(u => u.Payments)
                    .HasForeignKey(p => p.UserID)
-                   .OnDelete(DeleteBehavior.Restrict);
+                   .OnDelete(DeleteBehavior.Cascade);
 
             builder.HasOne(p => p.Ticket)
                    .WithMany(t => t.Payments)
                    .HasForeignKey(p => p.TicketID)
-                   .OnDelete(DeleteBehavior.Restrict);
+                   .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }

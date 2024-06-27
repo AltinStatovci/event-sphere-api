@@ -1,4 +1,5 @@
-﻿using EventSphere.Domain.Entities;
+﻿using EventSphere.Domain.DTOs.User;
+using EventSphere.Domain.Entities;
 
 namespace EventSphere.Business.Services.Interfaces
 {
@@ -6,7 +7,12 @@ namespace EventSphere.Business.Services.Interfaces
     {
         Task<IEnumerable<User>> GetAllUsersAsync();
         Task<User> GetUserByIdAsync(int id);
-        Task UpdateUserAsync(User user);
+        Task UpdateUserAsync(UpdateUserDTO updateUserDto);
+
+        Task UpdateUserPasswordAsync( int id,UpdatePasswordDto updatePasswordDto);
         Task DeleteUserAsync(int id);
+        Task<int> GetUserCountAsync();
+        
+        
     }
 }

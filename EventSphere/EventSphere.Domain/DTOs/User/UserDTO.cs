@@ -16,11 +16,12 @@ namespace EventSphere.Domain.DTOs.User
         [Required(ErrorMessage = "Email is required.")]
         [EmailAddress(ErrorMessage = "Invalid Email Address.")]
         public string Email { get; set; }
-
-        [Required(ErrorMessage = "Password is required.")]
-        public string Password { get; set; }
-
+      
         [Required(ErrorMessage = "RoleID is required.")]
         public int RoleID { get; set; }
+
+        public string? RoleName { get; set; }
+        public DateTime DateCreated { get; set; }
+
     }
 }
