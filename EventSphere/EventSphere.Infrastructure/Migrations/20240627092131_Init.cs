@@ -3,11 +3,12 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
+#pragma warning disable CA1814 // Prefer jagged arrays over multidimensional
+
 namespace EventSphere.Infrastructure.Migrations
 {
-
     /// <inheritdoc />
-    public partial class InitialCreate : Migration
+    public partial class Init : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -126,19 +127,19 @@ namespace EventSphere.Infrastructure.Migrations
                         column: x => x.CategoryID,
                         principalTable: "EventCategory",
                         principalColumn: "ID",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Event_Location_LocationId",
                         column: x => x.LocationId,
                         principalTable: "Location",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Event_User_OrganizerID",
                         column: x => x.OrganizerID,
                         principalTable: "User",
                         principalColumn: "ID",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -161,7 +162,7 @@ namespace EventSphere.Infrastructure.Migrations
                         column: x => x.EventID,
                         principalTable: "Event",
                         principalColumn: "ID",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -187,13 +188,47 @@ namespace EventSphere.Infrastructure.Migrations
                         column: x => x.TicketID,
                         principalTable: "Ticket",
                         principalColumn: "ID",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Payment_User_UserID",
                         column: x => x.UserID,
                         principalTable: "User",
                         principalColumn: "ID",
                         onDelete: ReferentialAction.NoAction);
+                });
+
+            migrationBuilder.InsertData(
+                table: "EventCategory",
+                columns: new[] { "ID", "CategoryName" },
+                values: new object[,]
+                {
+                    { 1, "Concerts" },
+                    { 2, "Sports" },
+                    { 3, "Outside Activities" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Location",
+                columns: new[] { "Id", "City", "Country" },
+                values: new object[,]
+                {
+                    { 1, "Prishtina", "Kosovo" },
+                    { 2, "Fushe Kosove", "Kosovo" },
+                    { 3, "Prizren", "Kosovo" },
+                    { 4, "Gjilan", "Kosovo" },
+                    { 5, "Ferizaj", "Kosovo" },
+                    { 6, "Peje", "Kosovo" },
+                    { 7, "Mitrovice", "Kosovo" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Role",
+                columns: new[] { "ID", "RoleName" },
+                values: new object[,]
+                {
+                    { 1, "Admin" },
+                    { 2, "Organizer" },
+                    { 3, "User" }
                 });
 
             migrationBuilder.CreateIndex(
