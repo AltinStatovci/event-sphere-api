@@ -10,6 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace EventSphere.Infrastructure.Migrations
 {
+
     [DbContext(typeof(EventSphereDbContext))]
     partial class EventSphereDbContextModelSnapshot : ModelSnapshot
     {

@@ -7,6 +7,7 @@ namespace EventSphere.Infrastructure.Migrations
     /// <inheritdoc />
     public partial class modifyEventDescription : Migration
     {
+
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {

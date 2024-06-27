@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace EventSphere.Infrastructure.Migrations
 {
+
     /// <inheritdoc />
     public partial class InitialCreate : Migration
     {
