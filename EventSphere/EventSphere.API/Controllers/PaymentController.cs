@@ -20,7 +20,7 @@ namespace EventSphere.API.Controllers
             _emailService = emailService;
         }
         [HttpGet]
-        [Authorize(Policy = "Admin")]
+        //[Authorize(Policy = "Admin")]
         public async Task<IActionResult> GetAllPayments()
         {
             var ticket = await _paymentService.GetAllPaymentsAsync();
