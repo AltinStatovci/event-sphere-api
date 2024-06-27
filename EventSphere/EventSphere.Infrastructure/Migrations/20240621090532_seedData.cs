@@ -6,6 +6,7 @@
 
 namespace EventSphere.Infrastructure.Migrations
 {
+
     /// <inheritdoc />
     public partial class seedData : Migration
     {
