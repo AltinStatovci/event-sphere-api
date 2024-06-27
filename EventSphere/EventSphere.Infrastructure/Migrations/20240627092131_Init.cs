@@ -213,12 +213,12 @@ namespace EventSphere.Infrastructure.Migrations
                 values: new object[,]
                 {
                     { 1, "Prishtina", "Kosovo" },
-                    { 2, "Fushe Kosove", "Kosovo" },
-                    { 3, "Prizren", "Kosovo" },
-                    { 4, "Gjilan", "Kosovo" },
+                    { 2, "Mitrovice", "Kosovo" },
+                    { 3, "Pejë", "Kosovo" },
+                    { 4, "Prizren", "Kosovo" },
                     { 5, "Ferizaj", "Kosovo" },
-                    { 6, "Peje", "Kosovo" },
-                    { 7, "Mitrovice", "Kosovo" }
+                    { 6, "Gjilan", "Kosovo" },
+                    { 7, "Gjakovë", "Kosovo" }
                 });
 
             migrationBuilder.InsertData(

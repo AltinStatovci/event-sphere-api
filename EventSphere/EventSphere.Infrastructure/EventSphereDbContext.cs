@@ -46,7 +46,7 @@ namespace EventSphere.Infrastructure
 
             modelBuilder.Entity<Location>().HasData(
                 new Location { Id = 1, Country = "Kosovo", City = "Prishtina" },
-                new Location { Id = 2, Country = "Kosovo", City = "Mitrovica" },
+                new Location { Id = 2, Country = "Kosovo", City = "Mitrovice" },
                 new Location { Id = 3, Country = "Kosovo", City = "Pejë" },
                 new Location { Id = 4, Country = "Kosovo", City = "Prizren" },
                 new Location { Id = 5, Country = "Kosovo", City = "Ferizaj" },
