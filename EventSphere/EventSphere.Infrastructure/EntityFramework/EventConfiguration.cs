@@ -13,7 +13,7 @@ namespace EventSphere.Infrastructure.EntityFramework
             builder.HasKey(e => e.ID);
 
             builder.Property(e => e.EventName).IsRequired().HasMaxLength(100);
-            builder.Property(e => e.Description).IsRequired().HasMaxLength(300);
+            builder.Property(e => e.Description).IsRequired().HasMaxLength(1000);
             builder.Property(e => e.StartDate).IsRequired();
             builder.Property(e => e.EndDate).IsRequired();
             builder.Property(e => e.PhotoData);
