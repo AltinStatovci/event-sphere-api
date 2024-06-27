@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EventSphere.Infrastructure.Migrations
 {
     [DbContext(typeof(EventSphereDbContext))]
-    [Migration("20240621132306_modifyEventDescription")]
-    partial class modifyEventDescription
+    [Migration("20240627092131_Init")]
+    partial class Init
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -53,8 +53,8 @@ namespace EventSphere.Infrastructure.Migrations
 
                     b.Property<string>("Description")
                         .IsRequired()
-                        .HasMaxLength(1000)
-                        .HasColumnType("nvarchar(1000)");
+                        .HasMaxLength(300)
+                        .HasColumnType("nvarchar(300)");
 
                     b.Property<DateTime>("EndDate")
                         .HasColumnType("datetime2");
@@ -159,19 +159,19 @@ namespace EventSphere.Infrastructure.Migrations
                         new
                         {
                             Id = 2,
-                            City = "Fushe Kosove",
+                            City = "Mitrovica",
                             Country = "Kosovo"
                         },
                         new
                         {
                             Id = 3,
-                            City = "Prizren",
+                            City = "Pejë",
                             Country = "Kosovo"
                         },
                         new
                         {
                             Id = 4,
-                            City = "Gjilan",
+                            City = "Prizren",
                             Country = "Kosovo"
                         },
                         new
@@ -183,13 +183,13 @@ namespace EventSphere.Infrastructure.Migrations
                         new
                         {
                             Id = 6,
-                            City = "Peje",
+                            City = "Gjilan",
                             Country = "Kosovo"
                         },
                         new
                         {
                             Id = 7,
-                            City = "Mitrovice",
+                            City = "Gjakovë",
                             Country = "Kosovo"
                         });
                 });
