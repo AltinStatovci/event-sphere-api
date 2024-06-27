@@ -58,5 +58,10 @@ namespace EventSphere.Infrastructure.Repositories
         {
             return await _context.Set<TEntity>().Where(predicate).ToListAsync();
         }
+        public async Task<IEnumerable<TEntity>> FindByConditionAsync(Expression<Func<TEntity, bool>> expression) 
+        {
+            return await _context.Set<TEntity>().Where(expression).ToListAsync();
+        }
+
     }
 }
