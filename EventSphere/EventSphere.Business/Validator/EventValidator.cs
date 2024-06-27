@@ -17,7 +17,7 @@ namespace EventSphere.Business.Validator
                 .NotEmpty().WithMessage("Description is required.")
                 .MaximumLength(500).WithMessage("Description cannot be longer than 500 characters.");
 
-            RuleFor(x => x.Location)
+            RuleFor(x => x.Address)
                 .NotEmpty().WithMessage("Location is required.")
                 .MaximumLength(50).WithMessage("Location cannot be longer than 50 characters.");
 

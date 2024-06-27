@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EventSphere.Infrastructure.Migrations
 {
     [DbContext(typeof(EventSphereDbContext))]
-    [Migration("20240627092131_Init")]
-    partial class Init
+    [Migration("20240627143003_modify-description")]
+    partial class modifydescription
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -53,8 +53,8 @@ namespace EventSphere.Infrastructure.Migrations
 
                     b.Property<string>("Description")
                         .IsRequired()
-                        .HasMaxLength(300)
-                        .HasColumnType("nvarchar(300)");
+                        .HasMaxLength(1000)
+                        .HasColumnType("nvarchar(1000)");
 
                     b.Property<DateTime>("EndDate")
                         .HasColumnType("datetime2");
@@ -159,7 +159,7 @@ namespace EventSphere.Infrastructure.Migrations
                         new
                         {
                             Id = 2,
-                            City = "Mitrovica",
+                            City = "Mitrovice",
                             Country = "Kosovo"
                         },
                         new
@@ -366,10 +366,12 @@ namespace EventSphere.Infrastructure.Migrations
                         .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("LastName")
+                        .IsRequired()
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)");
 
                     b.Property<string>("Name")
+                        .IsRequired()
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)");
 
