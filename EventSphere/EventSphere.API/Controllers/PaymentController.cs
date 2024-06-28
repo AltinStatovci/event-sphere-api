@@ -51,7 +51,7 @@ namespace EventSphere.API.Controllers
         }
 
         [HttpGet("event/{eventId}")]
-        [Authorize(Policy = "Organizer")]
+        [Authorize(Policy = "AdminOrOrganizer")]
         public async Task<IActionResult> GetPaymentsByEventId(int eventId)
         {
             var payments = await _paymentService.GetPaymentsByEventIdAsync(eventId);
