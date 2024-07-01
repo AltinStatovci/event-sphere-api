@@ -156,7 +156,7 @@ namespace EventSphere.Infrastructure.Migrations
                         new
                         {
                             Id = 2,
-                            City = "Mitrovice",
+                            City = "Mitrovicë",
                             Country = "Kosovo"
                         },
                         new
@@ -222,14 +222,11 @@ namespace EventSphere.Infrastructure.Migrations
                     b.Property<int>("UserId")
                         .HasColumnType("int");
 
-
-                    b.HasKey("Id");
-
                     b.Property<string>("UserName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-
+                    b.HasKey("Id");
 
                     b.HasIndex("TicketId");
 
@@ -401,7 +398,7 @@ namespace EventSphere.Infrastructure.Migrations
                     b.HasOne("EventSphere.Domain.Entities.EventCategory", "Category")
                         .WithMany()
                         .HasForeignKey("CategoryId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("EventSphere.Domain.Entities.Location", "Location")
@@ -413,7 +410,7 @@ namespace EventSphere.Infrastructure.Migrations
                     b.HasOne("EventSphere.Domain.Entities.User", "Organizer")
                         .WithMany()
                         .HasForeignKey("OrganizerId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Category");
@@ -428,13 +425,13 @@ namespace EventSphere.Infrastructure.Migrations
                     b.HasOne("EventSphere.Domain.Entities.Ticket", "Ticket")
                         .WithMany("Payments")
                         .HasForeignKey("TicketId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("EventSphere.Domain.Entities.User", "User")
                         .WithMany("Payments")
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Ticket");
@@ -447,7 +444,7 @@ namespace EventSphere.Infrastructure.Migrations
                     b.HasOne("EventSphere.Domain.Entities.Event", "Event")
                         .WithMany("Tickets")
                         .HasForeignKey("EventId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Event");
