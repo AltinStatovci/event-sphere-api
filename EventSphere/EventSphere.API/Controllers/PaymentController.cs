@@ -3,6 +3,7 @@ using EventSphere.Business.Services;
 using EventSphere.Business.Services.Interfaces;
 using EventSphere.Domain.DTOs;
 using EventSphere.Domain.Entities;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace EventSphere.API.Controllers
@@ -19,11 +20,14 @@ namespace EventSphere.API.Controllers
             _emailService = emailService;
         }
         [HttpGet]
+        [Authorize(Policy = "Admin")]
         public async Task<IActionResult> GetAllPayments()
         {
             var ticket = await _paymentService.GetAllPaymentsAsync();
             return Ok(ticket);
         }
+       
+
         [HttpGet("count")]
         public async Task<ActionResult<int>> GetPaymentCount()
         {
@@ -31,10 +35,27 @@ namespace EventSphere.API.Controllers
             return Ok(count);
         }
         [HttpGet("{id}")]
+        [Authorize(Policy = "All")]
         public async Task<IActionResult> GetPaymentId(int id)
         {
             var ticket = await _paymentService.GetPaymentByIdAsync(id);
             return Ok(ticket);
+        }
+
+        [HttpGet("user/{userId}")]
+        [Authorize(Policy = "User")]
+        public async Task<IActionResult> GetPaymentsByUserId(int userId)
+        {
+            var payments = await _paymentService.GetPaymentsByUserIdAsync(userId);
+            return Ok(payments);
+        }
+
+        [HttpGet("event/{eventId}")]
+        [Authorize(Policy = "AdminOrOrganizer")]
+        public async Task<IActionResult> GetPaymentsByEventId(int eventId)
+        {
+            var payments = await _paymentService.GetPaymentsByEventIdAsync(eventId);
+            return Ok(payments);
         }
         [HttpPost]
         public async Task<IActionResult> Create(PaymentDTO paymentDTO)
@@ -49,7 +70,7 @@ namespace EventSphere.API.Controllers
                     Subject = "Payment Confirmation",
                     Body = $@"
             <p>Thank you <strong>{paymentResponse.User.Name}</strong> for buying a ticket.</p>
-            <p>The price of the ticket is <strong>{paymentResponse.Payment.Amount:C}</strong>.</p>"
+            <p>The price of the ticket is <strong>{paymentResponse.Ticket.Price * paymentDTO.Amount:C}</strong>.</p>"
                 };
 
                 await _emailService.SendEmailAsync(mailRequest);
@@ -62,12 +83,14 @@ namespace EventSphere.API.Controllers
         }
 
         [HttpPut("{id}")]
+       
         public async Task<IActionResult> Update(int id, PaymentDTO PaymentDTO)
         {
             await _paymentService.UpdatePaymentAsync(id, PaymentDTO);
             return NoContent();
         }
         [HttpDelete("{id}")]
+        [Authorize(Policy = "Admin")]
         public async Task<IActionResult> Delete(int id)
         {
             await _paymentService.DeletePaymentAsync(id);

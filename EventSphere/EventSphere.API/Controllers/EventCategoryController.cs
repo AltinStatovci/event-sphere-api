@@ -6,11 +6,13 @@ using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 
 namespace EventSphere.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    
     public class EventCategoryController : ControllerBase
     {
         private readonly IEventCategoryService _eventCategoryService;
@@ -41,6 +43,7 @@ namespace EventSphere.API.Controllers
         }
 
         [HttpPost]
+        [Authorize(Policy = "Admin")]
         public async Task<ActionResult<EventCategoryDto>> AddCategory(EventCategoryDto categoryDTO)
         {
             var validationResult = _validator.Validate(categoryDTO);
@@ -55,6 +58,7 @@ namespace EventSphere.API.Controllers
         }
 
         [HttpPut("{id}")]
+        [Authorize(Policy = "Admin")]
         public async Task<IActionResult> UpdateCategory(int id, EventCategoryDto categoryDTO)
         {
             if (id != categoryDTO.Id)
@@ -67,6 +71,7 @@ namespace EventSphere.API.Controllers
         }
 
         [HttpDelete("{id}")]
+        [Authorize(Policy = "Admin")]
         public async Task<IActionResult> DeleteCategory(int id)
         {
             await _eventCategoryService.DeleteCategoryAsync(id);

@@ -31,14 +31,21 @@ namespace EventSphere.Business.Services
 
         public async Task<PaymentResponseDto> AddPaymentAsync(PaymentDTO Pid)
         {
+            var ticket = await _ticketRepository.GetByIdAsync(Pid.TicketId);
+            if (ticket == null)
+            {
+                throw new Exception("Ticket not found");
+            }
+
             var options = new ChargeCreateOptions
             {
-                Amount = Pid.Amount * 100, // amount in cents
+                Amount = (int)(ticket.Price * Pid.Amount * 100),
                 Currency = "usd",
-                Description = "Payment for ticket",
+                Description = $"Payment for {Pid.Amount} ticket(s)",
                 Source = Pid.StripeToken
             };
 
+            var user = await _userRepository.GetByIdAsync(Pid.UserId);
             var service = new ChargeService();
             Charge charge = await service.CreateAsync(options);
 
@@ -46,20 +53,42 @@ namespace EventSphere.Business.Services
             {
                 var payment = new Payment
                 {
+
                     UserId = Pid.UserId,
                     TicketId = Pid.TicketId,
                     Amount = Pid.Amount,
                     PaymentMethod = Pid.PaymentMethod,
                     PaymentDate = Pid.PaymentDate,
                     PaymentStatus = true, // payment successful
+                    TicketName = ticket.TicketType,
+                    UserName = user.Name + " " + user.LastName,
                 };
 
                 var user = await _userRepository.GetByIdAsync(Pid.UserId);
+
+
+                var availableTick = await _eventRepository.GetByIdAsync(ticket.EventId);
+                if (availableTick != null)
+                {
+                    if(availableTick.AvailableTickets == 0 || Pid.Amount >= availableTick.AvailableTickets)
+                    {
+                        throw new Exception("There are not enough tickets available");
+                    }
+                    else
+                    {
+                        availableTick.AvailableTickets -= Pid.Amount;
+                        await _eventRepository.UpdateAsync(availableTick);
+                    }
+                }
+
+
                 var response = new PaymentResponseDto
                 {
                     Payment = payment,
                     User = user,
+                    Ticket = ticket,
                 };
+
                 await _genericRepository.AddAsync(payment);
                 return response;
             }
@@ -68,6 +97,7 @@ namespace EventSphere.Business.Services
                 throw new Exception("Payment failed");
             }
         }
+
 
 
         public async Task DeletePaymentAsync(int id)
@@ -103,5 +133,14 @@ namespace EventSphere.Business.Services
         {
             return await _genericRepository.CountAsync();
         }
+        public async Task<IEnumerable<Payment>> GetPaymentsByUserIdAsync(int userId)
+        {
+            return await _genericRepository.GetAsync(p => p.UserId == userId);
+        }
+        public async Task<IEnumerable<Payment>> GetPaymentsByEventIdAsync(int eventId)
+        {
+            return await _genericRepository.FindByConditionAsync(p => p.Ticket.EventId == eventId);
+        }
+
     }
 }

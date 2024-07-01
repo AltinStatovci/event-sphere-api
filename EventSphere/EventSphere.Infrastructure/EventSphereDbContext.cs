@@ -31,6 +31,29 @@ namespace EventSphere.Infrastructure
             modelBuilder.ApplyConfiguration(new EventConfiguration());
             modelBuilder.ApplyConfiguration(new ReportConfiguration());
             modelBuilder.ApplyConfiguration(new LocationConfiguration());
+
+            modelBuilder.Entity<Role>().HasData(
+            new Role { ID = 1, RoleName = "Admin" },
+            new Role { ID = 2, RoleName = "Organizer" },
+            new Role { ID = 3, RoleName = "User" }
+            );
+
+            modelBuilder.Entity<EventCategory>().HasData(
+                new EventCategory { ID = 1, CategoryName = "Concerts" },
+                new EventCategory { ID = 2, CategoryName = "Sports" },
+                new EventCategory { ID = 3, CategoryName = "Outside Activities" }
+            );
+
+            modelBuilder.Entity<Location>().HasData(
+                new Location { Id = 1, Country = "Kosovo", City = "Prishtina" },
+                new Location { Id = 2, Country = "Kosovo", City = "Mitrovice" },
+                new Location { Id = 3, Country = "Kosovo", City = "Pejë" },
+                new Location { Id = 4, Country = "Kosovo", City = "Prizren" },
+                new Location { Id = 5, Country = "Kosovo", City = "Ferizaj" },
+                new Location { Id = 6, Country = "Kosovo", City = "Gjilan" },
+                new Location { Id = 7, Country = "Kosovo", City = "Gjakovë" }
+                );
+
         }
     }
 }

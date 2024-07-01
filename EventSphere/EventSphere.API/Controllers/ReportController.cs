@@ -1,6 +1,7 @@
 ﻿using EventSphere.Business.Services;
 using EventSphere.Business.Services.Interfaces;
 using EventSphere.Domain.DTOs;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace EventSphere.API.Controllers
@@ -15,6 +16,7 @@ namespace EventSphere.API.Controllers
             _reportService = reportService;
         }
         [HttpGet]
+        [Authorize(Policy = "Admin")]
         public async Task<IActionResult> GetAllReports()
         {
             var report = await _reportService.GetAllReportsAsync();
@@ -26,29 +28,42 @@ namespace EventSphere.API.Controllers
             var count = await _reportService.GetReportCountAsync();
             return Ok(count);
         }
+        
         [HttpGet("{id}")]
+        [Authorize(Policy = "All")]
         public async Task<IActionResult> GetReportId(int id)
         {
             var report = await _reportService.GetReportByIdAsync(id);
             return Ok(report);
         }
+        [HttpGet("GetReportByUserId/{userId}")]
+        [Authorize(Policy = "All")]
+        public async Task<IActionResult> GetReportByUserId(int userId)
+        {
+            var reports = await _reportService.GetReportByUserIdAsync(userId);
+            return Ok(reports);
+        }
         [HttpPost]
+        [Authorize(Policy = "All")]
         public async Task<IActionResult> Create(ReportDTO reportDTO)
         {
             var report = await _reportService.CreateAsync(reportDTO);
             return CreatedAtAction(nameof(GetReportId), new { id = reportDTO.ReportId }, reportDTO);
         }
         [HttpPut("{id}")]
+        [Authorize(Policy = "All")]
         public async Task<IActionResult> Update(int id, ReportDTO reportDTO)
         {
             await _reportService.UpdateAsync(id, reportDTO);
             return NoContent();
         }
         [HttpDelete("{id}")]
+        [Authorize(Policy = "All")]
         public async Task<IActionResult> Delete(int id)
         {
             await _reportService.DeleteAsync(id);
             return NoContent();
         }
+        
     }
 }

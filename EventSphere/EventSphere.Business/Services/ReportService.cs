@@ -50,6 +50,10 @@ namespace EventSphere.Business.Services
         {
             return await _reportRepository.GetByIdAsync(id);
         }
+        public async Task<IEnumerable<Report>> GetReportByUserIdAsync(int userId) // Return a collection
+        {
+            return await _reportRepository.FindAsync(r => r.userId == userId);
+        }
 
         public async Task UpdateAsync(int id, ReportDTO Rid)
         {
@@ -72,5 +76,7 @@ namespace EventSphere.Business.Services
         {
             return await _reportRepository.CountAsync();
         }
+
+       
     }
 }

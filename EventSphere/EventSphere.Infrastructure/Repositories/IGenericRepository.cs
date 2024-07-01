@@ -1,4 +1,6 @@
-﻿using System.Linq.Expressions;
+﻿using EventSphere.Domain.DTOs;
+using EventSphere.Domain.Entities;
+using System.Linq.Expressions;
 
 namespace EventSphere.Infrastructure.Repositories
 {
@@ -11,5 +13,7 @@ namespace EventSphere.Infrastructure.Repositories
         Task UpdateAsync(TEntity entity);
         Task DeleteAsync(int id);
         Task<int> CountAsync();
+        Task<IEnumerable<TEntity>> FindAsync(Expression<Func<TEntity, bool>> predicate);
+        Task<IEnumerable<TEntity>> FindByConditionAsync(Expression<Func<TEntity, bool>> expression);
     }
 }

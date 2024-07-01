@@ -31,6 +31,7 @@ namespace EventSphere.Infrastructure.EntityFramework
                    .WithMany(t => t.Payments)
                    .HasForeignKey(p => p.TicketId)
                    .OnDelete(DeleteBehavior.Restrict);
+
         }
     }
 }

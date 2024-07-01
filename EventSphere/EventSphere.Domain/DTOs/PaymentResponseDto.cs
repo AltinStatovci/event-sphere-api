@@ -6,5 +6,6 @@ public class PaymentResponseDto
 {
     public Payment Payment { get; set; }
     public Entities.User  User { get; set; }
+    public Entities.Ticket Ticket { get; set; }
     
 }

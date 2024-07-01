@@ -1,12 +1,14 @@
 ﻿using EventSphere.Business.Services;
 using EventSphere.Business.Services.Interfaces;
 using EventSphere.Domain.Entities;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace EventSphere.API.Controllers
 {
     [Route("api/roles")]
     [ApiController]
+    [Authorize]
     public class RoleController : Controller
     {
         private readonly IRoleServices _roleServices;
@@ -16,6 +18,7 @@ namespace EventSphere.API.Controllers
             _roleServices = roleServices;
         }
         [HttpPost]
+        [Authorize(Policy = "Admin")]
         public async Task<IActionResult> CreateRole(Role role)
         {
             var createdRole = await _roleServices.AddRoleAsync(role);
@@ -23,6 +26,7 @@ namespace EventSphere.API.Controllers
         }
 
         [HttpGet("{id}")]
+        [Authorize(Policy = "Admin")]
         public async Task<IActionResult> GetRoleById(int id)
         {
             var role = await _roleServices.GetRoleByIdAsync(id);
@@ -34,6 +38,7 @@ namespace EventSphere.API.Controllers
         }
 
         [HttpGet]
+        [Authorize(Policy = "Admin")]
         public async Task<IActionResult> GetAllRoles()
         {
             var roles = await _roleServices.GetAllRolesAsync();
@@ -41,6 +46,7 @@ namespace EventSphere.API.Controllers
         }
 
         [HttpPut("{id}")]
+        [Authorize(Policy = "Admin")]
         public async Task<IActionResult> UpdateRole(int id, Role role)
         {
             if (id != role.Id)
@@ -53,6 +59,7 @@ namespace EventSphere.API.Controllers
         }
 
         [HttpDelete("{id}")]
+        [Authorize(Policy = "Admin")]
         public async Task<IActionResult> DeleteRole(int id)
         {
             await _roleServices.DeleteRoleAsync(id);

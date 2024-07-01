@@ -16,5 +16,6 @@ namespace EventSphere.Business.Services.Interfaces
         Task UpdateAsync(int id, ReportDTO Rid);
         Task DeleteAsync(int id);
         Task<int> GetReportCountAsync();
+        Task<IEnumerable<Report>> GetReportByUserIdAsync(int userId);
     }
 }
