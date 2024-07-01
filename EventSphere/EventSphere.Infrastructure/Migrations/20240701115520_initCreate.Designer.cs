@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EventSphere.Infrastructure.Migrations
 {
     [DbContext(typeof(EventSphereDbContext))]
-    [Migration("20240618110901_changeNamingConvention")]
-    partial class changeNamingConvention
+    [Migration("20240701115520_initCreate")]
+    partial class initCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -33,6 +33,10 @@ namespace EventSphere.Infrastructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<string>("Address")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int>("AvailableTickets")
                         .HasColumnType("int");
 
@@ -49,8 +53,8 @@ namespace EventSphere.Infrastructure.Migrations
 
                     b.Property<string>("Description")
                         .IsRequired()
-                        .HasMaxLength(300)
-                        .HasColumnType("nvarchar(300)");
+                        .HasMaxLength(1000)
+                        .HasColumnType("nvarchar(1000)");
 
                     b.Property<DateTime>("EndDate")
                         .HasColumnType("datetime2");
@@ -59,9 +63,6 @@ namespace EventSphere.Infrastructure.Migrations
                         .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
-
-                    b.Property<string>("LocationAdress")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("LocationId")
                         .HasColumnType("int");
@@ -109,6 +110,23 @@ namespace EventSphere.Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("EventCategory", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            CategoryName = "Concerts"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            CategoryName = "Sports"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            CategoryName = "Outside Activities"
+                        });
                 });
 
             modelBuilder.Entity("EventSphere.Domain.Entities.Location", b =>
@@ -118,10 +136,6 @@ namespace EventSphere.Infrastructure.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Address")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("City")
                         .IsRequired()
@@ -134,6 +148,50 @@ namespace EventSphere.Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Location", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            City = "Prishtina",
+                            Country = "Kosovo"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            City = "Mitrovice",
+                            Country = "Kosovo"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            City = "Pejë",
+                            Country = "Kosovo"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            City = "Prizren",
+                            Country = "Kosovo"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            City = "Ferizaj",
+                            Country = "Kosovo"
+                        },
+                        new
+                        {
+                            Id = 6,
+                            City = "Gjilan",
+                            Country = "Kosovo"
+                        },
+                        new
+                        {
+                            Id = 7,
+                            City = "Gjakovë",
+                            Country = "Kosovo"
+                        });
                 });
 
             modelBuilder.Entity("EventSphere.Domain.Entities.Payment", b =>
@@ -166,6 +224,10 @@ namespace EventSphere.Infrastructure.Migrations
 
                     b.Property<int>("UserId")
                         .HasColumnType("int");
+
+                    b.Property<string>("UserName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -232,6 +294,23 @@ namespace EventSphere.Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Role", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            RoleName = "Admin"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            RoleName = "Organizer"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            RoleName = "User"
+                        });
                 });
 
             modelBuilder.Entity("EventSphere.Domain.Entities.Ticket", b =>
@@ -287,10 +366,12 @@ namespace EventSphere.Infrastructure.Migrations
                         .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("LastName")
+                        .IsRequired()
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)");
 
                     b.Property<string>("Name")
+                        .IsRequired()
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)");
 
@@ -326,7 +407,7 @@ namespace EventSphere.Infrastructure.Migrations
                     b.HasOne("EventSphere.Domain.Entities.Location", "Location")
                         .WithMany()
                         .HasForeignKey("LocationId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("EventSphere.Domain.Entities.User", "Organizer")

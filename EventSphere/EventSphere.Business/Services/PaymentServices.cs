@@ -21,12 +21,18 @@ namespace EventSphere.Business.Services
         private readonly IGenericRepository<User> _userRepository;
         private readonly IGenericRepository<Domain.Entities.Event> _eventRepository;
         private readonly StripeSettings _stripeSettings;
-        public PaymentServices(IGenericRepository<Payment> genericRepository, IGenericRepository<User> userRepository, IGenericRepository<Domain.Entities.Event> eventRepository, IOptions<StripeSettings> stripeSettings)
+        private readonly IGenericRepository<Ticket> _ticketRepository;
+        public PaymentServices(IGenericRepository<Payment> genericRepository,
+            IGenericRepository<User> userRepository,
+            IGenericRepository<Domain.Entities.Event> eventRepository,
+            IOptions<StripeSettings> stripeSettings,
+            IGenericRepository<Ticket> ticketRepository)
         {
             _genericRepository = genericRepository;
             _userRepository = userRepository;
             _eventRepository = eventRepository;
             _stripeSettings = stripeSettings.Value;
+            _ticketRepository = ticketRepository;
         }
 
         public async Task<PaymentResponseDto> AddPaymentAsync(PaymentDTO Pid)
@@ -51,6 +57,8 @@ namespace EventSphere.Business.Services
 
             if (charge.Status == "succeeded")
             {
+                var users = await _userRepository.GetByIdAsync(Pid.UserId);
+
                 var payment = new Payment
                 {
 
@@ -61,10 +69,9 @@ namespace EventSphere.Business.Services
                     PaymentDate = Pid.PaymentDate,
                     PaymentStatus = true, // payment successful
                     TicketName = ticket.TicketType,
-                    UserName = user.Name + " " + user.LastName,
+                    UserName = users.Name + " " + users.LastName,
                 };
 
-                var user = await _userRepository.GetByIdAsync(Pid.UserId);
 
 
                 var availableTick = await _eventRepository.GetByIdAsync(ticket.EventId);

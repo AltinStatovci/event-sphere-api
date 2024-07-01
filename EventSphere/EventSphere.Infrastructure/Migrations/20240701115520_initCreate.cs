@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace EventSphere.Infrastructure.Migrations
 {
     /// <inheritdoc />
-    public partial class Init : Migration
+    public partial class initCreate : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -17,13 +17,13 @@ namespace EventSphere.Infrastructure.Migrations
                 name: "EventCategory",
                 columns: table => new
                 {
-                    ID = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     CategoryName = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_EventCategory", x => x.ID);
+                    table.PrimaryKey("PK_EventCategory", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -44,57 +44,57 @@ namespace EventSphere.Infrastructure.Migrations
                 name: "Report",
                 columns: table => new
                 {
-                    reportId = table.Column<int>(type: "int", nullable: false)
+                    ReportId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    userId = table.Column<int>(type: "int", nullable: false),
-                    userName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    userlastName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    userEmail = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    reportName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    reportDesc = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    reportAnsw = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    UserId = table.Column<int>(type: "int", nullable: false),
+                    UserName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    UserLastName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    UserEmail = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ReportName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ReportDesc = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ReportAnsw = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Report", x => x.reportId);
+                    table.PrimaryKey("PK_Report", x => x.ReportId);
                 });
 
             migrationBuilder.CreateTable(
                 name: "Role",
                 columns: table => new
                 {
-                    ID = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     RoleName = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Role", x => x.ID);
+                    table.PrimaryKey("PK_Role", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
                 name: "User",
                 columns: table => new
                 {
-                    ID = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: true),
-                    LastName = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: true),
+                    Name = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false),
+                    LastName = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false),
                     Email = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     Password = table.Column<byte[]>(type: "varbinary(64)", nullable: false),
                     Salt = table.Column<byte[]>(type: "varbinary(64)", nullable: false),
-                    RoleID = table.Column<int>(type: "int", nullable: false),
+                    RoleId = table.Column<int>(type: "int", nullable: false),
                     RoleName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     DateCreated = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "GETDATE()")
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_User", x => x.ID);
+                    table.PrimaryKey("PK_User", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_User_Role_RoleID",
-                        column: x => x.RoleID,
+                        name: "FK_User_Role_RoleId",
+                        column: x => x.RoleId,
                         principalTable: "Role",
-                        principalColumn: "ID",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -102,17 +102,17 @@ namespace EventSphere.Infrastructure.Migrations
                 name: "Event",
                 columns: table => new
                 {
-                    ID = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     EventName = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
-                    Description = table.Column<string>(type: "nvarchar(300)", maxLength: 300, nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(1000)", maxLength: 1000, nullable: false),
                     Address = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     LocationId = table.Column<int>(type: "int", nullable: false),
                     StartDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     EndDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    CategoryID = table.Column<int>(type: "int", nullable: false),
+                    CategoryId = table.Column<int>(type: "int", nullable: false),
                     CategoryName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    OrganizerID = table.Column<int>(type: "int", nullable: false),
+                    OrganizerId = table.Column<int>(type: "int", nullable: false),
                     OrganizerName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     PhotoData = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     MaxAttendance = table.Column<int>(type: "int", nullable: false),
@@ -121,13 +121,13 @@ namespace EventSphere.Infrastructure.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Event", x => x.ID);
+                    table.PrimaryKey("PK_Event", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Event_EventCategory_CategoryID",
-                        column: x => x.CategoryID,
+                        name: "FK_Event_EventCategory_CategoryId",
+                        column: x => x.CategoryId,
                         principalTable: "EventCategory",
-                        principalColumn: "ID",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Event_Location_LocationId",
                         column: x => x.LocationId,
@@ -135,20 +135,20 @@ namespace EventSphere.Infrastructure.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Event_User_OrganizerID",
-                        column: x => x.OrganizerID,
+                        name: "FK_Event_User_OrganizerId",
+                        column: x => x.OrganizerId,
                         principalTable: "User",
-                        principalColumn: "ID",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
                 name: "Ticket",
                 columns: table => new
                 {
-                    ID = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    EventID = table.Column<int>(type: "int", nullable: false),
+                    EventId = table.Column<int>(type: "int", nullable: false),
                     EventName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     TicketType = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false),
                     Price = table.Column<double>(type: "float", nullable: false),
@@ -156,24 +156,24 @@ namespace EventSphere.Infrastructure.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Ticket", x => x.ID);
+                    table.PrimaryKey("PK_Ticket", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Ticket_Event_EventID",
-                        column: x => x.EventID,
+                        name: "FK_Ticket_Event_EventId",
+                        column: x => x.EventId,
                         principalTable: "Event",
-                        principalColumn: "ID",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
                 name: "Payment",
                 columns: table => new
                 {
-                    ID = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    UserID = table.Column<int>(type: "int", nullable: false),
+                    UserId = table.Column<int>(type: "int", nullable: false),
                     UserName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    TicketID = table.Column<int>(type: "int", nullable: false),
+                    TicketId = table.Column<int>(type: "int", nullable: false),
                     TicketName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Amount = table.Column<int>(type: "int", nullable: false),
                     PaymentMethod = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
@@ -182,24 +182,24 @@ namespace EventSphere.Infrastructure.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Payment", x => x.ID);
+                    table.PrimaryKey("PK_Payment", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Payment_Ticket_TicketID",
-                        column: x => x.TicketID,
+                        name: "FK_Payment_Ticket_TicketId",
+                        column: x => x.TicketId,
                         principalTable: "Ticket",
-                        principalColumn: "ID",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_Payment_User_UserID",
-                        column: x => x.UserID,
+                        name: "FK_Payment_User_UserId",
+                        column: x => x.UserId,
                         principalTable: "User",
-                        principalColumn: "ID",
-                        onDelete: ReferentialAction.NoAction);
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.InsertData(
                 table: "EventCategory",
-                columns: new[] { "ID", "CategoryName" },
+                columns: new[] { "Id", "CategoryName" },
                 values: new object[,]
                 {
                     { 1, "Concerts" },
@@ -213,17 +213,17 @@ namespace EventSphere.Infrastructure.Migrations
                 values: new object[,]
                 {
                     { 1, "Prishtina", "Kosovo" },
-                    { 2, "Fushe Kosove", "Kosovo" },
-                    { 3, "Prizren", "Kosovo" },
-                    { 4, "Gjilan", "Kosovo" },
+                    { 2, "Mitrovicë", "Kosovo" },
+                    { 3, "Pejë", "Kosovo" },
+                    { 4, "Prizren", "Kosovo" },
                     { 5, "Ferizaj", "Kosovo" },
-                    { 6, "Peje", "Kosovo" },
-                    { 7, "Mitrovice", "Kosovo" }
+                    { 6, "Gjilan", "Kosovo" },
+                    { 7, "Gjakovë", "Kosovo" }
                 });
 
             migrationBuilder.InsertData(
                 table: "Role",
-                columns: new[] { "ID", "RoleName" },
+                columns: new[] { "Id", "RoleName" },
                 values: new object[,]
                 {
                     { 1, "Admin" },
@@ -232,9 +232,9 @@ namespace EventSphere.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Event_CategoryID",
+                name: "IX_Event_CategoryId",
                 table: "Event",
-                column: "CategoryID");
+                column: "CategoryId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Event_LocationId",
@@ -242,29 +242,29 @@ namespace EventSphere.Infrastructure.Migrations
                 column: "LocationId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Event_OrganizerID",
+                name: "IX_Event_OrganizerId",
                 table: "Event",
-                column: "OrganizerID");
+                column: "OrganizerId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Payment_TicketID",
+                name: "IX_Payment_TicketId",
                 table: "Payment",
-                column: "TicketID");
+                column: "TicketId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Payment_UserID",
+                name: "IX_Payment_UserId",
                 table: "Payment",
-                column: "UserID");
+                column: "UserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Ticket_EventID",
+                name: "IX_Ticket_EventId",
                 table: "Ticket",
-                column: "EventID");
+                column: "EventId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_User_RoleID",
+                name: "IX_User_RoleId",
                 table: "User",
-                column: "RoleID");
+                column: "RoleId");
         }
 
         /// <inheritdoc />
