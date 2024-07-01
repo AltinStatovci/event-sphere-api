@@ -48,7 +48,7 @@ namespace EventSphere.API.Controllers
         public async Task<IActionResult> Create(ReportDTO reportDTO)
         {
             var report = await _reportService.CreateAsync(reportDTO);
-            return CreatedAtAction(nameof(GetReportId), new { id = reportDTO.reportId }, reportDTO);
+            return CreatedAtAction(nameof(GetReportId), new { id = reportDTO.ReportId }, reportDTO);
         }
         [HttpPut("{id}")]
         [Authorize(Policy = "All")]

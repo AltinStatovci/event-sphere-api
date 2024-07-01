@@ -74,7 +74,7 @@ namespace EventSphere.API.Controllers
                 };
 
                 await _emailService.SendEmailAsync(mailRequest);
-                return CreatedAtAction(nameof(GetPaymentId), new { id = paymentDTO.ID }, paymentDTO);
+                return CreatedAtAction(nameof(GetPaymentId), new { id = paymentDTO.Id }, paymentDTO);
             }
             catch (Exception ex)
             {

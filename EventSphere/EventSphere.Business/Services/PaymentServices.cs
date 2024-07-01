@@ -21,23 +21,17 @@ namespace EventSphere.Business.Services
         private readonly IGenericRepository<User> _userRepository;
         private readonly IGenericRepository<Domain.Entities.Event> _eventRepository;
         private readonly StripeSettings _stripeSettings;
-        private readonly IGenericRepository<Ticket> _ticketRepository;
-        public PaymentServices(IGenericRepository<Payment> genericRepository,
-            IGenericRepository<User> userRepository,
-            IGenericRepository<Domain.Entities.Event> eventRepository,
-            IOptions<StripeSettings> stripeSettings,
-            IGenericRepository<Ticket> ticketRepository)
+        public PaymentServices(IGenericRepository<Payment> genericRepository, IGenericRepository<User> userRepository, IGenericRepository<Domain.Entities.Event> eventRepository, IOptions<StripeSettings> stripeSettings)
         {
             _genericRepository = genericRepository;
             _userRepository = userRepository;
             _eventRepository = eventRepository;
             _stripeSettings = stripeSettings.Value;
-            _ticketRepository = ticketRepository;
         }
 
         public async Task<PaymentResponseDto> AddPaymentAsync(PaymentDTO Pid)
         {
-            var ticket = await _ticketRepository.GetByIdAsync(Pid.TicketID);
+            var ticket = await _ticketRepository.GetByIdAsync(Pid.TicketId);
             if (ticket == null)
             {
                 throw new Exception("Ticket not found");
@@ -51,7 +45,7 @@ namespace EventSphere.Business.Services
                 Source = Pid.StripeToken
             };
 
-            var user = await _userRepository.GetByIdAsync(Pid.UserID);
+            var user = await _userRepository.GetByIdAsync(Pid.UserId);
             var service = new ChargeService();
             Charge charge = await service.CreateAsync(options);
 
@@ -59,17 +53,21 @@ namespace EventSphere.Business.Services
             {
                 var payment = new Payment
                 {
-                    UserID = Pid.UserID,
-                    TicketID = Pid.TicketID,
-                    TicketName = ticket.TicketType,
-                    UserName = user.Name + " " + user.LastName,
+
+                    UserId = Pid.UserId,
+                    TicketId = Pid.TicketId,
                     Amount = Pid.Amount,
                     PaymentMethod = Pid.PaymentMethod,
                     PaymentDate = Pid.PaymentDate,
-                    PaymentStatus = true,
+                    PaymentStatus = true, // payment successful
+                    TicketName = ticket.TicketType,
+                    UserName = user.Name + " " + user.LastName,
                 };
 
-                var availableTick = await _eventRepository.GetByIdAsync(ticket.EventID);
+                var user = await _userRepository.GetByIdAsync(Pid.UserId);
+
+
+                var availableTick = await _eventRepository.GetByIdAsync(ticket.EventId);
                 if (availableTick != null)
                 {
                     if(availableTick.AvailableTickets == 0 || Pid.Amount >= availableTick.AvailableTickets)
@@ -82,6 +80,7 @@ namespace EventSphere.Business.Services
                         await _eventRepository.UpdateAsync(availableTick);
                     }
                 }
+
 
                 var response = new PaymentResponseDto
                 {
@@ -122,7 +121,7 @@ namespace EventSphere.Business.Services
         {
             var payment = await _genericRepository.GetByIdAsync(id);
 
-            payment.TicketID = Pid.TicketID;
+            payment.TicketId = Pid.TicketId;
             payment.Amount = Pid.Amount;
             payment.PaymentMethod = Pid.PaymentMethod;
             payment.PaymentDate = Pid.PaymentDate;
@@ -136,11 +135,11 @@ namespace EventSphere.Business.Services
         }
         public async Task<IEnumerable<Payment>> GetPaymentsByUserIdAsync(int userId)
         {
-            return await _genericRepository.GetAsync(p => p.UserID == userId);
+            return await _genericRepository.GetAsync(p => p.UserId == userId);
         }
         public async Task<IEnumerable<Payment>> GetPaymentsByEventIdAsync(int eventId)
         {
-            return await _genericRepository.FindByConditionAsync(p => p.Ticket.EventID == eventId);
+            return await _genericRepository.FindByConditionAsync(p => p.Ticket.EventId == eventId);
         }
 
     }

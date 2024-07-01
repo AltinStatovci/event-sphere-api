@@ -2,7 +2,7 @@
 {
     public class Event
     {
-        public int ID { get; set; }
+        public int Id { get; set; }
         public string EventName { get; set; }
         public string Description { get; set; }
         public string Address { get; set; }
@@ -10,10 +10,10 @@
         public Location Location { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
-        public int CategoryID { get; set; }
+        public int CategoryId { get; set; }
         public EventCategory Category { get; set; }
         public string? CategoryName { get; set; }
-        public int OrganizerID { get; set; }
+        public int OrganizerId { get; set; }
         public User Organizer { get; set; }
         public string? OrganizerName {  get; set; }
         public string PhotoData { get; set; }

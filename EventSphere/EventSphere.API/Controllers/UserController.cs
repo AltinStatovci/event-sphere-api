@@ -59,6 +59,10 @@ namespace EventSphere.API.Controllers
         [Authorize(Policy = "All")]
         public async Task<IActionResult> UpdateUser(UpdateUserDTO updateUserDto)
         {
+
+            var existingUser = await _userService.GetUserByIdAsync(updateUserDto.Id);
+            if (existingUser == null)
+
             await _userService.UpdateUserAsync(updateUserDto);
             return NoContent();
         }
@@ -69,6 +73,7 @@ namespace EventSphere.API.Controllers
         public async Task<IActionResult> UpdateUserPassword(int id, UpdatePasswordDto updatePasswordDto)
         {
             try
+
             {
                 await _userService.UpdateUserPasswordAsync(id, updatePasswordDto);
                 return NoContent();

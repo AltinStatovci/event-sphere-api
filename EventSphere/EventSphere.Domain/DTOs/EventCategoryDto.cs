@@ -11,9 +11,7 @@ namespace EventSphere.Domain.DTOs
     {
         public class EventCategoryDto
         {
-            [Required(ErrorMessage = "ID is required.")]
-            public int ID { get; set; }
-            [Required(ErrorMessage = "Category Name is required.")]
+            public int Id { get; set; }
             public string CategoryName { get; set; }
         }
     }

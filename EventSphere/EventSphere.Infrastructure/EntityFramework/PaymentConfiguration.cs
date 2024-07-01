@@ -15,7 +15,7 @@ namespace EventSphere.Infrastructure.EntityFramework
         {
             builder.ToTable("Payment");
 
-            builder.HasKey(p => p.ID);
+            builder.HasKey(p => p.Id);
 
             builder.Property(p => p.Amount).IsRequired();
             builder.Property(p => p.PaymentMethod).IsRequired().HasMaxLength(50);
@@ -24,13 +24,14 @@ namespace EventSphere.Infrastructure.EntityFramework
 
             builder.HasOne(p => p.User)
                    .WithMany(u => u.Payments)
-                   .HasForeignKey(p => p.UserID)
-                   .OnDelete(DeleteBehavior.Cascade);
+                   .HasForeignKey(p => p.UserId)
+                   .OnDelete(DeleteBehavior.Restrict);
 
             builder.HasOne(p => p.Ticket)
                    .WithMany(t => t.Payments)
-                   .HasForeignKey(p => p.TicketID)
-                   .OnDelete(DeleteBehavior.Cascade);
+                   .HasForeignKey(p => p.TicketId)
+                   .OnDelete(DeleteBehavior.Restrict);
+
         }
     }
 }

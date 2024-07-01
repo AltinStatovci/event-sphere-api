@@ -22,7 +22,7 @@ namespace EventSphere.API.Controllers
         public async Task<IActionResult> CreateRole(Role role)
         {
             var createdRole = await _roleServices.AddRoleAsync(role);
-            return CreatedAtAction(nameof(GetRoleById), new { id = createdRole.ID }, createdRole);
+            return CreatedAtAction(nameof(GetRoleById), new { id = createdRole.Id }, createdRole);
         }
 
         [HttpGet("{id}")]
@@ -49,7 +49,7 @@ namespace EventSphere.API.Controllers
         [Authorize(Policy = "Admin")]
         public async Task<IActionResult> UpdateRole(int id, Role role)
         {
-            if (id != role.ID)
+            if (id != role.Id)
             {
                 return BadRequest();
             }

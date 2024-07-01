@@ -75,9 +75,11 @@ namespace EventSphere.Business.Services
             {
                 string base64Image = await ResizeAndConvertToBase64Async(image);
 
-                var user = await _userRepository.GetByIdAsync(eventDto.OrganizerID);
-                var userName = user.Name;
-                var category = await _eventCategoryRepository.GetByIdAsync(eventDto.CategoryID);
+
+                var user = await _userRepository.GetByIdAsync(eventDto.OrganizerId);
+                var userName = user.Name;  
+                var category = await _eventCategoryRepository.GetByIdAsync(eventDto.CategoryId);
+
                 var categoryName = category.CategoryName;
                 var location = await _locationRepository.GetByIdAsync(eventDto.LocationId);
 
@@ -89,11 +91,14 @@ namespace EventSphere.Business.Services
                     Location = location,
                     StartDate = eventDto.StartDate,
                     EndDate = eventDto.EndDate,
-                    CategoryID = eventDto.CategoryID,
-                    Category = category,
+                    CategoryId = eventDto.CategoryId,
                     CategoryName = categoryName,
-                    OrganizerID = eventDto.OrganizerID,
+                    OrganizerId = eventDto.OrganizerId,
+
+
+                    Category = category,
                     Organizer = user,
+
                     OrganizerName = userName,
                     PhotoData = base64Image,
                     MaxAttendance = eventDto.MaxAttendance,
@@ -154,7 +159,7 @@ namespace EventSphere.Business.Services
             var eventById = await _eventRepository.GetByIdAsync(id);
             if (eventById == null)
             {
-                throw new ArgumentException($"Event with ID {id} not found.");
+                throw new ArgumentException($"Event with Id {id} not found.");
             }
 
             try
@@ -166,8 +171,8 @@ namespace EventSphere.Business.Services
                 eventById.LocationId = eventDto.LocationId;
                 eventById.StartDate = eventDto.StartDate;
                 eventById.EndDate = eventDto.EndDate;
-                eventById.CategoryID = eventDto.CategoryID;
-                eventById.OrganizerID = eventDto.OrganizerID;
+                eventById.CategoryId = eventDto.CategoryId;
+                eventById.OrganizerId = eventDto.OrganizerId;
                 eventById.MaxAttendance = eventDto.MaxAttendance;
                 eventById.AvailableTickets = eventDto.AvailableTickets;
                 eventById.DateCreated = eventDto.DateCreated;
@@ -206,12 +211,12 @@ namespace EventSphere.Business.Services
 
         public async Task<IEnumerable<Event>> GetEventByCategoryId(int eventCategoryId)
         {
-            return await _context.Events.Where(u => u.CategoryID == eventCategoryId).ToListAsync();
+            return await _context.Events.Where(u => u.CategoryId == eventCategoryId).ToListAsync();
         }
         
         public async Task<IEnumerable<Event>> GetEventByOrganizerId(int organizerId)
         {
-            return await _context.Events.Where(u => u.OrganizerID == organizerId).ToListAsync();
+            return await _context.Events.Where(u => u.OrganizerId == organizerId).ToListAsync();
         }
 
         public async Task<IEnumerable<Event>> GetEventsByCity(string city)

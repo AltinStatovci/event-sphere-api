@@ -2,8 +2,8 @@
 {
     public class Ticket
     {
-        public int ID { get; set; }
-        public int EventID { get; set; }
+        public int Id { get; set; }
+        public int EventId { get; set; }
         public Event Event { get; set; }
         public string? EventName { get; set; }
       
