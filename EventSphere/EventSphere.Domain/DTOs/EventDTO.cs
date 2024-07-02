@@ -22,7 +22,7 @@ namespace EventSphere.Domain.DTOs
         public int MaxAttendance { get; set; }
 
         public int AvailableTickets { get; set; }
-
+        public bool IsApproved {  get; set; }
         public DateTime DateCreated { get; set; }
         
     }

@@ -94,9 +94,11 @@ namespace EventSphere.API.Controllers
             var validationResult = _validator.Validate(eventDto);
             if (!validationResult.IsValid)
             {
+
                 var errorMessages = validationResult.Errors.Select(error => error.ErrorMessage).ToList();
                 Log.Error("Validation failed for event: {@Errors}", errorMessages);
                 return BadRequest(new { Errors = errorMessages });
+
             }
 
             try
@@ -237,6 +239,13 @@ namespace EventSphere.API.Controllers
             
                 return StatusCode(500, new { Error = "An error occurred while processing your request." });
             }
+        }
+        [HttpPost("approve/{id}")]
+        [Authorize(Policy = "Admin")]
+        public async Task<IActionResult> ApproveEvent(int id)
+        {
+                var approvedEvent = await _eventService.UpdateEventStatus(id);
+                return Ok(approvedEvent);
         }
     }
 }
