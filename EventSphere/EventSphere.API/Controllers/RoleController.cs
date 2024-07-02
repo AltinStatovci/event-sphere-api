@@ -14,12 +14,12 @@ namespace EventSphere.API.Controllers
     public class RoleController : ControllerBase
     {
         private readonly IRoleServices _roleServices;
-        private readonly ILogger<RoleController> _logger;
+        
 
-        public RoleController(IRoleServices roleServices, ILogger<RoleController> logger)
+        public RoleController(IRoleServices roleServices)
         {
             _roleServices = roleServices;
-            _logger = logger;
+      
         }
 
         [HttpPost]

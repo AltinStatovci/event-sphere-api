@@ -13,12 +13,12 @@ namespace EventSphere.API.Controllers
     public class ReportController : ControllerBase
     {
         private readonly IReportService _reportService;
-        private readonly ILogger<ReportController> _logger;
+    
 
-        public ReportController(IReportService reportService, ILogger<ReportController> logger)
+        public ReportController(IReportService reportService)
         {
             _reportService = reportService;
-            _logger = logger;
+        
         }
 
         [HttpGet]

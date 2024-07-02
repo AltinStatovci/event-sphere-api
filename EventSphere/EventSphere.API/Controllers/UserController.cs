@@ -19,13 +19,13 @@ namespace EventSphere.API.Controllers
     {
         private readonly IUserService _userService;
         private readonly IMapper _mapper;
-        private readonly ILogger<UserController> _logger;
+       
 
-        public UserController(IUserService userService, IMapper mapper, ILogger<UserController> logger)
+        public UserController(IUserService userService, IMapper mapper)
         {
             _userService = userService;
             _mapper = mapper;
-            _logger = logger;
+         
         }
 
         [HttpGet("getUsers")]

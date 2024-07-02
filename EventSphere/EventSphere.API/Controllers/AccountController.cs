@@ -14,12 +14,12 @@ namespace EventSphere.API.Controllers
     public class AccountController : ControllerBase
     {
         private readonly IAccountService _accountService;
-        private readonly ILogger<AccountController> _logger;
+        
 
-        public AccountController(IAccountService accountService, ILogger<AccountController> logger)
+        public AccountController(IAccountService accountService)
         {
             _accountService = accountService;
-            _logger = logger;
+            
         }
 
         [HttpPost("register")]

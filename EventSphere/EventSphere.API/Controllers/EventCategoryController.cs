@@ -19,13 +19,13 @@ namespace EventSphere.API.Controllers
     {
         private readonly IEventCategoryService _eventCategoryService;
         private readonly EventCategoryValidator _validator;
-        private readonly ILogger<EventCategoryController> _logger;
+       
 
-        public EventCategoryController(IEventCategoryService eventCategoryService, ILogger<EventCategoryController> logger)
+        public EventCategoryController(IEventCategoryService eventCategoryService)
         {
             _eventCategoryService = eventCategoryService;
             _validator = new EventCategoryValidator();
-            _logger = logger;
+        
         }
 
         [HttpGet]

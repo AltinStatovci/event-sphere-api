@@ -19,13 +19,13 @@ namespace EventSphere.API.Controllers
     {
         private readonly IEventService _eventService;
         private readonly EventValidator _validator;
-        private readonly ILogger<EventController> _logger;
+      
 
-        public EventController(IEventService eventService, ILogger<EventController> logger)
+        public EventController(IEventService eventService)
         {
             _eventService = eventService;
             _validator = new EventValidator();
-            _logger = logger;
+     
         }
 
         [HttpGet]
