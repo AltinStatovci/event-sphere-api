@@ -11,6 +11,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 using EventSphere.Infrastructure.Repositories;
+using Serilog;
 
 namespace EventSphere.Business.Services
 {
@@ -20,6 +21,7 @@ namespace EventSphere.Business.Services
         private readonly IMapper _mapper;
         private readonly IConfiguration _config;
         private readonly IGenericRepository<Role> _roleRepository;
+     
 
         public AccountService(IUserRepository userRepository, IConfiguration config, IMapper mapper, IGenericRepository<Role> roleRepository)
         {
@@ -27,6 +29,7 @@ namespace EventSphere.Business.Services
             _config = config;
             _mapper = mapper;
             _roleRepository = roleRepository;
+        
         }
 
         public async Task<UserDTO> AddUserAsync(CreateUserDTO createUserDto)
@@ -35,7 +38,9 @@ namespace EventSphere.Business.Services
             if (existingUser != null)
             {
                 throw new ArgumentException("Email is already in use.", nameof(createUserDto.Email));
+               
             }
+            
             var user = _mapper.Map<User>(createUserDto);
             var passwordSalt = PasswordGenerator.GenerateSalt();
             var passwordHash = PasswordGenerator.GenerateHash(createUserDto.Password, passwordSalt);
