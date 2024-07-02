@@ -4,6 +4,7 @@ using EventSphere.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EventSphere.Infrastructure.Migrations
 {
     [DbContext(typeof(EventSphereDbContext))]
-    partial class EventSphereDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240626171026_Init")]
+    partial class Init
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -24,11 +27,11 @@ namespace EventSphere.Infrastructure.Migrations
 
             modelBuilder.Entity("EventSphere.Domain.Entities.Event", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("ID")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
 
                     b.Property<string>("Address")
                         .IsRequired()
@@ -37,7 +40,7 @@ namespace EventSphere.Infrastructure.Migrations
                     b.Property<int>("AvailableTickets")
                         .HasColumnType("int");
 
-                    b.Property<int>("CategoryId")
+                    b.Property<int>("CategoryID")
                         .HasColumnType("int");
 
                     b.Property<string>("CategoryName")
@@ -50,8 +53,8 @@ namespace EventSphere.Infrastructure.Migrations
 
                     b.Property<string>("Description")
                         .IsRequired()
-                        .HasMaxLength(1000)
-                        .HasColumnType("nvarchar(1000)");
+                        .HasMaxLength(300)
+                        .HasColumnType("nvarchar(300)");
 
                     b.Property<DateTime>("EndDate")
                         .HasColumnType("datetime2");
@@ -67,7 +70,7 @@ namespace EventSphere.Infrastructure.Migrations
                     b.Property<int>("MaxAttendance")
                         .HasColumnType("int");
 
-                    b.Property<int>("OrganizerId")
+                    b.Property<int>("OrganizerID")
                         .HasColumnType("int");
 
                     b.Property<string>("OrganizerName")
@@ -80,48 +83,48 @@ namespace EventSphere.Infrastructure.Migrations
                     b.Property<DateTime>("StartDate")
                         .HasColumnType("datetime2");
 
-                    b.HasKey("Id");
+                    b.HasKey("ID");
 
-                    b.HasIndex("CategoryId");
+                    b.HasIndex("CategoryID");
 
                     b.HasIndex("LocationId");
 
-                    b.HasIndex("OrganizerId");
+                    b.HasIndex("OrganizerID");
 
                     b.ToTable("Event", (string)null);
                 });
 
             modelBuilder.Entity("EventSphere.Domain.Entities.EventCategory", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("ID")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
 
                     b.Property<string>("CategoryName")
                         .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.HasKey("Id");
+                    b.HasKey("ID");
 
                     b.ToTable("EventCategory", (string)null);
 
                     b.HasData(
                         new
                         {
-                            Id = 1,
+                            ID = 1,
                             CategoryName = "Concerts"
                         },
                         new
                         {
-                            Id = 2,
+                            ID = 2,
                             CategoryName = "Sports"
                         },
                         new
                         {
-                            Id = 3,
+                            ID = 3,
                             CategoryName = "Outside Activities"
                         });
                 });
@@ -156,19 +159,19 @@ namespace EventSphere.Infrastructure.Migrations
                         new
                         {
                             Id = 2,
-                            City = "Mitrovice",
+                            City = "Fushe Kosove",
                             Country = "Kosovo"
                         },
                         new
                         {
                             Id = 3,
-                            City = "Pejë",
+                            City = "Prizren",
                             Country = "Kosovo"
                         },
                         new
                         {
                             Id = 4,
-                            City = "Prizren",
+                            City = "Gjilan",
                             Country = "Kosovo"
                         },
                         new
@@ -180,24 +183,24 @@ namespace EventSphere.Infrastructure.Migrations
                         new
                         {
                             Id = 6,
-                            City = "Gjilan",
+                            City = "Peje",
                             Country = "Kosovo"
                         },
                         new
                         {
                             Id = 7,
-                            City = "Gjakovë",
+                            City = "Mitrovice",
                             Country = "Kosovo"
                         });
                 });
 
             modelBuilder.Entity("EventSphere.Domain.Entities.Payment", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("ID")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
 
                     b.Property<int>("Amount")
                         .HasColumnType("int");
@@ -213,120 +216,117 @@ namespace EventSphere.Infrastructure.Migrations
                     b.Property<bool>("PaymentStatus")
                         .HasColumnType("bit");
 
-                    b.Property<int>("TicketId")
+                    b.Property<int>("TicketID")
                         .HasColumnType("int");
 
                     b.Property<string>("TicketName")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("UserId")
+                    b.Property<int>("UserID")
                         .HasColumnType("int");
-
-
-                    b.HasKey("Id");
 
                     b.Property<string>("UserName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.HasKey("ID");
 
+                    b.HasIndex("TicketID");
 
-                    b.HasIndex("TicketId");
-
-                    b.HasIndex("UserId");
+                    b.HasIndex("UserID");
 
                     b.ToTable("Payment", (string)null);
                 });
 
             modelBuilder.Entity("EventSphere.Domain.Entities.Report", b =>
                 {
-                    b.Property<int>("ReportId")
+                    b.Property<int>("reportId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ReportId"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("reportId"));
 
-                    b.Property<string>("ReportAnsw")
+                    b.Property<string>("reportAnsw")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("ReportDesc")
+                    b.Property<string>("reportDesc")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("ReportName")
+                    b.Property<string>("reportName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("UserEmail")
+                    b.Property<string>("userEmail")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("UserId")
+                    b.Property<int>("userId")
                         .HasColumnType("int");
 
-                    b.Property<string>("UserLastName")
+                    b.Property<string>("userName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("UserName")
+                    b.Property<string>("userlastName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("ReportId");
+                    b.HasKey("reportId");
 
                     b.ToTable("Report", (string)null);
                 });
 
             modelBuilder.Entity("EventSphere.Domain.Entities.Role", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("ID")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
 
                     b.Property<string>("RoleName")
                         .IsRequired()
                         .HasMaxLength(20)
                         .HasColumnType("nvarchar(20)");
 
-                    b.HasKey("Id");
+                    b.HasKey("ID");
 
                     b.ToTable("Role", (string)null);
 
                     b.HasData(
                         new
                         {
-                            Id = 1,
+                            ID = 1,
                             RoleName = "Admin"
                         },
                         new
                         {
-                            Id = 2,
+                            ID = 2,
                             RoleName = "Organizer"
                         },
                         new
                         {
-                            Id = 3,
+                            ID = 3,
                             RoleName = "User"
                         });
                 });
 
             modelBuilder.Entity("EventSphere.Domain.Entities.Ticket", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("ID")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
 
                     b.Property<string>("BookingReference")
                         .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
-                    b.Property<int>("EventId")
+                    b.Property<int>("EventID")
                         .HasColumnType("int");
 
                     b.Property<string>("EventName")
@@ -340,20 +340,20 @@ namespace EventSphere.Infrastructure.Migrations
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)");
 
-                    b.HasKey("Id");
+                    b.HasKey("ID");
 
-                    b.HasIndex("EventId");
+                    b.HasIndex("EventID");
 
                     b.ToTable("Ticket", (string)null);
                 });
 
             modelBuilder.Entity("EventSphere.Domain.Entities.User", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("ID")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
 
                     b.Property<DateTime>("DateCreated")
                         .ValueGeneratedOnAdd()
@@ -366,12 +366,10 @@ namespace EventSphere.Infrastructure.Migrations
                         .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("LastName")
-                        .IsRequired()
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)");
 
                     b.Property<string>("Name")
-                        .IsRequired()
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)");
 
@@ -379,7 +377,7 @@ namespace EventSphere.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("varbinary(64)");
 
-                    b.Property<int>("RoleId")
+                    b.Property<int>("RoleID")
                         .HasColumnType("int");
 
                     b.Property<string>("RoleName")
@@ -389,9 +387,9 @@ namespace EventSphere.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("varbinary(64)");
 
-                    b.HasKey("Id");
+                    b.HasKey("ID");
 
-                    b.HasIndex("RoleId");
+                    b.HasIndex("RoleID");
 
                     b.ToTable("User", (string)null);
                 });
@@ -400,7 +398,7 @@ namespace EventSphere.Infrastructure.Migrations
                 {
                     b.HasOne("EventSphere.Domain.Entities.EventCategory", "Category")
                         .WithMany()
-                        .HasForeignKey("CategoryId")
+                        .HasForeignKey("CategoryID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -412,7 +410,7 @@ namespace EventSphere.Infrastructure.Migrations
 
                     b.HasOne("EventSphere.Domain.Entities.User", "Organizer")
                         .WithMany()
-                        .HasForeignKey("OrganizerId")
+                        .HasForeignKey("OrganizerID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -427,13 +425,13 @@ namespace EventSphere.Infrastructure.Migrations
                 {
                     b.HasOne("EventSphere.Domain.Entities.Ticket", "Ticket")
                         .WithMany("Payments")
-                        .HasForeignKey("TicketId")
+                        .HasForeignKey("TicketID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("EventSphere.Domain.Entities.User", "User")
                         .WithMany("Payments")
-                        .HasForeignKey("UserId")
+                        .HasForeignKey("UserID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -446,7 +444,7 @@ namespace EventSphere.Infrastructure.Migrations
                 {
                     b.HasOne("EventSphere.Domain.Entities.Event", "Event")
                         .WithMany("Tickets")
-                        .HasForeignKey("EventId")
+                        .HasForeignKey("EventID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -457,7 +455,7 @@ namespace EventSphere.Infrastructure.Migrations
                 {
                     b.HasOne("EventSphere.Domain.Entities.Role", "Role")
                         .WithMany()
-                        .HasForeignKey("RoleId")
+                        .HasForeignKey("RoleID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

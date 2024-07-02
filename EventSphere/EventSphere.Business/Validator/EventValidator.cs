@@ -28,10 +28,10 @@ namespace EventSphere.Business.Validator
                 .NotEmpty().WithMessage("End date is required.")
                 .GreaterThanOrEqualTo(x => x.StartDate).WithMessage("End date must be after start date.");
 
-            RuleFor(x => x.CategoryId)
+            RuleFor(x => x.CategoryID)
                 .NotEmpty().WithMessage("Category ID is required.");
 
-            RuleFor(x => x.OrganizerId)
+            RuleFor(x => x.OrganizerID)
                 .NotEmpty().WithMessage("Organizer ID is required.");
 
             RuleFor(x => x.MaxAttendance)
