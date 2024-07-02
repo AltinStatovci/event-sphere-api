@@ -59,7 +59,6 @@ namespace EventSphere.API.Controllers
             var validationResult = _validator.Validate(eventDto);
             if (!validationResult.IsValid)
             {
-                // If validation fails, return BadRequest with the error messages        var errorMessages = validationResult.Errors.Select(error => error.ErrorMessage);        var errorMessages = validationResult.Errors.Select(error => error.ErrorMessage);
                 var errorMessages = validationResult.Errors.Select(error => error.ErrorMessage);
 
                 return BadRequest(errorMessages);
@@ -139,6 +138,13 @@ namespace EventSphere.API.Controllers
         {
             var events = await _eventService.GetEventsByNameAsync(name);
             return Ok(events);
+        }
+        [HttpPost("approve/{id}")]
+        [Authorize(Policy = "Admin")]
+        public async Task<IActionResult> ApproveEvent(int id)
+        {
+                var approvedEvent = await _eventService.UpdateEventStatus(id);
+                return Ok(approvedEvent);
         }
     }
 }

@@ -98,6 +98,7 @@ namespace EventSphere.Business.Services
                     PhotoData = base64Image,
                     MaxAttendance = eventDto.MaxAttendance,
                     AvailableTickets = eventDto.AvailableTickets,
+                    IsApproved = eventDto.IsApproved
                 };
 
                 await _eventRepository.AddAsync(events);
@@ -222,6 +223,23 @@ namespace EventSphere.Business.Services
         public async Task<IEnumerable<Event>> GetEventsByCountry(string country)
         {
             return await _context.Events.Include(e => e.Location).Where(e => e.Location.Country == country).ToListAsync();
+        }
+
+        public async Task<Event> UpdateEventStatus(int id)
+        {
+            var eventById = await _eventRepository.GetByIdAsync(id);
+            try
+            {
+                eventById.IsApproved = true;
+
+                await _eventRepository.UpdateAsync(eventById);
+
+                return eventById;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error occurred while approving the event.", ex);
+            }
         }
     }
 }

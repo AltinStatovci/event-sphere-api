@@ -20,6 +20,7 @@ namespace EventSphere.Infrastructure.EntityFramework
             builder.Property(e => e.MaxAttendance).IsRequired();
             builder.Property(e => e.AvailableTickets).IsRequired();
             builder.Property(e => e.DateCreated).HasDefaultValueSql("GETDATE()");
+            builder.Property(e => e.IsApproved).IsRequired();
 
             builder.HasOne(e => e.Category)
                    .WithMany()
