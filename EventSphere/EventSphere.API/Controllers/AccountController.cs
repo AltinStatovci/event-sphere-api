@@ -5,6 +5,7 @@ using EventSphere.Domain.Entities;
 using MapsterMapper;
 
 using Microsoft.AspNetCore.Mvc;
+using Serilog;
 
 namespace EventSphere.API.Controllers
 {
@@ -13,24 +14,56 @@ namespace EventSphere.API.Controllers
     public class AccountController : ControllerBase
     {
         private readonly IAccountService _accountService;
+        private readonly ILogger<AccountController> _logger;
 
-        public AccountController(IAccountService accountService)
+        public AccountController(IAccountService accountService, ILogger<AccountController> logger)
         {
             _accountService = accountService;
+            _logger = logger;
         }
 
         [HttpPost("register")]
         public async Task<IActionResult> Register(CreateUserDTO createUserDto)
         {
-            var createdUser = await _accountService.AddUserAsync(createUserDto);
-            return Ok(createdUser);
+            try
+            {
+                var createdUser = await _accountService.AddUserAsync(createUserDto);
+             
+                Log.Information("User created successfully: {@User}", createdUser);
+                return Ok(createdUser);
+            }
+            catch (ArgumentException ex)
+            {
+                Log.Error("User creation failed due to invalid input: {@Error}", ex.Message);
+                return BadRequest(new { Error = ex.Message });
+            }
+            catch (Exception ex)
+            {
+                Log.Fatal("An error occurred while creating user: {@Error}", ex);
+                return StatusCode(500, new { Error = "An error occurred while processing your request." });
+            }
         }
+
 
         [HttpPost("authenticate")]
         public async Task<IActionResult> Authenticate(LoginDTO loginDto)
         {
-            var token = await _accountService.AuthenticateAsync(loginDto);
-            return Ok(token);
+            try
+            {
+                var token = await _accountService.AuthenticateAsync(loginDto);
+                if (token == null)
+                {
+                    Log.Error("User authentication failed: invalid credentials");
+                    return BadRequest(new { Error = "Invalid credentials" });
+                }
+                Log.Information("User authenticated successfully: {@Token}", token);
+                return Ok(token);
+            }
+            catch (Exception ex)
+            {
+                Log.Fatal("An error occurred while authenticating user: {@Error}", ex);
+                return StatusCode(500, new { Error = "An error occurred while processing your request." });
+            }
         }
     }
 }

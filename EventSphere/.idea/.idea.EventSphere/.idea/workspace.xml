@@ -11,13 +11,21 @@
   <component name="ChangeListManager">
     <list default="true" id="c85145b6-99f5-46d8-b5ce-9fdbb86b216d" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.EventSphere/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.EventSphere/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/EventSphere.Business/Validator/EventValidator.cs" beforeDir="false" afterPath="$PROJECT_DIR$/EventSphere.Business/Validator/EventValidator.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/EventSphere.Domain/DTOs/User/CreateUserDTO.cs" beforeDir="false" afterPath="$PROJECT_DIR$/EventSphere.Domain/DTOs/User/CreateUserDTO.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/EventSphere.Domain/DTOs/User/LoginDTO.cs" beforeDir="false" afterPath="$PROJECT_DIR$/EventSphere.Domain/DTOs/User/LoginDTO.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/EventSphere.Domain/DTOs/User/UpdatePasswordDto.cs" beforeDir="false" afterPath="$PROJECT_DIR$/EventSphere.Domain/DTOs/User/UpdatePasswordDto.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/EventSphere.Infrastructure/EntityFramework/EventConfiguration.cs" beforeDir="false" afterPath="$PROJECT_DIR$/EventSphere.Infrastructure/EntityFramework/EventConfiguration.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/EventSphere.Infrastructure/Migrations/20240627092131_Init.Designer.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/EventSphere.Infrastructure/Migrations/20240627092131_Init.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/EventSphere.API/Controllers/AccountController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/EventSphere.API/Controllers/AccountController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/EventSphere.API/Controllers/EventCategoryController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/EventSphere.API/Controllers/EventCategoryController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/EventSphere.API/Controllers/EventController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/EventSphere.API/Controllers/EventController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/EventSphere.API/Controllers/LocationController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/EventSphere.API/Controllers/LocationController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/EventSphere.API/Controllers/PaymentController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/EventSphere.API/Controllers/PaymentController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/EventSphere.API/Controllers/ReportController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/EventSphere.API/Controllers/ReportController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/EventSphere.API/Controllers/RoleController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/EventSphere.API/Controllers/RoleController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/EventSphere.API/Controllers/TicketController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/EventSphere.API/Controllers/TicketController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/EventSphere.API/Controllers/UserController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/EventSphere.API/Controllers/UserController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/EventSphere.API/EventSphere.API.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/EventSphere.API/EventSphere.API.csproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/EventSphere.API/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/EventSphere.API/Program.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/EventSphere.Business/EventSphere.Business.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/EventSphere.Business/EventSphere.Business.csproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/EventSphere.Business/Services/AccountService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/EventSphere.Business/Services/AccountService.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/EventSphere.Domain/EventSphere.Domain.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/EventSphere.Domain/EventSphere.Domain.csproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/EventSphere.Infrastructure/EventSphere.Infrastructure.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/EventSphere.Infrastructure/EventSphere.Infrastructure.csproj" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -53,7 +61,7 @@
     &quot;.NET Launch Settings Profile.EventSphere.API: http.executor&quot;: &quot;Run&quot;,
     &quot;HTTP Request.EventSphere.API | #1.executor&quot;: &quot;Run&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;Logs&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
     &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
@@ -108,6 +116,7 @@
       <workItem from="1719313542575" duration="4251000" />
       <workItem from="1719387490973" duration="5361000" />
       <workItem from="1719476198986" duration="4232000" />
+      <workItem from="1719918281698" duration="11948000" />
     </task>
     <servers />
   </component>
