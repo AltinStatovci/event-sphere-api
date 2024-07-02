@@ -23,7 +23,7 @@ namespace EventSphere.Business.Services
         {
             return new EventCategoryDto
             {
-                Id = category.Id,
+                ID = category.ID,
                 CategoryName = category.CategoryName
             };
         }
@@ -32,7 +32,7 @@ namespace EventSphere.Business.Services
         {
             return new EventCategory
             {
-                Id = categoryDTO.Id,
+                ID = categoryDTO.ID,
                 CategoryName = categoryDTO.CategoryName
             };
         }

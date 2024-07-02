@@ -8,7 +8,7 @@ public class UserConfiguration : IEntityTypeConfiguration<User>
     {
         builder.ToTable("User");
 
-        builder.HasKey(u => u.Id);
+        builder.HasKey(u => u.ID);
 
         builder.Property(u => u.Name).HasMaxLength(30);
         builder.Property(u => u.LastName).HasMaxLength(30);
@@ -24,7 +24,7 @@ public class UserConfiguration : IEntityTypeConfiguration<User>
 
         builder.HasOne(u => u.Role)
                .WithMany()
-               .HasForeignKey(u => u.RoleId);
+               .HasForeignKey(u => u.RoleID);
 
         builder.Property(u => u.DateCreated)
                .HasDefaultValueSql("GETDATE()");
@@ -33,6 +33,6 @@ public class UserConfiguration : IEntityTypeConfiguration<User>
 
         builder.HasMany(u => u.Payments)
                .WithOne(p => p.User)
-               .HasForeignKey(p => p.UserId);
+               .HasForeignKey(p => p.UserID);
     }
 }

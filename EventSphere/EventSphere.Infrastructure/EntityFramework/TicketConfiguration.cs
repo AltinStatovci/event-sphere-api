@@ -15,7 +15,7 @@ namespace EventSphere.Infrastructure.EntityFramework
         {
             builder.ToTable("Ticket");
 
-            builder.HasKey(t => t.Id);
+            builder.HasKey(t => t.ID);
 
             builder.Property(t => t.TicketType).IsRequired().HasMaxLength(30);
             builder.Property(t => t.Price).IsRequired();
@@ -26,9 +26,8 @@ namespace EventSphere.Infrastructure.EntityFramework
 
             builder.HasOne(t => t.Event)
                    .WithMany(e => e.Tickets)
-                   .HasForeignKey(t => t.EventId)
-                   .OnDelete(DeleteBehavior.Restrict);
-
+                   .HasForeignKey(t => t.EventID)
+                   .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }

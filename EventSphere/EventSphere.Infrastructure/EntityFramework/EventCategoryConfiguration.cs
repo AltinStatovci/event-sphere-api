@@ -14,8 +14,8 @@ namespace EventSphere.Infrastructure.EntityFramework
         public void Configure(EntityTypeBuilder<EventCategory> builder)
         {
             builder.ToTable("EventCategory");
-            builder.HasKey(ec => ec.Id);
-            builder.Property(ec => ec.Id)
+            builder.HasKey(ec => ec.ID);
+            builder.Property(ec => ec.ID)
                    .ValueGeneratedOnAdd();
 
             builder.Property(ec => ec.CategoryName)
