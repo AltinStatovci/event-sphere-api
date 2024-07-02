@@ -43,7 +43,7 @@ namespace EventSphere.API.Controllers
         public async Task<IActionResult> Create(TicketDTO ticketDTO)
         {
             var ticket = await _ticketService.CreateAsync(ticketDTO);
-            return CreatedAtAction(nameof(GetTicketId), new { id = ticketDTO.Id }, ticketDTO);
+            return CreatedAtAction(nameof(GetTicketId), new { id = ticketDTO.ID }, ticketDTO);
         }
         [HttpPut("{id}")]
         [Authorize (Policy = "AdminOrOrganizer")]

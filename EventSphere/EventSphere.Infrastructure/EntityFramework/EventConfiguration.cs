@@ -10,7 +10,7 @@ namespace EventSphere.Infrastructure.EntityFramework
         {
             builder.ToTable("Event");
 
-            builder.HasKey(e => e.Id);
+            builder.HasKey(e => e.ID);
 
             builder.Property(e => e.EventName).IsRequired().HasMaxLength(100);
             builder.Property(e => e.Description).IsRequired().HasMaxLength(1000);
@@ -23,15 +23,13 @@ namespace EventSphere.Infrastructure.EntityFramework
 
             builder.HasOne(e => e.Category)
                    .WithMany()
-
-                   .HasForeignKey(e => e.CategoryId)
-                   .OnDelete(DeleteBehavior.Restrict);
+                   .HasForeignKey(e => e.CategoryID)
+                   .OnDelete(DeleteBehavior.Cascade);
 
             builder.HasOne(e => e.Organizer)
                    .WithMany()
-                   .HasForeignKey(e => e.OrganizerId)
-                   .OnDelete(DeleteBehavior.Restrict);
-
+                   .HasForeignKey(e => e.OrganizerID)
+                   .OnDelete(DeleteBehavior.Cascade);
 
             builder.HasOne(e => e.Location)
                     .WithMany()

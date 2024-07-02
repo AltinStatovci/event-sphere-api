@@ -54,14 +54,14 @@ namespace EventSphere.API.Controllers
             }
 
             var addedCategory = await _eventCategoryService.AddCategoryAsync(categoryDTO);
-            return CreatedAtAction(nameof(GetCategoryById), new { id = addedCategory.Id }, addedCategory);
+            return CreatedAtAction(nameof(GetCategoryById), new { id = addedCategory.ID }, addedCategory);
         }
 
         [HttpPut("{id}")]
         [Authorize(Policy = "Admin")]
         public async Task<IActionResult> UpdateCategory(int id, EventCategoryDto categoryDTO)
         {
-            if (id != categoryDTO.Id)
+            if (id != categoryDTO.ID)
             {
                 return BadRequest();
             }

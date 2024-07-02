@@ -4,8 +4,9 @@ namespace EventSphere.Domain.DTOs.User
 {
     public class UserDTO
     {
+        [Required(ErrorMessage = "ID is required.")]
+        public int ID { get; set; }
 
-        public int Id { get; set; }
         [Required(ErrorMessage = "Name is required.")]
         public string Name { get; set; }
 
@@ -16,11 +17,10 @@ namespace EventSphere.Domain.DTOs.User
         [EmailAddress(ErrorMessage = "Invalid Email Address.")]
         public string Email { get; set; }
       
-        [Required(ErrorMessage = "RoleId is required.")]
-        public int RoleId { get; set; }
+        [Required(ErrorMessage = "RoleID is required.")]
+        public int RoleID { get; set; }
 
         public string? RoleName { get; set; }
-
         public DateTime DateCreated { get; set; }
 
     }

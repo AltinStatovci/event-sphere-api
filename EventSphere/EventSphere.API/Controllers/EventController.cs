@@ -68,7 +68,7 @@ namespace EventSphere.API.Controllers
             try
             {
                 var createdEvent = await _eventService.CreateEventsAsync(eventDto, image);
-                return CreatedAtAction(nameof(GetEventName), new { id = createdEvent.Id }, createdEvent);
+                return CreatedAtAction(nameof(GetEventName), new { id = createdEvent.ID }, createdEvent);
             }
             catch (Exception ex)
             {
