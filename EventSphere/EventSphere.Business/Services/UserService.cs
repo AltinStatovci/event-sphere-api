@@ -30,7 +30,7 @@ namespace EventSphere.Business.Services
 
         public async Task UpdateUserAsync(UpdateUserDTO updateUserDto)
         {
-            var existingUser = await _userRepository.GetByIdAsync(updateUserDto.Id);
+            var existingUser = await _userRepository.GetByIdAsync(updateUserDto.ID);
             if (existingUser == null)
             {
                 throw new Exception("User does not exist!");
