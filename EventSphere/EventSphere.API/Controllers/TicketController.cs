@@ -13,12 +13,12 @@ namespace EventSphere.API.Controllers
     public class TicketController : ControllerBase
     {
         private readonly ITicketService _ticketService;
-        private readonly ILogger<TicketController> _logger;
+        
 
-        public TicketController(ITicketService ticketService, ILogger<TicketController> logger)
+        public TicketController(ITicketService ticketService)
         {
             _ticketService = ticketService;
-            _logger = logger;
+       
         }
 
         [HttpGet]
@@ -82,9 +82,11 @@ namespace EventSphere.API.Controllers
         {
             try
             {
-                var createdTicket = await _ticketService.CreateAsync(ticketDTO);
-                Log.Information("Ticket created successfully: {@Ticket}", createdTicket);
-                return CreatedAtAction(nameof(GetTicketId), new { id = createdTicket.ID }, createdTicket);
+              
+                var ticket = await _ticketService.CreateAsync(ticketDTO);
+                Log.Information("Ticket created successfully: {@Ticket}", ticketDTO);
+                return CreatedAtAction(nameof(GetTicketId), new { id = ticketDTO.ID }, ticketDTO);
+              
             }
             catch (Exception ex)
             {

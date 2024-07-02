@@ -14,12 +14,12 @@ namespace EventSphere.API.Controllers
     public class LocationController : ControllerBase
     {
         private readonly ILocationServices _locationService;
-        private readonly ILogger<LocationController> _logger;
+       
 
-        public LocationController(ILocationServices locationService, ILogger<LocationController> logger)
+        public LocationController(ILocationServices locationService)
         {
             _locationService = locationService;
-            _logger = logger;
+          
         }
 
         [HttpGet]

@@ -15,13 +15,13 @@ namespace EventSphere.API.Controllers
     {
         private readonly IPaymentService _paymentService;
         private readonly IEmailService _emailService;
-        private readonly ILogger<PaymentController> _logger;
+    
 
-        public PaymentController(IPaymentService paymentService, IEmailService emailService, ILogger<PaymentController> logger)
+        public PaymentController(IPaymentService paymentService, IEmailService emailService)
         {
             _paymentService = paymentService;
             _emailService = emailService;
-            _logger = logger;
+         
         }
 
         [HttpGet]
@@ -116,12 +116,6 @@ namespace EventSphere.API.Controllers
         [HttpPost]
         public async Task<IActionResult> Create(PaymentDTO paymentDTO)
         {
-            if (paymentDTO == null)
-            {
-                Log.Error("Invalid payment data.");
-                return BadRequest(new { Error = "Invalid payment data." });
-            }
-
             try
             {
                 var paymentResponse = await _paymentService.AddPaymentAsync(paymentDTO);
@@ -131,19 +125,18 @@ namespace EventSphere.API.Controllers
                     ToEmail = paymentResponse.User.Email,
                     Subject = "Payment Confirmation",
                     Body = $@"
-                        <p>Thank you <strong>{paymentResponse.User.Name}</strong> for buying a ticket.</p>
-                        <p>The price of the ticket is <strong>{paymentResponse.Ticket.Price * paymentDTO.Amount:C}</strong>.</p>"
+            <p>Thank you <strong>{paymentResponse.User.Name}</strong> for buying a ticket.</p>
+            <p>The price of the ticket is <strong>{paymentResponse.Ticket.Price * paymentDTO.Amount:C}</strong>.</p>"
                 };
 
                 await _emailService.SendEmailAsync(mailRequest);
-
-                Log.Information("Payment created successfully: {@Payment}", paymentResponse);
-                return CreatedAtAction(nameof(GetPaymentId), new { id = paymentResponse.Payment.ID }, paymentResponse);
+                Log.Information("Payment created successfully: {@Payment}", paymentDTO);
+                return CreatedAtAction(nameof(GetPaymentId), new { id = paymentDTO.ID }, paymentDTO);
             }
             catch (Exception ex)
             {
                 Log.Fatal("An error occurred while creating the payment: {@Error}", ex);
-                return StatusCode(500, new { Error = "An error occurred while processing your request." });
+                return BadRequest(new { message = ex.Message });
             }
         }
 
