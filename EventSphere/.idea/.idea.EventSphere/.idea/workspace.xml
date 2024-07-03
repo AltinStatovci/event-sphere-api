@@ -10,9 +10,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="c85145b6-99f5-46d8-b5ce-9fdbb86b216d" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.EventSphere/.idea/dataSources.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.EventSphere/.idea/dataSources.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.EventSphere/.idea/indexLayout.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.EventSphere/.idea/indexLayout.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.EventSphere/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.EventSphere/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/EventSphere.API/Controllers/TicketController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/EventSphere.API/Controllers/TicketController.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -49,6 +48,7 @@
     "HTTP Request.EventSphere.API | #1.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "git-widget-placeholder": "main",
+    "ignore.virus.scanning.warn.message": "true",
     "node.js.detected.package.eslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
@@ -104,6 +104,7 @@
       <workItem from="1719387490973" duration="5361000" />
       <workItem from="1719476198986" duration="4232000" />
       <workItem from="1719918281698" duration="11948000" />
+      <workItem from="1719995572099" duration="246000" />
     </task>
     <servers />
   </component>

@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using Serilog;
 using System;
 using System.Threading.Tasks;
+using EventSphere.Business.Helper;
 
 namespace EventSphere.API.Controllers
 {
@@ -13,12 +14,15 @@ namespace EventSphere.API.Controllers
     public class ReportController : ControllerBase
     {
         private readonly IReportService _reportService;
+        private readonly IEmailService _emailService;
+        private readonly IUserService _userService;
     
 
-        public ReportController(IReportService reportService)
+        public ReportController(IReportService reportService, IEmailService emailService, IUserService userService)
         {
             _reportService = reportService;
-        
+            _emailService = emailService;
+            _userService = userService;
         }
 
         [HttpGet]
@@ -93,20 +97,48 @@ namespace EventSphere.API.Controllers
             }
         }
 
-        [HttpPost]
+  [HttpPost]
         [Authorize(Policy = "All")]
         public async Task<IActionResult> Create(ReportDTO reportDTO)
         {
             if (reportDTO == null)
             {
-                Log.Warning("Invalid report data.");
+                Log.Error("Invalid report data.");
                 return BadRequest(new { Error = "Invalid report data." });
             }
 
             try
             {
                 var report = await _reportService.CreateAsync(reportDTO);
-                Log.Information("Report created successfully: {@Report}", report);
+
+              
+                var adminUsers = await _userService.GetUsersByRoleAsync("Admin");
+                if (adminUsers == null || !adminUsers.Any())
+                {
+                    Log.Error("No admin users found.");
+                    return NotFound(new { Error = "No admin users found." });
+                }
+
+       
+                var emailTasks = adminUsers.Select(user => 
+                {
+                    var mailRequest = new MailRequest
+                    {
+                        ToEmail = user.Email,
+                        Subject = $"Report from {report.userName}",
+                        Body = $@"
+                        <p>Report name: {report.reportName}</p>
+                        ---------------------------------------------------
+                        <p>Report description: {report.reportDesc}</p>
+                        "
+                    };
+
+                    return _emailService.SendEmailAsync(mailRequest);
+                });
+
+                await Task.WhenAll(emailTasks);
+
+                Log.Information("Report created and emails sent successfully: {@Report}", report);
                 return CreatedAtAction(nameof(GetReportId), new { id = report.reportId }, report);
             }
             catch (Exception ex)
@@ -115,7 +147,7 @@ namespace EventSphere.API.Controllers
                 return StatusCode(500, new { Error = "An error occurred while processing your request." });
             }
         }
-
+        
         [HttpPut("{id}")]
         [Authorize(Policy = "All")]
         public async Task<IActionResult> Update(int id, ReportDTO reportDTO)

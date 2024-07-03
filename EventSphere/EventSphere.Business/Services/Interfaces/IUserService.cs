@@ -12,6 +12,7 @@ namespace EventSphere.Business.Services.Interfaces
         Task UpdateUserPasswordAsync( int id,UpdatePasswordDto updatePasswordDto);
         Task DeleteUserAsync(int id);
         Task<int> GetUserCountAsync();
+        Task<IEnumerable<User>> GetUsersByRoleAsync(string role);
         
         
     }
