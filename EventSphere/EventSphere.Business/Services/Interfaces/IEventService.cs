@@ -18,5 +18,7 @@ namespace EventSphere.Business.Services.Interfaces
         Task<IEnumerable<Event>> GetEventsByCountry(string country);
         Task<IEnumerable<Event>> GetEventsByNameAsync(string name);
         Task<Event> UpdateEventStatus(int id);
+        Task<string> GetOrganizerEmail(int id);
+        Task UpdateMessage(int id, string message);
     }
 }
