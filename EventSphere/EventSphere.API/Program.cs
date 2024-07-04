@@ -5,18 +5,16 @@ using EventSphere.Infrastructure.Settings;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
-using Microsoft.Extensions.Configuration;
-using Stripe;
-using System.Text;
-using System.Configuration;
 using Serilog;
 using Serilog.Events;
-
+using Serilog.Sinks.MSSqlServer;
+using Stripe;
+using System.Text;
+using System.Collections.ObjectModel;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-
 builder.Services.AddControllers();
 builder.Services.AddDbContext<EventSphereDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
@@ -52,28 +50,23 @@ builder.Services.AddAuthorization(options =>
     
     options.AddPolicy("AdminOrOrganizer", policy => policy.RequireRole("1", "2"));
     options.AddPolicy("All", policy => policy.RequireRole("1", "2","3"));
-   
 });
 
 builder.Services.Configure<StripeSettings>(builder.Configuration.GetSection("Stripe"));
 
 Log.Logger = new LoggerConfiguration()
-    .WriteTo.Logger(log => log
-        .Filter.ByIncludingOnly(evt => evt.Level == LogEventLevel.Information)
-        .WriteTo.File("logs/200Logs/logs-.txt", 
-            outputTemplate: "{Timestamp:yyyy-MM-dd HH:mm:ss.fff zzz} [{Level:u3}] {Message:lj}{NewLine}{Exception}",
-            rollingInterval: RollingInterval.Day))
-    .WriteTo.Logger(lc => lc
-        .Filter.ByIncludingOnly(evt => evt.Level == LogEventLevel.Error)
-        .WriteTo.File("logs/400Logs/logs-.txt", 
-            outputTemplate: "{Timestamp:yyyy-MM-dd HH:mm:ss.fff zzz} [{Level:u3}] {Message:lj}{NewLine}{Exception}",
-            rollingInterval: RollingInterval.Day))
-    .WriteTo.Logger(lc => lc
-        .Filter.ByIncludingOnly(evt => evt.Level == LogEventLevel.Fatal)
-        .WriteTo.File("logs/500Logs/logs-.txt", 
-            outputTemplate: "{Timestamp:yyyy-MM-dd HH:mm:ss.fff zzz} [{Level:u3}] {Message:lj}{NewLine}{Exception}",
-            rollingInterval: RollingInterval.Day))
-    .CreateLogger();
+    .MinimumLevel.Information()
+    .WriteTo.MSSqlServer(
+        connectionString: builder.Configuration.GetConnectionString("DefaultConnection"),
+        sinkOptions: new MSSqlServerSinkOptions { TableName = "Logs", AutoCreateSqlTable = false },
+        restrictedToMinimumLevel: LogEventLevel.Information
+    ).CreateLogger();
+
+
+Serilog.Debugging.SelfLog.Enable(msg => Console.WriteLine($"Serilog diagnostic: {msg}"));
+
+
+
 
 var app = builder.Build();
 

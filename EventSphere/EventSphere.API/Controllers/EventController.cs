@@ -112,7 +112,7 @@ namespace EventSphere.API.Controllers
             }
             catch (Exception ex)
             {
-                Log.Fatal("An error occurred while creating the event: {@Error}", ex);
+                Log.Fatal("An error occurred while creating the event: ");
                 return StatusCode(StatusCodes.Status500InternalServerError, new { Error = "Error occurred while creating the event." });
             }
         }
@@ -140,7 +140,7 @@ namespace EventSphere.API.Controllers
             }
             catch (Exception ex)
             {
-                Log.Fatal("An error occurred while updating the event: {@Error}", ex);
+                Log.Fatal("An error occurred while updating the event:");
                 return StatusCode(500, new { Error = "An error occurred while updating the event. Please try again later." });
             }
         }
@@ -157,7 +157,7 @@ namespace EventSphere.API.Controllers
             }
             catch (Exception ex)
             {
-                Log.Fatal("An error occurred while deleting the event: {@Error}", ex);
+                Log.Fatal("An error occurred while deleting the event: ");
                 return StatusCode(500, new { Error = "An error occurred while processing your request." });
             }
         }

@@ -77,7 +77,7 @@ namespace EventSphere.API.Controllers
             }
             catch (Exception ex)
             {
-                Log.Fatal("An error occurred while adding the location: {@Error}", ex);
+                Log.Fatal("An error occurred while adding the location " );
                 return StatusCode(500, new { Error = "An error occurred while processing your request." });
             }
         }
@@ -100,7 +100,7 @@ namespace EventSphere.API.Controllers
             }
             catch (Exception ex)
             {
-                Log.Fatal("An error occurred while updating the location: {@Error}", ex);
+                Log.Fatal("An error occurred while updating the location ");
                 return StatusCode(500, new { Error = "An error occurred while processing your request." });
             }
         }
@@ -117,7 +117,7 @@ namespace EventSphere.API.Controllers
             }
             catch (Exception ex)
             {
-                Log.Fatal("An error occurred while deleting the location: {@Error}", ex);
+                Log.Fatal("An error occurred while deleting the location ");
                 return StatusCode(500, new { Error = "An error occurred while processing your request." });
             }
         }
