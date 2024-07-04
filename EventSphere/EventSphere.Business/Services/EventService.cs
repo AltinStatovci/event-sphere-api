@@ -12,6 +12,9 @@ using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.Formats.Jpeg;
 using SixLabors.ImageSharp.Processing;
 using SixLabors.ImageSharp.PixelFormats;
+using Microsoft.Extensions.Logging;
+using EventSphere.Business.Helper;
+using Azure;
 
 namespace EventSphere.Business.Services
 {
@@ -19,7 +22,7 @@ namespace EventSphere.Business.Services
     {
         protected readonly EventSphereDbContext _context;
 
-        public EventServiceBase(EventSphereDbContext context)
+        public EventServiceBase(EventSphereDbContext context) 
         {
             _context = context;
         }
@@ -209,7 +212,7 @@ namespace EventSphere.Business.Services
         {
             return await _context.Events.Where(u => u.CategoryID == eventCategoryId).ToListAsync();
         }
-        
+
         public async Task<IEnumerable<Event>> GetEventByOrganizerId(int organizerId)
         {
             return await _context.Events.Where(u => u.OrganizerID == organizerId).ToListAsync();
@@ -231,6 +234,7 @@ namespace EventSphere.Business.Services
             try
             {
                 eventById.IsApproved = true;
+                eventById.Message = "Approved";
 
                 await _eventRepository.UpdateAsync(eventById);
 
@@ -241,5 +245,21 @@ namespace EventSphere.Business.Services
                 throw new Exception("Error occurred while approving the event.", ex);
             }
         }
-    }
+        public async Task<string> GetOrganizerEmail(int id)
+        {
+            var email = await _context.Events
+                .Where(e => e.ID == id)
+                .Select(e => e.Organizer.Email)
+                .FirstOrDefaultAsync();
+            
+            return email;
+        }
+
+        public async Task UpdateMessage(int id, string message)
+        {
+            var eventById = await _eventRepository.GetByIdAsync(id);
+            eventById.Message = message;
+            await _eventRepository.UpdateAsync(eventById);
+        }
+    }  
 }

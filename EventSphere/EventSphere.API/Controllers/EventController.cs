@@ -1,4 +1,6 @@
-﻿using EventSphere.Business.Services.Interfaces;
+﻿using EventSphere.Business.Helper;
+using EventSphere.Business.Services;
+using EventSphere.Business.Services.Interfaces;
 using EventSphere.Business.Validator;
 using EventSphere.Domain.DTOs;
 using EventSphere.Domain.DTOs.EventSphere.API.DTOs;
@@ -19,13 +21,14 @@ namespace EventSphere.API.Controllers
     {
         private readonly IEventService _eventService;
         private readonly EventValidator _validator;
-      
-
-        public EventController(IEventService eventService)
+        private readonly IEmailService _emailService;
+        
+        public EventController(IEventService eventService, IEmailService emailService)
         {
             _eventService = eventService;
             _validator = new EventValidator();
-     
+            _emailService = emailService;
+
         }
 
         [HttpGet]
@@ -245,7 +248,39 @@ namespace EventSphere.API.Controllers
         public async Task<IActionResult> ApproveEvent(int id)
         {
                 var approvedEvent = await _eventService.UpdateEventStatus(id);
-                return Ok(approvedEvent);
+                var email = await _eventService.GetOrganizerEmail(id);
+                var eventById = await _eventService.GetEventsByIdAsync(id); 
+              
+
+                var mailRequest = new MailRequest
+            {
+                ToEmail = email,
+                Subject = "Event Approval Update",
+                Body = $"<p>Dear {eventById.OrganizerName},</p><p> Your event submission for {eventById.EventName} was approved.</p><p>Best regards, EventSphere Team</p>",
+            };
+            await _emailService.SendEmailAsync(mailRequest);
+            return Ok(approvedEvent);
         }
+        [HttpPost("reject")]
+        [Authorize(Policy = "Admin")]
+        public async Task<IActionResult> RejectEvent([FromForm] int id, [FromForm] string message)
+        {
+            var email = await _eventService.GetOrganizerEmail(id);
+            var eventById = await _eventService.GetEventsByIdAsync(id);
+
+            await _eventService.UpdateMessage(id, message);
+
+            var mailRequest = new MailRequest
+            {
+                ToEmail = email,
+                Subject = "Event Approval Update",
+                Body = $"<p>Dear {eventById.OrganizerName},</p><p>Unfortunately, your event submission for {eventById.EventName} was not approved for the following reason:</p><p>{message}</p><p>Best regards,</p><p>EventSphere Team</p>",
+            };
+            await _emailService.SendEmailAsync(mailRequest);
+
+            return Ok();
+        }
+
+
     }
 }
