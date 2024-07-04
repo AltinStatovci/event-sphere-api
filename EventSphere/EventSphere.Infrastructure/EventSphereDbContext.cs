@@ -19,6 +19,7 @@ namespace EventSphere.Infrastructure
         public DbSet<EventCategory> EventCategories { get; set; }
         public DbSet<Report> Reports { get; set; }
         public DbSet<Location> Locations { get; set; }
+        public DbSet<Logg>Logs { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -31,6 +32,7 @@ namespace EventSphere.Infrastructure
             modelBuilder.ApplyConfiguration(new EventConfiguration());
             modelBuilder.ApplyConfiguration(new ReportConfiguration());
             modelBuilder.ApplyConfiguration(new LocationConfiguration());
+            modelBuilder.ApplyConfiguration(new LogConfiguration());
 
             modelBuilder.Entity<Role>().HasData(
             new Role { ID = 1, RoleName = "Admin" },

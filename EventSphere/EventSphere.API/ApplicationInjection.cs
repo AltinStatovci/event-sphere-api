@@ -50,6 +50,10 @@ namespace EventSphere.API
 
 
             services.Configure<EmailSettings>(configuration.GetSection("EmailSettings"));
+            
+           
+            services.AddScoped<ILogService, LogService>();
+            services.AddScoped<ILogRepository, LogRepository>();
 
         }
     }

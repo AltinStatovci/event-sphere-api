@@ -135,7 +135,7 @@ namespace EventSphere.API.Controllers
             }
             catch (Exception ex)
             {
-                Log.Fatal("An error occurred while creating the payment: {@Error}", ex);
+                Log.Fatal("An error occurred while creating the payment ");
                 return BadRequest(new { message = ex.Message });
             }
         }
@@ -157,7 +157,7 @@ namespace EventSphere.API.Controllers
             }
             catch (Exception ex)
             {
-                Log.Fatal("An error occurred while updating the payment: {@Error}", ex);
+                Log.Fatal("An error occurred while updating the payment ");
                 return StatusCode(500, new { Error = "An error occurred while processing your request." });
             }
         }
@@ -174,7 +174,7 @@ namespace EventSphere.API.Controllers
             }
             catch (Exception ex)
             {
-                Log.Fatal("An error occurred while deleting the payment: {@Error}", ex);
+                Log.Fatal("An error occurred while deleting the payment ");
                 return StatusCode(500, new { Error = "An error occurred while processing your request." });
             }
         }

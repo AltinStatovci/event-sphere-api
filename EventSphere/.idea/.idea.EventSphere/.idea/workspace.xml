@@ -10,8 +10,26 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="c85145b6-99f5-46d8-b5ce-9fdbb86b216d" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.EventSphere/.idea/indexLayout.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.EventSphere/.idea/indexLayout.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/EventSphere.Domain/Entities/Logg.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/EventSphere.Infrastructure/EntityFramework/LogConfiguration.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.EventSphere/.idea/dataSources.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.EventSphere/.idea/dataSources.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.EventSphere/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.EventSphere/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/EventSphere.API/Controllers/AccountController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/EventSphere.API/Controllers/AccountController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/EventSphere.API/Controllers/EventCategoryController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/EventSphere.API/Controllers/EventCategoryController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/EventSphere.API/Controllers/EventController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/EventSphere.API/Controllers/EventController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/EventSphere.API/Controllers/LocationController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/EventSphere.API/Controllers/LocationController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/EventSphere.API/Controllers/PaymentController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/EventSphere.API/Controllers/PaymentController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/EventSphere.API/Controllers/ReportController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/EventSphere.API/Controllers/ReportController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/EventSphere.API/Controllers/RoleController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/EventSphere.API/Controllers/RoleController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/EventSphere.API/Controllers/TicketController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/EventSphere.API/Controllers/TicketController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/EventSphere.API/Controllers/UserController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/EventSphere.API/Controllers/UserController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/EventSphere.API/EventSphere.API.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/EventSphere.API/EventSphere.API.csproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/EventSphere.API/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/EventSphere.API/Program.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/EventSphere.Business/EventSphere.Business.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/EventSphere.Business/EventSphere.Business.csproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/EventSphere.Domain/EventSphere.Domain.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/EventSphere.Domain/EventSphere.Domain.csproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/EventSphere.Infrastructure/EventSphere.Infrastructure.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/EventSphere.Infrastructure/EventSphere.Infrastructure.csproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/EventSphere.Infrastructure/EventSphereDbContext.cs" beforeDir="false" afterPath="$PROJECT_DIR$/EventSphere.Infrastructure/EventSphereDbContext.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/EventSphere.Infrastructure/Migrations/EventSphereDbContextModelSnapshot.cs" beforeDir="false" afterPath="$PROJECT_DIR$/EventSphere.Infrastructure/Migrations/EventSphereDbContextModelSnapshot.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -42,27 +60,27 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    ".NET Launch Settings Profile.EventSphere.API: http.executor": "Run",
-    "HTTP Request.EventSphere.API | #1.executor": "Run",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "main",
-    "ignore.virus.scanning.warn.message": "true",
-    "node.js.detected.package.eslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;.NET Launch Settings Profile.EventSphere.API: http.executor&quot;: &quot;Run&quot;,
+    &quot;HTTP Request.EventSphere.API | #1.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;logs-in-db&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   },
-  "keyToStringList": {
-    "rider.external.source.directories": [
-      "C:\\Users\\hp\\AppData\\Roaming\\JetBrains\\Rider2024.1\\resharper-host\\DecompilerCache",
-      "C:\\Users\\hp\\AppData\\Roaming\\JetBrains\\Rider2024.1\\resharper-host\\SourcesCache",
-      "C:\\Users\\hp\\AppData\\Local\\Symbols\\src"
+  &quot;keyToStringList&quot;: {
+    &quot;rider.external.source.directories&quot;: [
+      &quot;C:\\Users\\hp\\AppData\\Roaming\\JetBrains\\Rider2024.1\\resharper-host\\DecompilerCache&quot;,
+      &quot;C:\\Users\\hp\\AppData\\Roaming\\JetBrains\\Rider2024.1\\resharper-host\\SourcesCache&quot;,
+      &quot;C:\\Users\\hp\\AppData\\Local\\Symbols\\src&quot;
     ]
   }
-}]]></component>
+}</component>
   <component name="RunManager" selected=".NET Launch Settings Profile.EventSphere.API: http">
     <configuration name="EventSphere.API | #1" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" temporary="true" nameIsGenerated="true" path="$PROJECT_DIR$/EventSphere.API/EventSphere.API.http" requestIdentifier="#1" runType="Run single request">
       <method v="2" />
@@ -105,6 +123,13 @@
       <workItem from="1719476198986" duration="4232000" />
       <workItem from="1719918281698" duration="11948000" />
       <workItem from="1719995572099" duration="246000" />
+      <workItem from="1720012784823" duration="3452000" />
+      <workItem from="1720078828549" duration="1575000" />
+      <workItem from="1720080778326" duration="2573000" />
+      <workItem from="1720083939502" duration="678000" />
+      <workItem from="1720085043364" duration="689000" />
+      <workItem from="1720086043293" duration="2177000" />
+      <workItem from="1720092657372" duration="1315000" />
     </task>
     <servers />
   </component>
