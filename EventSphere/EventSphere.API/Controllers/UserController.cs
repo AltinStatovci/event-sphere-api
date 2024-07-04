@@ -5,9 +5,10 @@ using EventSphere.Domain.Entities;
 using MapsterMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System.Security.Claims;
-using EventSphere.Business.Services;
-using EventSphere.Business.Helper;
+using Serilog;
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace EventSphere.API.Controllers
 {
@@ -18,51 +19,88 @@ namespace EventSphere.API.Controllers
     {
         private readonly IUserService _userService;
         private readonly IMapper _mapper;
+       
 
         public UserController(IUserService userService, IMapper mapper)
         {
             _userService = userService;
             _mapper = mapper;
+         
         }
 
-        
         [HttpGet("getUsers")]
-        [Authorize (Policy = "Admin"  )]
+        [Authorize(Policy = "Admin")]
         public async Task<IActionResult> GetUsers()
         {
-            var userClaims = User.Claims;
-            var users = await _userService.GetAllUsersAsync();
-            var userDtos = _mapper.Map<IEnumerable<UpdateUserDTO>>(users);
-            return Ok(userDtos);
+            try
+            {
+                var users = await _userService.GetAllUsersAsync();
+                var userDtos = _mapper.Map<IEnumerable<UpdateUserDTO>>(users);
+            
+                return Ok(userDtos);
+            }
+            catch (Exception ex)
+            {
+               
+                return StatusCode(500, new { Error = "An error occurred while processing your request." });
+            }
         }
+
         [HttpGet("count")]
         public async Task<ActionResult<int>> GetUserCount()
         {
-            var count = await _userService.GetUserCountAsync();
-            return Ok(count);
+            try
+            {
+                var count = await _userService.GetUserCountAsync();
+              
+                return Ok(count);
+            }
+            catch (Exception ex)
+            {
+               
+                return StatusCode(500, new { Error = "An error occurred while processing your request." });
+            }
         }
 
         [HttpGet("getUser/{id}")]
         [Authorize(Policy = "All")]
         public async Task<IActionResult> GetUser(int id)
         {
-            var user = await _userService.GetUserByIdAsync(id);
-            if (user == null)
+            try
             {
-                return NotFound();
+                var user = await _userService.GetUserByIdAsync(id);
+                if (user == null)
+                {
+                    Log.Warning("User not found: {Id}", id);
+                    return NotFound();
+                }
+                var userDto = _mapper.Map<UpdateUserDTO>(user);
+               
+                return Ok(userDto);
             }
-            var userDto = _mapper.Map<UpdateUserDTO>(user);
-            return Ok(userDto);
+            catch (Exception ex)
+            {
+              
+                return StatusCode(500, new { Error = "An error occurred while processing your request." });
+            }
         }
 
         [HttpPut("updateUser")]
         [Authorize(Policy = "All")]
         public async Task<IActionResult> UpdateUser(UpdateUserDTO updateUserDto)
         {
-            await _userService.UpdateUserAsync(updateUserDto);
-            return NoContent();
+            try
+            {
+                await _userService.UpdateUserAsync(updateUserDto);
+                Log.Information("User updated successfully: {@User}", updateUserDto);
+                return NoContent();
+            }
+            catch (Exception ex)
+            {
+                Log.Fatal("An error occurred while updating the user: {@Error}", ex);
+                return StatusCode(500, new { Error = "An error occurred while processing your request." });
+            }
         }
-        
 
         [HttpPatch("updateUserPassword/{id}")]
         [Authorize(Policy = "All")]
@@ -71,22 +109,31 @@ namespace EventSphere.API.Controllers
             try
             {
                 await _userService.UpdateUserPasswordAsync(id, updatePasswordDto);
+                Log.Information("User password updated successfully for user ID: {UserId}", id);
                 return NoContent();
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
-                Console.WriteLine(e);
-                throw;
+                Log.Fatal("An error occurred while updating user password: {@Error}", ex);
+                return StatusCode(500, new { Error = "An error occurred while processing your request." });
             }
-         
         }
 
         [HttpDelete("deleteUser/{id}")]
         [Authorize(Policy = "Admin")]
         public async Task<IActionResult> DeleteUser(int id)
         {
-            await _userService.DeleteUserAsync(id);
-            return NoContent();
+            try
+            {
+                await _userService.DeleteUserAsync(id);
+                Log.Information("User deleted successfully: {Id}", id);
+                return NoContent();
+            }
+            catch (Exception ex)
+            {
+                Log.Fatal("An error occurred while deleting the user: {@Error}", ex);
+                return StatusCode(500, new { Error = "An error occurred while processing your request." });
+            }
         }
     }
 }

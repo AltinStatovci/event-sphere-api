@@ -1,49 +1,85 @@
-﻿using EventSphere.Business.Services;
-using EventSphere.Business.Services.Interfaces;
-using EventSphere.Domain.DTOs;
+﻿using EventSphere.Business.Services.Interfaces;
 using EventSphere.Domain.Entities;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using System.Reflection.Metadata.Ecma335;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using Serilog;
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace EventSphere.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-
     public class LocationController : ControllerBase
     {
-    private readonly ILocationServices _locationServices;
-      
-        public LocationController(ILocationServices locationServices)
+        private readonly ILocationServices _locationService;
+       
+
+        public LocationController(ILocationServices locationService)
         {
-            _locationServices = locationServices;
+            _locationService = locationService;
+          
         }
 
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Location>>> GetLocations()
         {
-            var locations = await _locationServices.GetAllLocations();
-            return Ok(locations);
-        }
-        [HttpGet("{id}")]
-        public async Task<ActionResult<IEnumerable<Location>>> GetLocationById(int id)
-        {
-            var location = await _locationServices.GetLocationById(id);
-            if (location == null)
+            try
             {
-                return NotFound();
+                var locations = await _locationService.GetAllLocations();
+            
+                return Ok(locations);
             }
-            return Ok(location);
+            catch (Exception ex)
+            {
+               
+                return StatusCode(500, new { Error = "An error occurred while processing your request." });
+            }
+        }
+
+        [HttpGet("{id}")]
+        public async Task<ActionResult<Location>> GetLocationById(int id)
+        {
+            try
+            {
+                var location = await _locationService.GetLocationById(id);
+                if (location == null)
+                {
+                    Log.Error("Location not found: {Id}", id);
+                    return NotFound();
+                }
+               
+                return Ok(location);
+            }
+            catch (Exception ex)
+            {
+            
+                return StatusCode(500, new { Error = "An error occurred while processing your request." });
+            }
         }
 
         [HttpPost]
-        [Authorize (Policy = "Admin")]
+        [Authorize(Policy = "Admin")]
         public async Task<IActionResult> AddLocation(Location location)
         {
-            var createdLocation = await _locationServices.AddLocation(location);
-            return CreatedAtAction(nameof(GetLocationById), new { id = createdLocation.Id }, createdLocation);
+            if (location == null)
+            {
+                Log.Error("Invalid location data.");
+                return BadRequest(new { Error = "Invalid location data." });
+            }
+
+            try
+            {
+                var createdLocation = await _locationService.AddLocation(location);
+                Log.Information("Location added successfully: {@Location}", createdLocation);
+                return CreatedAtAction(nameof(GetLocationById), new { id = createdLocation.Id }, createdLocation);
+            }
+            catch (Exception ex)
+            {
+                Log.Fatal("An error occurred while adding the location: {@Error}", ex);
+                return StatusCode(500, new { Error = "An error occurred while processing your request." });
+            }
         }
 
         [HttpPut("{id}")]
@@ -52,32 +88,69 @@ namespace EventSphere.API.Controllers
         {
             if (id != location.Id)
             {
-                return BadRequest();
+                Log.Error("Invalid ID or location data.");
+                return BadRequest(new { Error = "Invalid ID or location data." });
             }
 
-            await _locationServices.UpdateLocation(location);
-            return Ok(location);
+            try
+            {
+                await _locationService.UpdateLocation(location);
+                Log.Information("Location updated successfully: {@Location}", location);
+                return Ok(location);
+            }
+            catch (Exception ex)
+            {
+                Log.Fatal("An error occurred while updating the location: {@Error}", ex);
+                return StatusCode(500, new { Error = "An error occurred while processing your request." });
+            }
         }
 
         [HttpDelete("{id}")]
         [Authorize(Policy = "Admin")]
         public async Task<IActionResult> DeleteLocation(int id)
         {
-            await _locationServices.DeleteLocation(id);
-            return NoContent();
+            try
+            {
+                await _locationService.DeleteLocation(id);
+                Log.Information("Location deleted successfully: {Id}", id);
+                return NoContent();
+            }
+            catch (Exception ex)
+            {
+                Log.Fatal("An error occurred while deleting the location: {@Error}", ex);
+                return StatusCode(500, new { Error = "An error occurred while processing your request." });
+            }
         }
 
         [HttpGet("city/{city}")]
         public async Task<ActionResult<IEnumerable<Location>>> GetLocationsByCity(string city)
         {
-            var locations = await _locationServices.GetLocationsByCity(city);
-            return Ok(locations);
+            try
+            {
+                var locations = await _locationService.GetLocationsByCity(city);
+               
+                return Ok(locations);
+            }
+            catch (Exception ex)
+            {
+              
+                return StatusCode(500, new { Error = "An error occurred while processing your request." });
+            }
         }
+
         [HttpGet("country/{country}")]
         public async Task<ActionResult<IEnumerable<Location>>> GetLocationsByCountry(string country)
         {
-            var locations = await _locationServices.GetLocationsByCountry(country);
-            return Ok(locations);
+            try
+            {
+                var locations = await _locationService.GetLocationsByCountry(country);
+              
+                return Ok(locations);
+            }
+            catch (Exception ex)
+            { 
+                return StatusCode(500, new { Error = "An error occurred while processing your request." });
+            }
         }
     }
 }

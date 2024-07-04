@@ -9,6 +9,9 @@ using Microsoft.Extensions.Configuration;
 using Stripe;
 using System.Text;
 using System.Configuration;
+using Serilog;
+using Serilog.Events;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -53,6 +56,24 @@ builder.Services.AddAuthorization(options =>
 });
 
 builder.Services.Configure<StripeSettings>(builder.Configuration.GetSection("Stripe"));
+
+Log.Logger = new LoggerConfiguration()
+    .WriteTo.Logger(log => log
+        .Filter.ByIncludingOnly(evt => evt.Level == LogEventLevel.Information)
+        .WriteTo.File("logs/200Logs/logs-.txt", 
+            outputTemplate: "{Timestamp:yyyy-MM-dd HH:mm:ss.fff zzz} [{Level:u3}] {Message:lj}{NewLine}{Exception}",
+            rollingInterval: RollingInterval.Day))
+    .WriteTo.Logger(lc => lc
+        .Filter.ByIncludingOnly(evt => evt.Level == LogEventLevel.Error)
+        .WriteTo.File("logs/400Logs/logs-.txt", 
+            outputTemplate: "{Timestamp:yyyy-MM-dd HH:mm:ss.fff zzz} [{Level:u3}] {Message:lj}{NewLine}{Exception}",
+            rollingInterval: RollingInterval.Day))
+    .WriteTo.Logger(lc => lc
+        .Filter.ByIncludingOnly(evt => evt.Level == LogEventLevel.Fatal)
+        .WriteTo.File("logs/500Logs/logs-.txt", 
+            outputTemplate: "{Timestamp:yyyy-MM-dd HH:mm:ss.fff zzz} [{Level:u3}] {Message:lj}{NewLine}{Exception}",
+            rollingInterval: RollingInterval.Day))
+    .CreateLogger();
 
 var app = builder.Build();
 

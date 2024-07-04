@@ -21,5 +21,10 @@ namespace EventSphere.Infrastructure.Repositories.UserRepository
         {
             return await _context.Users.FirstOrDefaultAsync(u => u.Email == email);
         }
+        
+        public async Task<IEnumerable<User>> GetUsersByRoleAsync(string role)
+        {
+            return await _context.Users.Where(u => u.RoleName == role).ToListAsync();
+        }
     }
 }

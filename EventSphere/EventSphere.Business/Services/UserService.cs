@@ -74,5 +74,10 @@ namespace EventSphere.Business.Services
         {
             return await _userRepository.CountAsync();
         }
+        
+        public async Task<IEnumerable<User>> GetUsersByRoleAsync(string role)
+        {
+            return await _userRepository.GetUsersByRoleAsync(role);
+        }
     }
 }
