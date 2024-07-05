@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Serilog;
 using System;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using EventSphere.Business.Helper;
 
@@ -97,10 +98,11 @@ namespace EventSphere.API.Controllers
             }
         }
 
-  [HttpPost]
+        [HttpPost]
         [Authorize(Policy = "All")]
         public async Task<IActionResult> Create(ReportDTO reportDTO)
         {
+            var userEmail = HttpContext.User.FindFirst(ClaimTypes.Email)?.Value;
             if (reportDTO == null)
             {
                 Log.Error("Invalid report data.");
@@ -138,12 +140,12 @@ namespace EventSphere.API.Controllers
 
                 await Task.WhenAll(emailTasks);
 
-                Log.Information("Report created and emails sent successfully: {@Report}", report);
+                Log.Information("Report created and emails sent successfully: {@Report} by {userEmail}", report , userEmail);
                 return CreatedAtAction(nameof(GetReportId), new { id = report.reportId }, report);
             }
             catch (Exception ex)
             {
-                Log.Fatal("An error occurred while creating the report: ");
+                Log.Fatal("An error occurred while creating the report: by {userEmail}", userEmail);
                 return StatusCode(500, new { Error = "An error occurred while processing your request." });
             }
         }
@@ -152,6 +154,7 @@ namespace EventSphere.API.Controllers
         [Authorize(Policy = "All")]
         public async Task<IActionResult> Update(int id, ReportDTO reportDTO)
         {
+            var userEmail = HttpContext.User.FindFirst(ClaimTypes.Email)?.Value;
             if (id != reportDTO.reportId)
             {
                 Log.Error("Invalid ID or report data.");
@@ -161,12 +164,12 @@ namespace EventSphere.API.Controllers
             try
             {
                 await _reportService.UpdateAsync(id, reportDTO);
-                Log.Information("Report updated successfully: {@Report}", reportDTO);
+                Log.Information("Report updated successfully: {@Report} by {userEmail}", reportDTO , userEmail);
                 return NoContent();
             }
             catch (Exception ex)
             {
-                Log.Fatal("An error occurred while updating the report ");
+                Log.Fatal("An error occurred while updating the report: by {userEmail}", userEmail);
                 return StatusCode(500, new { Error = "An error occurred while processing your request." });
             }
         }
@@ -175,15 +178,16 @@ namespace EventSphere.API.Controllers
         [Authorize(Policy = "All")]
         public async Task<IActionResult> Delete(int id)
         {
+            var userEmail = HttpContext.User.FindFirst(ClaimTypes.Email)?.Value;
             try
             {
                 await _reportService.DeleteAsync(id);
-                Log.Information("Report deleted successfully: {Id}", id);
+                Log.Information("Report deleted successfully: {Id} by {userEmail}", id , userEmail);
                 return NoContent();
             }
             catch (Exception ex)
             {
-                Log.Fatal("An error occurred while deleting the report ");
+                Log.Fatal("An error occurred while deleting the report: by {userEmail}", userEmail);
                 return StatusCode(500, new { Error = "An error occurred while processing your request." });
             }
         }

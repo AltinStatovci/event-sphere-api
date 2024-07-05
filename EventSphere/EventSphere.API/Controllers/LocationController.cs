@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using Serilog;
 using System;
 using System.Collections.Generic;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace EventSphere.API.Controllers
@@ -63,21 +64,22 @@ namespace EventSphere.API.Controllers
         [Authorize(Policy = "Admin")]
         public async Task<IActionResult> AddLocation(Location location)
         {
+            var userEmail = HttpContext.User.FindFirst(ClaimTypes.Email)?.Value;
             if (location == null)
             {
-                Log.Error("Invalid location data.");
+                Log.Error("Invalid location data:");
                 return BadRequest(new { Error = "Invalid location data." });
             }
 
             try
             {
                 var createdLocation = await _locationService.AddLocation(location);
-                Log.Information("Location added successfully: {@Location}", createdLocation);
+                Log.Information("Location added successfully: {@Location}  by {userEmail}", createdLocation , userEmail);
                 return CreatedAtAction(nameof(GetLocationById), new { id = createdLocation.Id }, createdLocation);
             }
             catch (Exception ex)
             {
-                Log.Fatal("An error occurred while adding the location " );
+                Log.Fatal("An error occurred while adding the location: by {userEmail} ", userEmail);
                 return StatusCode(500, new { Error = "An error occurred while processing your request." });
             }
         }
@@ -86,21 +88,22 @@ namespace EventSphere.API.Controllers
         [Authorize(Policy = "Admin")]
         public async Task<IActionResult> UpdateLocation(int id, Location location)
         {
+            var userEmail = HttpContext.User.FindFirst(ClaimTypes.Email)?.Value;
             if (id != location.Id)
             {
-                Log.Error("Invalid ID or location data.");
+                Log.Error("Invalid ID or location data:");
                 return BadRequest(new { Error = "Invalid ID or location data." });
             }
 
             try
             {
                 await _locationService.UpdateLocation(location);
-                Log.Information("Location updated successfully: {@Location}", location);
+                Log.Information("Location updated successfully: {@Location} by {userEmail}", location, userEmail);
                 return Ok(location);
             }
             catch (Exception ex)
             {
-                Log.Fatal("An error occurred while updating the location ");
+                Log.Fatal("An error occurred while updating the location:  by {userEmail} ", userEmail);
                 return StatusCode(500, new { Error = "An error occurred while processing your request." });
             }
         }
@@ -109,15 +112,16 @@ namespace EventSphere.API.Controllers
         [Authorize(Policy = "Admin")]
         public async Task<IActionResult> DeleteLocation(int id)
         {
+            var userEmail = HttpContext.User.FindFirst(ClaimTypes.Email)?.Value;
             try
             {
                 await _locationService.DeleteLocation(id);
-                Log.Information("Location deleted successfully: {Id}", id);
+                Log.Information("Location deleted successfully: {Id}  by {userEmail}", id , userEmail);
                 return NoContent();
             }
             catch (Exception ex)
             {
-                Log.Fatal("An error occurred while deleting the location ");
+                Log.Fatal("An error occurred while deleting the location: by {userEmail} ", userEmail);
                 return StatusCode(500, new { Error = "An error occurred while processing your request." });
             }
         }
