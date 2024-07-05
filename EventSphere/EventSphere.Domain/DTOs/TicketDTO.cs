@@ -22,6 +22,8 @@ namespace EventSphere.Domain.DTOs
         [Required(ErrorMessage = "Price is required.")]
         [Range(0, double.MaxValue, ErrorMessage = "Price cannot be negative.")]
         public double Price { get; set; }
+        [Required(ErrorMessage = "Ticket Amount is required.")]
+        public int TicketAmount { get; set; }
 
         [Required(ErrorMessage = "Booking reference is required.")]
         public string BookingReference { get; set; }
