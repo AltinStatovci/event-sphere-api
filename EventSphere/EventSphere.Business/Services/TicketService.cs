@@ -44,6 +44,7 @@ namespace EventSphere.Business.Services
                 EventName = eventsName,
                 TicketType = Tid.TicketType,
                 Price = Tid.Price,
+                TicketAmount = Tid.TicketAmount,
                 BookingReference = Tid.BookingReference,
             };
             await _ticketRepository.AddAsync(ticket);
@@ -77,6 +78,7 @@ namespace EventSphere.Business.Services
             ticket.EventID = Tid.EventID;
             ticket.TicketType = Tid.TicketType;
             ticket.Price = Tid.Price;
+            ticket.TicketAmount = Tid.TicketAmount;
             ticket.BookingReference = Tid.BookingReference;
 
             await _ticketRepository.UpdateAsync(ticket);
@@ -86,8 +88,5 @@ namespace EventSphere.Business.Services
         {
             return await _ticketRepository.CountAsync();
         }
-
-
-
     }
 }
