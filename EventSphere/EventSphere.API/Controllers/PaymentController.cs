@@ -132,12 +132,12 @@ namespace EventSphere.API.Controllers
                 };
 
                 await _emailService.SendEmailAsync(mailRequest);
-                Log.Information("Payment created successfully by  {userEmail}", userEmail);
+                Log.Information("Payment created successfully: by  {userEmail}", userEmail);
                 return CreatedAtAction(nameof(GetPaymentId), new { id = paymentDTO.ID }, paymentDTO);
             }
             catch (Exception ex)
             {
-                Log.Fatal("An error occurred while creating the payment by  {userEmail}", userEmail);
+                Log.Fatal("An error occurred while creating the payment: by  {userEmail}", userEmail);
                 return BadRequest(new { message = ex.Message });
             }
         }
@@ -155,12 +155,12 @@ namespace EventSphere.API.Controllers
             try
             {
                 await _paymentService.UpdatePaymentAsync(id, paymentDTO);
-                Log.Information("Payment updated successfully by {userEmail}", userEmail);
+                Log.Information("Payment updated successfully: by {userEmail}", userEmail);
                 return NoContent();
             }
             catch (Exception ex)
             {
-                Log.Fatal("An error occurred while updating the payment by  {userEmail}", userEmail);
+                Log.Fatal("An error occurred while updating the payment: by  {userEmail}", userEmail);
                 return StatusCode(500, new { Error = "An error occurred while processing your request." });
             }
         }
@@ -178,7 +178,7 @@ namespace EventSphere.API.Controllers
             }
             catch (Exception ex)
             {
-                Log.Fatal("An error occurred while deleting the payment by  {userEmail}", userEmail);
+                Log.Fatal("An error occurred while deleting the payment: by  {userEmail}", userEmail);
                 return StatusCode(500, new { Error = "An error occurred while processing your request." });
             }
         }

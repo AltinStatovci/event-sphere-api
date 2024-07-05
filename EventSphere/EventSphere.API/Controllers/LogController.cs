@@ -46,7 +46,7 @@ namespace EventSphere.API.Controllers
             }
             catch (Exception ex)
             {
-                Log.Fatal("An error occurred while deleting the Log ");
+                Log.Fatal("An error occurred while deleting the Log: ");
                 return StatusCode(500, new { Error = "An error occurred while processing your request." });
             }
         }
@@ -58,12 +58,12 @@ namespace EventSphere.API.Controllers
             try
             {
                 await _logService.DeleteAllLogsAsync();
-                Log.Information(" All Logs deleted successfully" );
+                Log.Information(" All Logs deleted successfully:" );
                 return NoContent();
             }
             catch (Exception ex)
             {
-                Log.Fatal("An error occurred while deleting the Log ");
+                Log.Fatal("An error occurred while deleting the Log: ");
                 return StatusCode(500, new { Error = "An error occurred while processing your request." });
             }
         }

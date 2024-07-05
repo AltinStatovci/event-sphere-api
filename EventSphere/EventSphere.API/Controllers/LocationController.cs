@@ -67,7 +67,7 @@ namespace EventSphere.API.Controllers
             var userEmail = HttpContext.User.FindFirst(ClaimTypes.Email)?.Value;
             if (location == null)
             {
-                Log.Error("Invalid location data.");
+                Log.Error("Invalid location data:");
                 return BadRequest(new { Error = "Invalid location data." });
             }
 
@@ -79,7 +79,7 @@ namespace EventSphere.API.Controllers
             }
             catch (Exception ex)
             {
-                Log.Fatal("An error occurred while adding the location by {userEmail} ", userEmail);
+                Log.Fatal("An error occurred while adding the location: by {userEmail} ", userEmail);
                 return StatusCode(500, new { Error = "An error occurred while processing your request." });
             }
         }
@@ -91,7 +91,7 @@ namespace EventSphere.API.Controllers
             var userEmail = HttpContext.User.FindFirst(ClaimTypes.Email)?.Value;
             if (id != location.Id)
             {
-                Log.Error("Invalid ID or location data.");
+                Log.Error("Invalid ID or location data:");
                 return BadRequest(new { Error = "Invalid ID or location data." });
             }
 
@@ -103,7 +103,7 @@ namespace EventSphere.API.Controllers
             }
             catch (Exception ex)
             {
-                Log.Fatal("An error occurred while updating the location  by {userEmail} ", userEmail);
+                Log.Fatal("An error occurred while updating the location:  by {userEmail} ", userEmail);
                 return StatusCode(500, new { Error = "An error occurred while processing your request." });
             }
         }
@@ -121,7 +121,7 @@ namespace EventSphere.API.Controllers
             }
             catch (Exception ex)
             {
-                Log.Fatal("An error occurred while deleting the location by {userEmail} ", userEmail);
+                Log.Fatal("An error occurred while deleting the location: by {userEmail} ", userEmail);
                 return StatusCode(500, new { Error = "An error occurred while processing your request." });
             }
         }

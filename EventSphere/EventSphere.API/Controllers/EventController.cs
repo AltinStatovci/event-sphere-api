@@ -94,7 +94,7 @@ namespace EventSphere.API.Controllers
             
             if (eventDto == null || image == null || image.Length == 0)
             {
-                Log.Error("Invalid event data or image.");
+                Log.Error("Invalid event data or image:.");
                 return BadRequest(new { Error = "Invalid event data or image." });
             }
 
@@ -111,12 +111,12 @@ namespace EventSphere.API.Controllers
             try
             {
                 var createdEvent = await _eventService.CreateEventsAsync(eventDto, image);
-                Log.Information("Event created successfully: {@Event}  by {userEmail}", createdEvent, userEmail);
+                Log.Information("Event created successfully: {@Event} by {userEmail}", createdEvent, userEmail);
                 return CreatedAtAction(nameof(GetEventName), new { id = createdEvent.ID }, createdEvent);
             }
             catch (Exception ex)
             {
-                Log.Fatal("An error occurred while creating the event  by {userEmail} ", userEmail);
+                Log.Fatal("An error occurred while creating the event:  by {userEmail} ", userEmail);
                 return StatusCode(StatusCodes.Status500InternalServerError, new { Error = "Error occurred while creating the event." });
             }
         }
@@ -128,7 +128,7 @@ namespace EventSphere.API.Controllers
             var userEmail = HttpContext.User.FindFirst(ClaimTypes.Email)?.Value; 
             if (id == 0 || eventDto == null)
             {
-                Log.Error("Invalid ID or event data.");
+                Log.Error("Invalid ID or event data:");
                 return BadRequest(new { Error = "Invalid ID or event data." });
             }
 
@@ -145,7 +145,7 @@ namespace EventSphere.API.Controllers
             }
             catch (Exception ex)
             {
-                Log.Fatal("An error occurred while updating the event  by {userEmail} ", userEmail);
+                Log.Fatal("An error occurred while updating the event:  by {userEmail} ", userEmail);
                 return StatusCode(500, new { Error = "An error occurred while updating the event. Please try again later." });
             }
         }
@@ -163,7 +163,7 @@ namespace EventSphere.API.Controllers
             }
             catch (Exception ex)
             {
-                Log.Fatal("An error occurred while deleting the event by {userEmail} ", userEmail);
+                Log.Fatal("An error occurred while deleting the event: by {userEmail} ", userEmail);
                 return StatusCode(500, new { Error = "An error occurred while processing your request." });
             }
         }
@@ -266,7 +266,7 @@ namespace EventSphere.API.Controllers
                 Body = $"<p>Dear {eventById.OrganizerName},</p><p> Your event submission for {eventById.EventName} was approved.</p><p>Best regards, EventSphere Team</p>",
             };
             await _emailService.SendEmailAsync(mailRequest);
-            Log.Information("Event Approved successfully: {eventById.EventName}  by {userEmail}", eventById.EventName , userEmail);
+            Log.Information("Event Approved successfully: {eventById}  by {userEmail}", eventById.EventName , userEmail);
             return Ok(approvedEvent);
         }
         [HttpPost("reject")]
@@ -286,7 +286,7 @@ namespace EventSphere.API.Controllers
                 Body = $"<p>Dear {eventById.OrganizerName},</p><p>Unfortunately, your event submission for {eventById.EventName} was not approved for the following reason:</p><p>{message}</p><p>Best regards,</p><p>EventSphere Team</p>",
             };
             await _emailService.SendEmailAsync(mailRequest);
-            Log.Information("Event Rejected : {eventById.EventName}  by {userEmail}", eventById.EventName , userEmail);
+            Log.Information("Event Rejected : {event}  by {userEmail}", eventById.EventName , userEmail);
 
             return Ok();
         }

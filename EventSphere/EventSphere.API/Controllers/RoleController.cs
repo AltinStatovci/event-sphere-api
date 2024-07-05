@@ -36,7 +36,7 @@ namespace EventSphere.API.Controllers
             }
             catch (Exception ex)
             {
-                Log.Fatal("An error occurred while creating the role by {userEmail} ", userEmail);
+                Log.Fatal("An error occurred while creating the role: by {userEmail} ", userEmail);
                 return StatusCode(500, new { Error = "An error occurred while processing your request." });
             }
         }
@@ -88,7 +88,7 @@ namespace EventSphere.API.Controllers
             var userEmail = HttpContext.User.FindFirst(ClaimTypes.Email)?.Value;
             if (id != role.ID)
             {
-                Log.Error("Invalid ID or role data.");
+                Log.Error("Invalid ID or role data:");
                 return BadRequest(new { Error = "Invalid ID or role data." });
             }
 
@@ -100,7 +100,7 @@ namespace EventSphere.API.Controllers
             }
             catch (Exception ex)
             {
-                Log.Fatal("An error occurred while updating the role by {userEmail} ", userEmail);
+                Log.Fatal("An error occurred while updating the role: by {userEmail} ", userEmail);
                 return StatusCode(500, new { Error = "An error occurred while processing your request." });
             }
         }
@@ -118,7 +118,7 @@ namespace EventSphere.API.Controllers
             }
             catch (Exception ex)
             {
-                Log.Fatal("An error occurred while deleting the role by {userEmail} ", userEmail);
+                Log.Fatal("An error occurred while deleting the role: by {userEmail} ", userEmail);
                 return StatusCode(500, new { Error = "An error occurred while processing your request." });
             }
         }

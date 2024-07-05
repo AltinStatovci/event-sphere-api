@@ -92,7 +92,7 @@ namespace EventSphere.API.Controllers
             }
             catch (Exception ex)
             {
-                Log.Fatal("An error occurred while creating the ticket by {userEmail}", userEmail);
+                Log.Fatal("An error occurred while creating the ticket: by {userEmail}", userEmail);
                 return StatusCode(500, new { Error = "An error occurred while processing your request." });
             }
         }
@@ -110,7 +110,7 @@ namespace EventSphere.API.Controllers
             }
             catch (Exception ex)
             {
-                Log.Fatal("An error occurred while updating the ticket  by {userEmail}", userEmail);
+                Log.Fatal("An error occurred while updating the ticket:  by {userEmail}", userEmail);
                 return StatusCode(500, new { Error = "An error occurred while processing your request." });
             }
         }
@@ -128,7 +128,7 @@ namespace EventSphere.API.Controllers
             }
             catch (Exception ex)
             {
-                Log.Fatal("An error occurred while deleting the ticket by {userEmail}", userEmail);
+                Log.Fatal("An error occurred while deleting the ticket: by {userEmail}", userEmail);
                 return StatusCode(500, new { Error = "An error occurred while processing your request." });
             }
         }
