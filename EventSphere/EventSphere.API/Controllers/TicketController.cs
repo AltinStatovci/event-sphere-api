@@ -90,6 +90,11 @@ namespace EventSphere.API.Controllers
                 return CreatedAtAction(nameof(GetTicketId), new { id = ticketDTO.ID }, ticketDTO);
               
             }
+            catch (ArgumentException ex)
+            {
+                Log.Error("Argument exception occurred while creating ticket: {Message} by {userEmail}", ex.Message, userEmail);
+                return BadRequest(new { Error = ex.Message }); 
+            }
             catch (Exception ex)
             {
                 Log.Fatal("An error occurred while creating the ticket: by {userEmail}", userEmail);
@@ -107,6 +112,11 @@ namespace EventSphere.API.Controllers
                 await _ticketService.UpdateAsync(id, ticketDTO);
                 Log.Information("Ticket updated successfully: {@Ticket} by {userEmail}", ticketDTO , userEmail);
                 return NoContent();
+            }
+            catch (InvalidOperationException ex) // Adjust the specific exception type as per your requirement
+            {
+                Log.Error("Invalid operation occurred while updating ticket: {Message} by {userEmail}", ex.Message, userEmail);
+                return BadRequest(new { Error = ex.Message });
             }
             catch (Exception ex)
             {
