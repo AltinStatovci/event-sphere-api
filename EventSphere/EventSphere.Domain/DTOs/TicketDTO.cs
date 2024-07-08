@@ -27,5 +27,6 @@ namespace EventSphere.Domain.DTOs
 
         [Required(ErrorMessage = "Booking reference is required.")]
         public string BookingReference { get; set; }
+        public int MaxAttendance { get; set; }
     }
 }

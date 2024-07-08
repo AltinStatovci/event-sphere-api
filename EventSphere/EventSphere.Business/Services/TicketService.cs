@@ -37,7 +37,16 @@ namespace EventSphere.Business.Services
         {
             var events = await _eventRepository.GetByIdAsync(Tid.EventID);
             var eventsName = events.EventName;
-            
+
+            var totalTickets = await _context.Tickets
+                .Where(t => t.EventID == Tid.EventID)
+                .SumAsync(t => t.TicketAmount);
+
+            if (totalTickets + Tid.TicketAmount > events.MaxAttendance)
+            {
+                throw new ArgumentException("Ticket amount cannot exceed the maximum attendance of the event.");
+            }
+
             var ticket = new Ticket
             {
                 EventID = Tid.EventID,
@@ -74,6 +83,17 @@ namespace EventSphere.Business.Services
         public async Task UpdateAsync(int id, TicketDTO Tid)
         {
             var ticket = await _ticketRepository.GetByIdAsync(id);
+            var events = await _eventRepository.GetByIdAsync(Tid.EventID);
+
+
+            var totalTickets = await _context.Tickets
+                .Where(t => t.EventID == Tid.EventID && t.ID != id)
+                .SumAsync(t => t.TicketAmount);
+
+            if (totalTickets + Tid.TicketAmount > ticket.Event.MaxAttendance)
+            {
+                throw new InvalidOperationException("Total tickets for the event cannot exceed MaxAttendance.");
+            }
 
             ticket.EventID = Tid.EventID;
             ticket.TicketType = Tid.TicketType;
