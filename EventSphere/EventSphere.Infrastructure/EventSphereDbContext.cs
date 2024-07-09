@@ -20,6 +20,7 @@ namespace EventSphere.Infrastructure
         public DbSet<Report> Reports { get; set; }
         public DbSet<Location> Locations { get; set; }
         public DbSet<Logg>Logs { get; set; }
+        public DbSet<PromoCode>PromoCodes { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -55,6 +56,14 @@ namespace EventSphere.Infrastructure
                 new Location { Id = 6, Country = "Kosovo", City = "Gjilan" },
                 new Location { Id = 7, Country = "Kosovo", City = "Gjakovë" }
                 );
+            modelBuilder.Entity<PromoCode>().HasData(
+                new PromoCode { ID = 1, Code = "B3LI3V3R", DiscountPercentage = 20, ExpiryDate = new DateTime(2024, 12, 31), IsValid = true },
+                new PromoCode { ID = 2, Code = "FALLSALE", DiscountPercentage = 15, ExpiryDate = new DateTime(2024, 10, 31), IsValid = true },
+                new PromoCode { ID = 3, Code = "SUMMERFUN", DiscountPercentage = 10, ExpiryDate = new DateTime(2024, 8, 31), IsValid = true },
+                new PromoCode { ID = 4, Code = "SPRINGSALE", DiscountPercentage = 15, ExpiryDate = new DateTime(2024, 5, 31), IsValid = true },
+                new PromoCode { ID = 5, Code = "WINTERWONDER", DiscountPercentage = 25, ExpiryDate = new DateTime(2024, 12, 21), IsValid = true }
+
+            );
 
         }
     }

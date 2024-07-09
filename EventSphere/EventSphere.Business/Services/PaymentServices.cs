@@ -9,8 +9,6 @@ using Stripe;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Security.Cryptography;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace EventSphere.Business.Services
@@ -20,19 +18,33 @@ namespace EventSphere.Business.Services
         private readonly IGenericRepository<Payment> _genericRepository;
         private readonly IGenericRepository<User> _userRepository;
         private readonly IGenericRepository<Domain.Entities.Event> _eventRepository;
+        private readonly IGenericRepository<PromoCode> _promoCodeRepository;
         private readonly StripeSettings _stripeSettings;
         private readonly IGenericRepository<Ticket> _ticketRepository;
+
         public PaymentServices(IGenericRepository<Payment> genericRepository,
             IGenericRepository<User> userRepository,
             IGenericRepository<Domain.Entities.Event> eventRepository,
             IOptions<StripeSettings> stripeSettings,
-            IGenericRepository<Ticket> ticketRepository)
+            IGenericRepository<Ticket> ticketRepository,
+            IGenericRepository<PromoCode> promoCodeRepository)
         {
             _genericRepository = genericRepository;
             _userRepository = userRepository;
             _eventRepository = eventRepository;
             _stripeSettings = stripeSettings.Value;
             _ticketRepository = ticketRepository;
+            _promoCodeRepository = promoCodeRepository;
+        }
+
+        public async Task<int?> ValidatePromoCodeAsync(string code)
+        {
+            var promoCode = await _promoCodeRepository.GetByCodeAsync(code);
+            if (promoCode != null && promoCode.ExpiryDate >= DateTime.Now)
+            {
+                return (int?)promoCode.DiscountPercentage;
+            }
+            return null;
         }
 
         public async Task<PaymentResponseDto> AddPaymentAsync(PaymentDTO Pid)
@@ -43,9 +55,27 @@ namespace EventSphere.Business.Services
                 throw new Exception("Ticket not found");
             }
 
+            double discount = 0;
+            if (!string.IsNullOrEmpty(Pid.PromoCode))
+            {
+                var promoCode = await _promoCodeRepository.GetByCodeAsync(Pid.PromoCode);
+                if (promoCode != null && promoCode.IsValid && !promoCode.IsExpired())
+                {
+                    discount = promoCode.DiscountPercentage;
+                }
+                else
+                {
+                    throw new Exception("Invalid or expired promo code");
+                }
+            }
+
+            var totalAmount = ticket.Price * Pid.Amount;
+            var discountAmount = totalAmount * (discount / 100);
+            var finalAmount = totalAmount - discountAmount;
+
             var options = new ChargeCreateOptions
             {
-                Amount = (int)(ticket.Price * Pid.Amount * 100),
+                Amount = (int)(finalAmount * 100), // Stripe expects amount in cents
                 Currency = "usd",
                 Description = $"Payment for {Pid.Amount} ticket(s)",
                 Source = Pid.StripeToken
@@ -72,7 +102,7 @@ namespace EventSphere.Business.Services
                 var availableTick = await _eventRepository.GetByIdAsync(ticket.EventID);
                 if (availableTick != null)
                 {
-                    if(availableTick.AvailableTickets == 0 || Pid.Amount >= availableTick.AvailableTickets)
+                    if (availableTick.AvailableTickets == 0 || Pid.Amount >= availableTick.AvailableTickets)
                     {
                         throw new Exception("There are not enough tickets available");
                     }
@@ -98,8 +128,6 @@ namespace EventSphere.Business.Services
                 throw new Exception("Payment failed");
             }
         }
-
-
 
         public async Task DeletePaymentAsync(int id)
         {
@@ -130,18 +158,20 @@ namespace EventSphere.Business.Services
 
             await _genericRepository.UpdateAsync(payment);
         }
+
         public async Task<int> GetPaymentCountAsync()
         {
             return await _genericRepository.CountAsync();
         }
+
         public async Task<IEnumerable<Payment>> GetPaymentsByUserIdAsync(int userId)
         {
             return await _genericRepository.GetAsync(p => p.UserID == userId);
         }
+
         public async Task<IEnumerable<Payment>> GetPaymentsByEventIdAsync(int eventId)
         {
             return await _genericRepository.FindByConditionAsync(p => p.Ticket.EventID == eventId);
         }
-
     }
 }

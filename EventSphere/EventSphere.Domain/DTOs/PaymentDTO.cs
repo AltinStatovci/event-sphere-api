@@ -31,7 +31,8 @@ namespace EventSphere.Domain.DTOs
 
         [Required(ErrorMessage = "Payment date is required.")]
         public DateTime PaymentDate { get; set; }
-        public string StripeToken { get; set; } 
+        public string StripeToken { get; set; }
+        public string PromoCode { get; set; }
     }
 
 }

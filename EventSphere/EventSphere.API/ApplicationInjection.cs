@@ -26,6 +26,7 @@ namespace EventSphere.API
             services.AddScoped<IPaymentService, PaymentServices>();
             services.AddScoped<IReportService, ReportService>();
             services.AddScoped<IGenericRepository<Report>, GenericRepository<Report>>();
+            services.AddScoped<IPromoCodeRepository, PromoCodeRepository>();
 
             services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
             services.AddScoped<IUserRepository, UserRepository>();

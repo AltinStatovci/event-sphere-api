@@ -41,8 +41,9 @@ namespace EventSphere.API.Controllers
                 return StatusCode(500, new { Error = "An error occurred while processing your request." });
             }
         }
+       
 
-        [HttpGet("count")]
+    [HttpGet("count")]
         public async Task<ActionResult<int>> GetPaymentCount()
         {
             try
@@ -114,6 +115,7 @@ namespace EventSphere.API.Controllers
             }
         }
 
+
         [HttpPost]
         public async Task<IActionResult> Create(PaymentDTO paymentDTO)
         {
@@ -181,6 +183,16 @@ namespace EventSphere.API.Controllers
                 Log.Fatal("An error occurred while deleting the payment: by  {userEmail}", userEmail);
                 return StatusCode(500, new { Error = "An error occurred while processing your request." });
             }
+        }
+        [HttpPost("validatePromoCode")]
+        public async Task<IActionResult> ValidatePromoCode([FromBody] PromoCodeDTO request)
+        {
+            var discount = await _paymentService.ValidatePromoCodeAsync(request.Code);
+            if (discount != null)
+            {
+                return Ok(new { Discount = discount });
+            }
+            return BadRequest("Invalid or expired promo code.");
         }
     }
 }
