@@ -4,6 +4,7 @@ using EventSphere.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EventSphere.Infrastructure.Migrations
 {
     [DbContext(typeof(EventSphereDbContext))]
-    partial class EventSphereDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240708074542_PromoCode")]
+    partial class PromoCode
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -312,30 +315,6 @@ namespace EventSphere.Infrastructure.Migrations
                             Code = "FALLSALE",
                             DiscountPercentage = 15.0,
                             ExpiryDate = new DateTime(2024, 10, 31, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            IsValid = true
-                        },
-                        new
-                        {
-                            ID = 3,
-                            Code = "SUMMERFUN",
-                            DiscountPercentage = 10.0,
-                            ExpiryDate = new DateTime(2024, 8, 31, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            IsValid = true
-                        },
-                        new
-                        {
-                            ID = 4,
-                            Code = "SPRINGSALE",
-                            DiscountPercentage = 15.0,
-                            ExpiryDate = new DateTime(2024, 5, 31, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            IsValid = true
-                        },
-                        new
-                        {
-                            ID = 5,
-                            Code = "WINTERWONDER",
-                            DiscountPercentage = 25.0,
-                            ExpiryDate = new DateTime(2024, 12, 21, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsValid = true
                         });
                 });

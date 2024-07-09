@@ -15,5 +15,6 @@ namespace EventSphere.Infrastructure.Repositories
         Task<int> CountAsync();
         Task<IEnumerable<TEntity>> FindAsync(Expression<Func<TEntity, bool>> predicate);
         Task<IEnumerable<TEntity>> FindByConditionAsync(Expression<Func<TEntity, bool>> expression);
+        Task<TEntity> GetByCodeAsync(string code);
     }
 }
