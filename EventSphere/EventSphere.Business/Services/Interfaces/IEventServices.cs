@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Http;
 
 namespace EventSphere.Business.Services.Interfaces
 {
-    public interface IEventService
+    public interface IEventServices
     {
         Task<IEnumerable<Event>> GetAllEventsAsync();
         Task<Event> GetEventsByIdAsync(int id);

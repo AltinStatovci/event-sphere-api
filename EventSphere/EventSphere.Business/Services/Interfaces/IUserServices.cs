@@ -3,7 +3,7 @@ using EventSphere.Domain.Entities;
 
 namespace EventSphere.Business.Services.Interfaces
 {
-    public interface IUserService
+    public interface IUserServices
     {
         Task<IEnumerable<User>> GetAllUsersAsync();
         Task<User> GetUserByIdAsync(int id);

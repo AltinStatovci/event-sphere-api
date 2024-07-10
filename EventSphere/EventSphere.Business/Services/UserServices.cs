@@ -7,12 +7,12 @@ using MapsterMapper;
 
 namespace EventSphere.Business.Services
 {
-    public class UserService : IUserService
+    public class UserServices : IUserServices
     {
         private readonly IUserRepository _userRepository;
         private readonly IMapper _mapper;
 
-        public UserService(IUserRepository userRepository, IMapper mapper)
+        public UserServices(IUserRepository userRepository, IMapper mapper)
         {
             _userRepository = userRepository;
             _mapper = mapper;

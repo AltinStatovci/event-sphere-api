@@ -15,7 +15,7 @@ using Serilog;
 
 namespace EventSphere.Business.Services
 {
-    public class AccountService : IAccountService
+    public class AccountServices : IAccountServices
     {
         private readonly IUserRepository _userRepository;
         private readonly IMapper _mapper;
@@ -23,7 +23,7 @@ namespace EventSphere.Business.Services
         private readonly IGenericRepository<Role> _roleRepository;
      
 
-        public AccountService(IUserRepository userRepository, IConfiguration config, IMapper mapper, IGenericRepository<Role> roleRepository)
+        public AccountServices(IUserRepository userRepository, IConfiguration config, IMapper mapper, IGenericRepository<Role> roleRepository)
         {
             _userRepository = userRepository;
             _config = config;

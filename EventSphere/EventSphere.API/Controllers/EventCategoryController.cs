@@ -18,11 +18,11 @@ namespace EventSphere.API.Controllers
     [ApiController]
     public class EventCategoryController : ControllerBase
     {
-        private readonly IEventCategoryService _eventCategoryService;
+        private readonly IEventCategoryServices _eventCategoryService;
         private readonly EventCategoryValidator _validator;
        
 
-        public EventCategoryController(IEventCategoryService eventCategoryService)
+        public EventCategoryController(IEventCategoryServices eventCategoryService)
         {
             _eventCategoryService = eventCategoryService;
             _validator = new EventCategoryValidator();

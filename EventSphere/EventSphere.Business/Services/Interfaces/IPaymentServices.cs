@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace EventSphere.Business.Services.Interfaces
 {
-    public interface IPaymentService
+    public interface IPaymentServices
     {
         Task<IEnumerable<Payment>> GetAllPaymentsAsync();
         Task<Payment> GetPaymentByIdAsync(int id);

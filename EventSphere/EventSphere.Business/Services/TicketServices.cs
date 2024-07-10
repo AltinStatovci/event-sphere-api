@@ -21,11 +21,11 @@ namespace EventSphere.Business.Services
             _context = context;
         }
     }
-    public class TicketService : TicketServiceBase, ITicketService
+    public class TicketServices : TicketServiceBase, ITicketServices
     {
         private readonly IGenericRepository<Ticket> _ticketRepository;
         private readonly IGenericRepository<Event> _eventRepository;
-        public TicketService(EventSphereDbContext context,
+        public TicketServices(EventSphereDbContext context,
             IGenericRepository<Ticket> ticketRepository,
             IGenericRepository<Event> eventRepository) : base(context)
         {

@@ -13,10 +13,10 @@ namespace EventSphere.API.Controllers
     [ApiController]
     public class TicketController : ControllerBase
     {
-        private readonly ITicketService _ticketService;
+        private readonly ITicketServices _ticketService;
         
 
-        public TicketController(ITicketService ticketService)
+        public TicketController(ITicketServices ticketService)
         {
             _ticketService = ticketService;
        

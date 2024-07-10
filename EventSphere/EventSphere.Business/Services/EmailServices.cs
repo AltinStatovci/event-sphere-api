@@ -7,11 +7,11 @@ using MimeKit;
 
 namespace EventSphere.Business.Services
 {
-    public class EmailService : IEmailService
+    public class EmailServices : IEmailServices
     {
         private readonly EmailSettings _emailSettings;
 
-        public EmailService(IOptions<EmailSettings> options)
+        public EmailServices(IOptions<EmailSettings> options)
         {
             _emailSettings = options.Value;
         }
