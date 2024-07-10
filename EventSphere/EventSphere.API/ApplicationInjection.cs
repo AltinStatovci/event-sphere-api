@@ -7,6 +7,8 @@ using EventSphere.Infrastructure.Repositories;
 using EventSphere.Infrastructure.Repositories.UserRepository;
 using Mapster;
 using MapsterMapper;
+using Stripe;
+using Event = EventSphere.Domain.Entities.Event;
 
 namespace EventSphere.API
 {
@@ -55,6 +57,7 @@ namespace EventSphere.API
            
             services.AddScoped<ILogServices, LogServices>();
             services.AddScoped<ILogRepository, LogRepository>();
+            services.AddScoped<ChargeService>();
 
         }
     }
