@@ -14,12 +14,12 @@ namespace EventSphere.API.Controllers
     [ApiController]
     public class ReportController : ControllerBase
     {
-        private readonly IReportService _reportService;
-        private readonly IEmailService _emailService;
-        private readonly IUserService _userService;
+        private readonly IReportServices _reportService;
+        private readonly IEmailServices _emailService;
+        private readonly IUserServices _userService;
     
 
-        public ReportController(IReportService reportService, IEmailService emailService, IUserService userService)
+        public ReportController(IReportServices reportService, IEmailServices emailService, IUserServices userService)
         {
             _reportService = reportService;
             _emailService = emailService;

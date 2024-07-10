@@ -28,14 +28,14 @@ namespace EventSphere.Business.Services
         }
     }
 
-    public class EventService : EventServiceBase, IEventService
+    public class EventServices : EventServiceBase, IEventServices
     {
         private readonly IGenericRepository<Event> _eventRepository;
         private readonly IGenericRepository<User> _userRepository;
         private readonly IGenericRepository<EventCategory> _eventCategoryRepository;
         private readonly IGenericRepository<Location> _locationRepository;
 
-        public EventService(EventSphereDbContext context,
+        public EventServices(EventSphereDbContext context,
             IGenericRepository<Event> eventRepository,
             IGenericRepository<User> userRepository,
             IGenericRepository<EventCategory> eventCategoryRepository,

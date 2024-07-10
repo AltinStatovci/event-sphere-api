@@ -14,24 +14,24 @@ namespace EventSphere.API
     {
         public static void AddEventSphereServices(this IServiceCollection services, IConfiguration configuration)
         {
-            services.AddScoped<ITicketService, TicketService>();
+            services.AddScoped<ITicketServices, TicketServices>();
             services.AddScoped<IGenericRepository<Ticket>, GenericRepository<Ticket>>();
 
             services.AddScoped<IGenericRepository<Event>, GenericRepository<Event>>();
-            services.AddScoped<IEventService, EventService>();
+            services.AddScoped<IEventServices, EventServices>();
 
             services.AddScoped<IGenericRepository<EventCategory>, GenericRepository<EventCategory>>();
-            services.AddScoped<IEventCategoryService, EventCategoryService>();
+            services.AddScoped<IEventCategoryServices, EventCategoryServices>();
             services.AddScoped<IGenericRepository<Payment>, GenericRepository<Payment>>();
-            services.AddScoped<IPaymentService, PaymentServices>();
-            services.AddScoped<IReportService, ReportService>();
+            services.AddScoped<IPaymentServices, PaymentServices>();
+            services.AddScoped<IReportServices, ReportServices>();
             services.AddScoped<IGenericRepository<Report>, GenericRepository<Report>>();
             services.AddScoped<IPromoCodeRepository, PromoCodeRepository>();
 
             services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
             services.AddScoped<IUserRepository, UserRepository>();
-            services.AddScoped<IUserService, UserService>();
-            services.AddScoped<IAccountService, AccountService>();
+            services.AddScoped<IUserServices, UserServices>();
+            services.AddScoped<IAccountServices, AccountServices>();
 
             services.AddScoped<IGenericRepository<Location>, GenericRepository<Location>>();
             services.AddScoped<ILocationServices, LocationServices>();
@@ -46,14 +46,14 @@ namespace EventSphere.API
             services.AddScoped<IRoleServices, RoleServices>();
             services.AddScoped<IGenericRepository<Role>, GenericRepository<Role>>();
 
-            services.AddTransient<IEmailService, EmailService>();
+            services.AddTransient<IEmailServices, EmailServices>();
 
 
 
             services.Configure<EmailSettings>(configuration.GetSection("EmailSettings"));
             
            
-            services.AddScoped<ILogService, LogService>();
+            services.AddScoped<ILogServices, LogServices>();
             services.AddScoped<ILogRepository, LogRepository>();
 
         }

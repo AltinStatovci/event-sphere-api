@@ -20,11 +20,11 @@ namespace EventSphere.API.Controllers
     [ApiController]
     public class EventController : ControllerBase
     {
-        private readonly IEventService _eventService;
+        private readonly IEventServices _eventService;
         private readonly EventValidator _validator;
-        private readonly IEmailService _emailService;
+        private readonly IEmailServices _emailService;
         
-        public EventController(IEventService eventService, IEmailService emailService)
+        public EventController(IEventServices eventService, IEmailServices emailService)
         {
             _eventService = eventService;
             _validator = new EventValidator();

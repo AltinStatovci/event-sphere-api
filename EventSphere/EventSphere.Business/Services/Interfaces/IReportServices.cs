@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace EventSphere.Business.Services.Interfaces
 {
-    public interface IReportService
+    public interface IReportServices
     {
         Task<IEnumerable<Report>> GetAllReportsAsync();
         Task<Report> GetReportByIdAsync(int id);
