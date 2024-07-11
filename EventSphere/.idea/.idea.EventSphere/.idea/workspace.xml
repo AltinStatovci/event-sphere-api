@@ -10,11 +10,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="c85145b6-99f5-46d8-b5ce-9fdbb86b216d" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/EventSphere.Tests/Services/EventServiceTest.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/EventSphere.Tests/Services/PaymentServiceTest.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.EventSphere/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.EventSphere/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/EventSphere.API/ApplicationInjection.cs" beforeDir="false" afterPath="$PROJECT_DIR$/EventSphere.API/ApplicationInjection.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/EventSphere.Business/Services/PaymentServices.cs" beforeDir="false" afterPath="$PROJECT_DIR$/EventSphere.Business/Services/PaymentServices.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/EventSphere.Business/Services/EventService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/EventSphere.Business/Services/EventService.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/EventSphere.Tests/Services/EventServiceTest.cs" beforeDir="false" afterPath="$PROJECT_DIR$/EventSphere.Tests/Services/EventServiceTest.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -59,7 +56,7 @@
     "977f1560-df40-4254-b130-c9be1a683935.executor": "Debug",
     "HTTP Request.EventSphere.API | #1.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "main",
+    "git-widget-placeholder": "unit-testing-to-fix",
     "ignore.virus.scanning.warn.message": "true",
     "node.js.detected.package.eslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -142,52 +139,13 @@
           <line>40</line>
           <properties documentPath="C:\Users\hp\Desktop\event-sphere\EventSphere\EventSphere.Tests\Services\EventServiceTest.cs" containingFunctionPresentation="Method 'CreateEventsAsync_OnImageNullOrEmpty_ShouldThrowArgumentException'">
             <startOffsets>
-              <option value="1687" />
+              <option value="1534" />
             </startOffsets>
             <endOffsets>
-              <option value="1706" />
+              <option value="1553" />
             </endOffsets>
           </properties>
           <option name="timeStamp" value="2" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/EventSphere.Business/Services/EventServices.cs</url>
-          <line>71</line>
-          <properties documentPath="C:\Users\hp\Desktop\event-sphere\EventSphere\EventSphere.Business\Services\EventServices.cs" containingFunctionPresentation="Method 'CreateEventsAsync'">
-            <startOffsets>
-              <option value="2476" />
-            </startOffsets>
-            <endOffsets>
-              <option value="2535" />
-            </endOffsets>
-          </properties>
-          <option name="timeStamp" value="3" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/EventSphere.Tests/Services/PaymentServiceTest.cs</url>
-          <line>54</line>
-          <properties documentPath="C:\Users\hp\Desktop\event-sphere\EventSphere\EventSphere.Tests\Services\PaymentServiceTest.cs" containingFunctionPresentation="Method 'AddPaymentAsync_ShouldAddPayment'">
-            <startOffsets>
-              <option value="2303" />
-            </startOffsets>
-            <endOffsets>
-              <option value="2358" />
-            </endOffsets>
-          </properties>
-          <option name="timeStamp" value="5" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/EventSphere.Business/Services/PaymentServices.cs</url>
-          <line>89</line>
-          <properties documentPath="C:\Users\hp\Desktop\event-sphere\EventSphere\EventSphere.Business\Services\PaymentServices.cs" containingFunctionPresentation="Method 'AddPaymentAsync'">
-            <startOffsets>
-              <option value="3383" />
-            </startOffsets>
-            <endOffsets>
-              <option value="3399" />
-            </endOffsets>
-          </properties>
-          <option name="timeStamp" value="6" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

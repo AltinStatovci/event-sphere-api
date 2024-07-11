@@ -13,7 +13,7 @@ namespace EventSphere.Tests.Services;
 public class EventServiceTest
 {
     private readonly IEventService _eventService;
-    private readonly Mock<EventSphereDbContext> _mockDbContext;
+   
     private readonly Mock<IEventRepository> _mockEventRepository;
     private readonly Mock<IGenericRepository<User>> _mockUserRepository;
     private readonly Mock<IGenericRepository<EventCategory>> _mockEventCategoryRepository;
@@ -21,12 +21,12 @@ public class EventServiceTest
 
     public EventServiceTest()
     {
-        _mockDbContext = new Mock<EventSphereDbContext>();
+      
         _mockEventRepository = new Mock<IEventRepository>();
         _mockUserRepository = new Mock<IGenericRepository<User>>();
         _mockEventCategoryRepository = new Mock<IGenericRepository<EventCategory>>();
         _mockLocationRepository = new Mock<IGenericRepository<Location>>();
-        _eventService = new EventService(_mockDbContext.Object, _mockEventRepository.Object, _mockUserRepository.Object, _mockEventCategoryRepository.Object, _mockLocationRepository.Object);
+        _eventService = new EventService( _mockEventRepository.Object, _mockUserRepository.Object, _mockEventCategoryRepository.Object, _mockLocationRepository.Object);
     }
 
     [Fact]
