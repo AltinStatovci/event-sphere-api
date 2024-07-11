@@ -23,5 +23,7 @@
         public bool IsApproved {  get; set; }
         public string? Message { get; set; }
         public ICollection<Ticket> Tickets { get; set; }
+        public DateTime ScheduleDate { get; set; }
+
     }
 }

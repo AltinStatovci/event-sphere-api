@@ -269,6 +269,24 @@ namespace EventSphere.API.Controllers
             Log.Information("Event Approved successfully: {eventById}  by {userEmail}", eventById.EventName , userEmail);
             return Ok(approvedEvent);
         }
+
+        [HttpGet("date")]
+        public async Task<IActionResult> GetEventsByDate()
+        {
+            var data = DateTime.Now;
+            var eventi = await _eventService.GetEventsByDate(data);
+            return Ok(eventi);
+
+        }
+        [HttpGet("datetime")]
+        public async Task<IActionResult> GetEventsByDateTime()
+        {
+            var data = DateTime.Now;
+            var eventi = await _eventService.GetEventsByDateTime(data);
+            return Ok(eventi);
+
+        }
+
         [HttpPost("reject")]
         [Authorize(Policy = "Admin")]
         public async Task<IActionResult> RejectEvent([FromForm] int id, [FromForm] string message)
@@ -290,7 +308,5 @@ namespace EventSphere.API.Controllers
 
             return Ok();
         }
-
-
     }
 }

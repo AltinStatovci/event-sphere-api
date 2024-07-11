@@ -4,6 +4,7 @@ using EventSphere.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EventSphere.Infrastructure.Migrations
 {
     [DbContext(typeof(EventSphereDbContext))]
-    partial class EventSphereDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240705105728_Add-ScheduleToEvent")]
+    partial class AddScheduleToEvent
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -69,9 +72,6 @@ namespace EventSphere.Infrastructure.Migrations
 
                     b.Property<int>("MaxAttendance")
                         .HasColumnType("int");
-
-                    b.Property<string>("Message")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("OrganizerID")
                         .HasColumnType("int");
@@ -202,37 +202,6 @@ namespace EventSphere.Infrastructure.Migrations
                         });
                 });
 
-            modelBuilder.Entity("EventSphere.Domain.Entities.Logg", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Exception")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Level")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Message")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("MessageTemplate")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Properties")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime?>("TimeStamp")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Logs", (string)null);
-                });
-
             modelBuilder.Entity("EventSphere.Domain.Entities.Payment", b =>
                 {
                     b.Property<int>("ID")
@@ -275,74 +244,6 @@ namespace EventSphere.Infrastructure.Migrations
                     b.HasIndex("UserID");
 
                     b.ToTable("Payment", (string)null);
-                });
-
-            modelBuilder.Entity("EventSphere.Domain.Entities.PromoCode", b =>
-                {
-                    b.Property<int>("ID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
-
-                    b.Property<string>("Code")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<double>("DiscountPercentage")
-                        .HasColumnType("float");
-
-                    b.Property<DateTime>("ExpiryDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<bool>("IsValid")
-                        .HasColumnType("bit");
-
-                    b.HasKey("ID");
-
-                    b.ToTable("PromoCodes");
-
-                    b.HasData(
-                        new
-                        {
-                            ID = 1,
-                            Code = "B3LI3V3R",
-                            DiscountPercentage = 20.0,
-                            ExpiryDate = new DateTime(2024, 12, 31, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            IsValid = true
-                        },
-                        new
-                        {
-                            ID = 2,
-                            Code = "FALLSALE",
-                            DiscountPercentage = 15.0,
-                            ExpiryDate = new DateTime(2024, 10, 31, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            IsValid = true
-                        },
-                        new
-                        {
-                            ID = 3,
-                            Code = "SUMMERFUN",
-                            DiscountPercentage = 10.0,
-                            ExpiryDate = new DateTime(2024, 8, 31, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            IsValid = true
-                        },
-                        new
-                        {
-                            ID = 4,
-                            Code = "SPRINGSALE",
-                            DiscountPercentage = 15.0,
-                            ExpiryDate = new DateTime(2024, 5, 31, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            IsValid = true
-                        },
-                        new
-                        {
-                            ID = 5,
-                            Code = "WINTERWONDER",
-                            DiscountPercentage = 25.0,
-                            ExpiryDate = new DateTime(2024, 12, 21, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            IsValid = true
-                        });
                 });
 
             modelBuilder.Entity("EventSphere.Domain.Entities.Report", b =>
@@ -441,9 +342,6 @@ namespace EventSphere.Infrastructure.Migrations
 
                     b.Property<double>("Price")
                         .HasColumnType("float");
-
-                    b.Property<int>("TicketAmount")
-                        .HasColumnType("int");
 
                     b.Property<string>("TicketType")
                         .IsRequired()
