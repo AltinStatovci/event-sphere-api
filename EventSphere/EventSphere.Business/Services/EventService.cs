@@ -98,7 +98,8 @@ namespace EventSphere.Business.Services
                     PhotoData = base64Image,
                     MaxAttendance = eventDto.MaxAttendance,
                     AvailableTickets = eventDto.AvailableTickets,
-                    IsApproved = eventDto.IsApproved
+                    IsApproved = eventDto.IsApproved,
+                    ScheduleDate = eventDto.ScheduleDate
                 };
 
                 await _eventRepository.AddAsync(events);
@@ -240,6 +241,14 @@ namespace EventSphere.Business.Services
             {
                 throw new Exception("Error occurred while approving the event.", ex);
             }
+        }
+        public async Task<IEnumerable<Event>> GetEventsByDate(DateTime date)
+        {
+            return await _context.Events.Where(e => e.ScheduleDate <= date && e.IsApproved == true && e.EndDate >= date).ToListAsync();
+        }
+        public async Task<IEnumerable<Event>> GetEventsByDateTime(DateTime date)
+        {
+            return await _context.Events.Where(e => e.ScheduleDate >= date && e.EndDate >= date).ToListAsync();
         }
     }
 }

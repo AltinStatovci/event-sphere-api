@@ -22,5 +22,7 @@
         public DateTime DateCreated { get; set; }
         public bool IsApproved {  get; set; }
         public ICollection<Ticket> Tickets { get; set; }
+        public DateTime ScheduleDate { get; set; }
+
     }
 }

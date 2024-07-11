@@ -247,5 +247,21 @@ namespace EventSphere.API.Controllers
                 var approvedEvent = await _eventService.UpdateEventStatus(id);
                 return Ok(approvedEvent);
         }
+        [HttpGet("date")]
+        public async Task<IActionResult> GetEventsByDate()
+        {
+            var data = DateTime.Now;
+            var eventi = await _eventService.GetEventsByDate(data);
+            return Ok(eventi);
+
+        }
+        [HttpGet("datetime")]
+        public async Task<IActionResult> GetEventsByDateTime()
+        {
+            var data = DateTime.Now;
+            var eventi = await _eventService.GetEventsByDateTime(data);
+            return Ok(eventi);
+
+        }
     }
 }
