@@ -17,8 +17,7 @@ namespace EventSphere.Business.Services
     {
         private readonly ITicketRepository _ticketRepository;
         private readonly IGenericRepository<Event> _eventRepository;
-        public TicketService(EventSphereDbContext context,
-            ITicketRepository ticketRepository,
+        public TicketService(ITicketRepository ticketRepository,
             IGenericRepository<Event> eventRepository)
         {
             _ticketRepository = ticketRepository;

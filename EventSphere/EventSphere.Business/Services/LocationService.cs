@@ -15,7 +15,7 @@ namespace EventSphere.Business.Services
     public class LocationService : ILocationService
     {
         private readonly ILocationRepository _locationRepository;
-        public LocationService(EventSphereDbContext context, ILocationRepository locationRepository)
+        public LocationService(ILocationRepository locationRepository)
         { 
            _locationRepository = locationRepository;
         }

@@ -19,8 +19,8 @@ namespace EventSphere.Tests.Services
             _mockLocationService.Setup(s => s.AddLocation(It.IsAny<Location>())).ReturnsAsync((Location loc) => loc);
             _mockLocationService.Setup(s => s.DeleteLocation(It.IsAny<int>())).Returns(Task.CompletedTask);
             _mockLocationService.Setup(s => s.GetAllLocations()).ReturnsAsync(It.IsAny<IEnumerable<Location>>());
-            _mockLocationService.Setup(s => s.GetLocationsByCity(It.IsAny<string>())).ReturnsAsync(It.IsAny<IEnumerable<Location>>());
-            _mockLocationService.Setup(s => s.GetLocationsByCountry(It.IsAny<string>())).ReturnsAsync(It.IsAny<IEnumerable<Location>>());
+            _mockLocationService.Setup(s => s.GetLocationsByCityAsync(It.IsAny<string>())).ReturnsAsync(It.IsAny<IEnumerable<Location>>());
+            _mockLocationService.Setup(s => s.GetLocationsByCountryAsync(It.IsAny<string>())).ReturnsAsync(It.IsAny<IEnumerable<Location>>());
             _mockLocationService.Setup(s => s.GetLocationById(It.IsAny<int>())).ReturnsAsync((Location loc) => loc);
             _mockLocationService.Setup(s => s.UpdateLocation(It.IsAny<Location>()));
         }
@@ -86,15 +86,15 @@ namespace EventSphere.Tests.Services
             };
             var expectedLocations = allLocations.Where(l => l.City == city).ToList();
 
-            _mockLocationService.Setup(s => s.GetLocationsByCity(city))
+            _mockLocationService.Setup(s => s.GetLocationsByCityAsync(city))
                 .ReturnsAsync(expectedLocations);
 
             // Act
-            var result = await _mockLocationService.Object.GetLocationsByCity(city);
+            var result = await _mockLocationService.Object.GetLocationsByCityAsync(city);
 
             // Assert
             Assert.Equal(expectedLocations, result);
-            _mockLocationService.Verify(s => s.GetLocationsByCity(city), Times.Once);
+            _mockLocationService.Verify(s => s.GetLocationsByCityAsync(city), Times.Once);
         }
 
         [Theory]
@@ -112,15 +112,15 @@ namespace EventSphere.Tests.Services
             };
             var expectedLocations = allLocations.Where(l => l.Country == country).ToList();
 
-            _mockLocationService.Setup(s => s.GetLocationsByCountry(country))
+            _mockLocationService.Setup(s => s.GetLocationsByCountryAsync(country))
                 .ReturnsAsync(expectedLocations);
 
             // Act
-            var result = await _mockLocationService.Object.GetLocationsByCountry(country);
+            var result = await _mockLocationService.Object.GetLocationsByCountryAsync(country);
 
             // Assert
             Assert.Equal(expectedLocations, result);
-            _mockLocationService.Verify(s => s.GetLocationsByCountry(country), Times.Once);
+            _mockLocationService.Verify(s => s.GetLocationsByCountryAsync(country), Times.Once);
         }
 
         [Theory]

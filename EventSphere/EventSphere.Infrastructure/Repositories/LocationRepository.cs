@@ -10,7 +10,7 @@ namespace EventSphere.Infrastructure.Repositories
 {
     public class LocationRepository : GenericRepository<Location>, ILocationRepository
     {
-        protected EventSphereDbContext _context;
+        protected readonly EventSphereDbContext _context;
         public LocationRepository(EventSphereDbContext context) : base(context)
         {
 
