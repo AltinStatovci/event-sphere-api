@@ -14,10 +14,10 @@ namespace EventSphere.API.Controllers
     [ApiController]
     public class LocationController : ControllerBase
     {
-        private readonly ILocationServices _locationService;
+        private readonly ILocationService _locationService;
        
 
-        public LocationController(ILocationServices locationService)
+        public LocationController(ILocationService locationService)
         {
             _locationService = locationService;
           
@@ -131,7 +131,7 @@ namespace EventSphere.API.Controllers
         {
             try
             {
-                var locations = await _locationService.GetLocationsByCity(city);
+                var locations = await _locationService.GetLocationsByCityAsync(city);
                
                 return Ok(locations);
             }
@@ -147,7 +147,7 @@ namespace EventSphere.API.Controllers
         {
             try
             {
-                var locations = await _locationService.GetLocationsByCountry(country);
+                var locations = await _locationService.GetLocationsByCountryAsync(country);
               
                 return Ok(locations);
             }

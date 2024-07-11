@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace EventSphere.Business.Services.Interfaces
 {
-    public interface IAccountServices
+    public interface IAccountService
     {
         Task<UserDTO> AddUserAsync(CreateUserDTO createUserDto);
         Task<string> AuthenticateAsync(LoginDTO loginDto);

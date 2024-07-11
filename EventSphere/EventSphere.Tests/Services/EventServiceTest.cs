@@ -12,7 +12,7 @@ namespace EventSphere.Tests.Services;
 
 public class EventServiceTest
 {
-    private readonly IEventServices _eventService;
+    private readonly IEventService _eventService;
     private readonly Mock<EventSphereDbContext> _mockDbContext;
     private readonly Mock<IGenericRepository<Event>> _mockEventRepository;
     private readonly Mock<IGenericRepository<User>> _mockUserRepository;

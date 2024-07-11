@@ -12,19 +12,10 @@ using System.Threading.Tasks;
 
 namespace EventSphere.Business.Services
 {
-    public class LocationServiceBase
+    public class LocationService : ILocationService
     {
-        protected readonly EventSphereDbContext _context;
-
-        public LocationServiceBase(EventSphereDbContext context)
-        {
-            _context = context;
-        }
-    }
-    public class LocationServices : LocationServiceBase, ILocationServices
-    {
-        private readonly IGenericRepository<Location> _locationRepository;
-        public LocationServices(EventSphereDbContext context, IGenericRepository<Location> locationRepository) : base(context) 
+        private readonly ILocationRepository _locationRepository;
+        public LocationService(EventSphereDbContext context, ILocationRepository locationRepository)
         { 
            _locationRepository = locationRepository;
         }
@@ -43,14 +34,14 @@ namespace EventSphere.Business.Services
             return await _locationRepository.GetAllAsync();
         }
 
-        public async Task<IEnumerable<Location>> GetLocationsByCity(string city)
+        public async Task<IEnumerable<Location>> GetLocationsByCityAsync(string city)
         {
-            return await _context.Locations.Where(u => u.City == city).ToListAsync();
+            return await _locationRepository.GetLocationsByCity(city);
         }
 
-        public async Task<IEnumerable<Location>> GetLocationsByCountry(string country)
+        public async Task<IEnumerable<Location>> GetLocationsByCountryAsync(string country)
         {
-            return await _context.Locations.Where(u => u.Country == country).ToListAsync();
+            return await _locationRepository.GetLocationsByCountry(country);
         }
 
         public async Task<Location> GetLocationById(int id)

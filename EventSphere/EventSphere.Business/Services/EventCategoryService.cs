@@ -10,11 +10,11 @@ using System.Threading.Tasks;
 
 namespace EventSphere.Business.Services
 {
-    public class EventCategoryServices : IEventCategoryServices
+    public class EventCategoryService : IEventCategoryService
     {
         private readonly IGenericRepository<EventCategory> _eventCategoryRepository;
 
-        public EventCategoryServices(IGenericRepository<EventCategory> eventCategoryRepository)
+        public EventCategoryService(IGenericRepository<EventCategory> eventCategoryRepository)
         {
             _eventCategoryRepository = eventCategoryRepository;
         }

@@ -13,10 +13,10 @@ namespace EventSphere.API.Controllers
     [ApiController]
     public class TicketController : ControllerBase
     {
-        private readonly ITicketServices _ticketService;
+        private readonly ITicketService _ticketService;
         
 
-        public TicketController(ITicketServices ticketService)
+        public TicketController(ITicketService ticketService)
         {
             _ticketService = ticketService;
        
@@ -149,7 +149,7 @@ namespace EventSphere.API.Controllers
         {
             try
             {
-                var tickets = await _ticketService.GetTicketByEventId(id);
+                var tickets = await _ticketService.GetTicketByEventIdAsync(id);
                
                 return Ok(tickets);
             }

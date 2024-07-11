@@ -14,10 +14,10 @@ namespace EventSphere.API.Controllers
     [Authorize]
     public class RoleController : ControllerBase
     {
-        private readonly IRoleServices _roleServices;
+        private readonly IRoleService _roleServices;
         
 
-        public RoleController(IRoleServices roleServices)
+        public RoleController(IRoleService roleServices)
         {
             _roleServices = roleServices;
       

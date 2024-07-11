@@ -12,7 +12,7 @@ namespace EventSphere.Tests.Services;
 
 public class PaymentServiceTest
 {
-    private readonly IPaymentServices _paymentServices;
+    private readonly IPaymentService _paymentServices;
     private readonly Mock<IGenericRepository<User>> _mockUserRepository;
     private readonly Mock<IGenericRepository<Payment>> _mockPaymentRepository;
     private readonly Mock<IGenericRepository<Event>> _mockEventRepository;
@@ -29,7 +29,7 @@ public class PaymentServiceTest
         _mockTicketRepository = new Mock<IGenericRepository<Ticket>>();
         _mockPromoCodeRepository = new Mock<IGenericRepository<PromoCode>>();
         _mockChargeService = new Mock<ChargeService>();
-        _paymentServices = new PaymentServices(_mockPaymentRepository.Object, _mockUserRepository.Object, _mockEventRepository.Object,_mockTicketRepository.Object,_mockPromoCodeRepository.Object,_mockChargeService.Object);
+        _paymentServices = new PaymentService(_mockPaymentRepository.Object, _mockUserRepository.Object, _mockEventRepository.Object,_mockTicketRepository.Object,_mockPromoCodeRepository.Object,_mockChargeService.Object);
         
     }
     

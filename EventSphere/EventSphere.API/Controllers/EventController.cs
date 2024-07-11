@@ -20,11 +20,11 @@ namespace EventSphere.API.Controllers
     [ApiController]
     public class EventController : ControllerBase
     {
-        private readonly IEventServices _eventService;
+        private readonly IEventService _eventService;
         private readonly EventValidator _validator;
-        private readonly IEmailServices _emailService;
+        private readonly IEmailService _emailService;
         
-        public EventController(IEventServices eventService, IEmailServices emailService)
+        public EventController(IEventService eventService, IEmailService emailService)
         {
             _eventService = eventService;
             _validator = new EventValidator();
@@ -169,11 +169,11 @@ namespace EventSphere.API.Controllers
         }
 
         [HttpGet("{id}/eventCategory")]
-        public async Task<ActionResult<IEnumerable<Event>>> GetEventByCategoryIdAsync(int id)
+        public async Task<ActionResult<IEnumerable<Event>>> GetEventByCategory(int id)
         {
             try
             {
-                var events = await _eventService.GetEventByCategoryId(id);
+                var events = await _eventService.GetEventByCategoryIdAsync(id);
                
                 return Ok(events);
             }
@@ -186,11 +186,11 @@ namespace EventSphere.API.Controllers
 
         [HttpGet("{id}/organizer")]
         [Authorize(Policy = "AdminOrOrganizer")]
-        public async Task<ActionResult<IEnumerable<Event>>> GetEventByOrganizerIdAsync(int id)
+        public async Task<ActionResult<IEnumerable<Event>>> GetEventByOrganizer(int id)
         {
             try
             {
-                var events = await _eventService.GetEventByOrganizerId(id);
+                var events = await _eventService.GetEventByOrganizerIdAsync(id);
             
                 return Ok(events);
             }
@@ -202,11 +202,11 @@ namespace EventSphere.API.Controllers
         }
 
         [HttpGet("{city}/city")]
-        public async Task<ActionResult<IEnumerable<Event>>> GetEventsByCityAsync(string city)
+        public async Task<ActionResult<IEnumerable<Event>>> GetEventsByCity(string city)
         {
             try
             {
-                var events = await _eventService.GetEventsByCity(city);
+                var events = await _eventService.GetEventsByCityAsync(city);
            
                 return Ok(events);
             }
@@ -218,11 +218,11 @@ namespace EventSphere.API.Controllers
         }
 
         [HttpGet("{country}/country")]
-        public async Task<ActionResult<IEnumerable<Event>>> GetEventsByCountryAsync(string country)
+        public async Task<ActionResult<IEnumerable<Event>>> GetEventsByCountry(string country)
         {
             try
             {
-                var events = await _eventService.GetEventsByCountry(country);
+                var events = await _eventService.GetEventsByCountryAsync(country);
              
                 return Ok(events);
             }
@@ -255,7 +255,7 @@ namespace EventSphere.API.Controllers
         {
             var userEmail = HttpContext.User.FindFirst(ClaimTypes.Email)?.Value; 
                 var approvedEvent = await _eventService.UpdateEventStatus(id);
-                var email = await _eventService.GetOrganizerEmail(id);
+                var email = await _eventService.GetOrganizerEmailAsync(id);
                 var eventById = await _eventService.GetEventsByIdAsync(id); 
               
 
@@ -274,7 +274,7 @@ namespace EventSphere.API.Controllers
         public async Task<IActionResult> RejectEvent([FromForm] int id, [FromForm] string message)
         {
             var userEmail = HttpContext.User.FindFirst(ClaimTypes.Email)?.Value; 
-            var email = await _eventService.GetOrganizerEmail(id);
+            var email = await _eventService.GetOrganizerEmailAsync(id);
             var eventById = await _eventService.GetEventsByIdAsync(id);
 
             await _eventService.UpdateMessage(id, message);

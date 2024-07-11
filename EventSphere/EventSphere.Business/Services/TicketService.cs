@@ -12,22 +12,14 @@ using System.Threading.Tasks;
 
 namespace EventSphere.Business.Services
 {
-    public class TicketServiceBase
-    {
-        protected readonly EventSphereDbContext _context;
 
-        public TicketServiceBase(EventSphereDbContext context)
-        {
-            _context = context;
-        }
-    }
-    public class TicketServices : TicketServiceBase, ITicketServices
+    public class TicketService : ITicketService
     {
-        private readonly IGenericRepository<Ticket> _ticketRepository;
+        private readonly ITicketRepository _ticketRepository;
         private readonly IGenericRepository<Event> _eventRepository;
-        public TicketServices(EventSphereDbContext context,
-            IGenericRepository<Ticket> ticketRepository,
-            IGenericRepository<Event> eventRepository) : base(context)
+        public TicketService(EventSphereDbContext context,
+            ITicketRepository ticketRepository,
+            IGenericRepository<Event> eventRepository)
         {
             _ticketRepository = ticketRepository;
             _eventRepository = eventRepository;
@@ -38,9 +30,7 @@ namespace EventSphere.Business.Services
             var events = await _eventRepository.GetByIdAsync(Tid.EventID);
             var eventsName = events.EventName;
 
-            var totalTickets = await _context.Tickets
-                .Where(t => t.EventID == Tid.EventID)
-                .SumAsync(t => t.TicketAmount);
+            var totalTickets = await _ticketRepository.GetTotalTicketsAsync(Tid.EventID);
 
             if (totalTickets + Tid.TicketAmount > events.MaxAttendance)
             {
@@ -70,9 +60,9 @@ namespace EventSphere.Business.Services
             return await _ticketRepository.GetAllAsync();
         }
 
-        public async Task<IEnumerable<Ticket>> GetTicketByEventId(int eventId)
+        public async Task<IEnumerable<Ticket>> GetTicketByEventIdAsync(int eventId)
         {
-            return await _context.Tickets.Where(u => u.EventID == eventId).ToListAsync();
+            return await _ticketRepository.GetTicketByEventId(eventId);
         }
 
         public async Task<Ticket> GetTicketByIdAsync(int id)
@@ -86,9 +76,7 @@ namespace EventSphere.Business.Services
             var events = await _eventRepository.GetByIdAsync(Tid.EventID);
 
 
-            var totalTickets = await _context.Tickets
-                .Where(t => t.EventID == Tid.EventID && t.ID != id)
-                .SumAsync(t => t.TicketAmount);
+            var totalTickets = await _ticketRepository.GetTotalTicketsUpdateAsync(Tid.EventID, id);
 
             if (totalTickets + Tid.TicketAmount > ticket.Event.MaxAttendance)
             {

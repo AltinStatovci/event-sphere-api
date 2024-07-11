@@ -13,10 +13,10 @@ namespace EventSphere.API.Controllers
     [ApiController]
     public class AccountController : ControllerBase
     {
-        private readonly IAccountServices _accountService;
+        private readonly IAccountService _accountService;
         
 
-        public AccountController(IAccountServices accountService)
+        public AccountController(IAccountService accountService)
         {
             _accountService = accountService;
             

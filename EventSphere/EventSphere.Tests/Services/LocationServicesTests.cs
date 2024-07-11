@@ -10,11 +10,11 @@ namespace EventSphere.Tests.Services
 {
     public class LocationServicesTests
     {
-        private readonly Mock<ILocationServices> _mockLocationService;
+        private readonly Mock<ILocationService> _mockLocationService;
 
         public LocationServicesTests()
         {
-            _mockLocationService = new Mock<ILocationServices>();
+            _mockLocationService = new Mock<ILocationService>();
 
             _mockLocationService.Setup(s => s.AddLocation(It.IsAny<Location>())).ReturnsAsync((Location loc) => loc);
             _mockLocationService.Setup(s => s.DeleteLocation(It.IsAny<int>())).Returns(Task.CompletedTask);

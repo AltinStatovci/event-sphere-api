@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace EventSphere.Business.Services
 {
-    public class PaymentServices : IPaymentServices
+    public class PaymentService : IPaymentService
     {
         private readonly IGenericRepository<Payment> _genericRepository;
         private readonly IGenericRepository<User> _userRepository;
@@ -23,7 +23,7 @@ namespace EventSphere.Business.Services
         private readonly IGenericRepository<Ticket> _ticketRepository;
         private readonly ChargeService _chargeService;
 
-        public PaymentServices(IGenericRepository<Payment> genericRepository,
+        public PaymentService(IGenericRepository<Payment> genericRepository,
             IGenericRepository<User> userRepository,
             IGenericRepository<Domain.Entities.Event> eventRepository,
          
