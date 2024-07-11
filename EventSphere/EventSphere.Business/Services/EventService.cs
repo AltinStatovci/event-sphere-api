@@ -239,13 +239,13 @@ namespace EventSphere.Business.Services
             }
         }
 
-        public async Task<IEnumerable<Event>> GetEventsByDate(DateTime date)
+        public async Task<IEnumerable<Event>> GetEventsByDateAsync(DateTime date)
         {
-            return await _context.Events.Where(e => e.ScheduleDate <= date && e.IsApproved == true && e.EndDate >= date).ToListAsync();
+            return await _eventRepository.GetEventsByDate(date);
         }
-        public async Task<IEnumerable<Event>> GetEventsByDateTime(DateTime date)
+        public async Task<IEnumerable<Event>> GetEventsByDateTimeAsync(DateTime date)
         {
-            return await _context.Events.Where(e => e.ScheduleDate >= date && e.EndDate >= date).ToListAsync();
+            return await _eventRepository.GetEventsByDateTime(date);
         }
 
         public async Task<string> GetOrganizerEmailAsync(int id)
