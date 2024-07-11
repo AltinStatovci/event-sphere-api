@@ -274,7 +274,7 @@ namespace EventSphere.API.Controllers
         public async Task<IActionResult> GetEventsByDate()
         {
             var data = DateTime.Now;
-            var eventi = await _eventService.GetEventsByDate(data);
+            var eventi = await _eventService.GetEventsByDateAsync(data);
             return Ok(eventi);
 
         }
@@ -282,7 +282,7 @@ namespace EventSphere.API.Controllers
         public async Task<IActionResult> GetEventsByDateTime()
         {
             var data = DateTime.Now;
-            var eventi = await _eventService.GetEventsByDateTime(data);
+            var eventi = await _eventService.GetEventsByDateTimeAsync(data);
             return Ok(eventi);
 
         }

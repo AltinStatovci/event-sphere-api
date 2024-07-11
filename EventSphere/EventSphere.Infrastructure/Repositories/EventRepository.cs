@@ -37,6 +37,16 @@ namespace EventSphere.Infrastructure.Repositories
             return await _context.Events.Include(e => e.Location).Where(e => e.Location.Country == country).ToListAsync();
         }
 
+        public async Task<IEnumerable<Event>> GetEventsByDate(DateTime date)
+        {
+            return await _context.Events.Where(e => e.ScheduleDate <= date && e.IsApproved == true && e.EndDate >= date).ToListAsync();
+        }
+
+        public async Task<IEnumerable<Event>> GetEventsByDateTime(DateTime date)
+        {
+            return await _context.Events.Where(e => e.ScheduleDate >= date && e.EndDate >= date).ToListAsync();
+        }
+
         public async Task<string> GetOrganizerEmail(int id)
         {
             var email = await _context.Events
