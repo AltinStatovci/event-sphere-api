@@ -18,7 +18,7 @@ namespace EventSphere.Business.Services.Interfaces
 
         Task<int> GetTicketCountAsync();
 
-        Task<IEnumerable<Ticket>> GetTicketByEventId(int eventId);
+        Task<IEnumerable<Ticket>> GetTicketByEventIdAsync(int eventId);
 
 
     }

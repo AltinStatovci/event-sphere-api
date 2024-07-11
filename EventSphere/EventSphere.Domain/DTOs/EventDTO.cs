@@ -23,6 +23,7 @@ namespace EventSphere.Domain.DTOs
 
         public int AvailableTickets { get; set; }
         public bool IsApproved {  get; set; }
+        public string? Message { get; set; }
         public DateTime DateCreated { get; set; }
         public DateTime ScheduleDate {  get; set; }
     }

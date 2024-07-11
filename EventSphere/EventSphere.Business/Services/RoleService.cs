@@ -9,11 +9,11 @@ using System.Threading.Tasks;
 
 namespace EventSphere.Business.Services
 {
-    public class RoleServices : IRoleServices
+    public class RoleService : IRoleService
     {
         private readonly IGenericRepository<Role> _genericRepository;
 
-        public RoleServices(IGenericRepository<Role> genericRepository)
+        public RoleService(IGenericRepository<Role> genericRepository)
         {
             _genericRepository = genericRepository;
         }

@@ -1,0 +1,27 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFramework>net8.0</TargetFramework>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Autofac.Extras.Moq" Version="6.1.1" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.0" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="8.0.0" />
+		<PackageReference Include="Moq.EntityFrameworkCore" Version="8.0.0" />
+		<PackageReference Include="xunit" Version="2.4.2" />
+		<PackageReference Include="xunit.runner.visualstudio" Version="2.4.5" />
+		<PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.4.1" />
+		<PackageReference Include="Moq" Version="4.20.70" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\EventSphere.API\EventSphere.API.csproj" />
+		<ProjectReference Include="..\EventSphere.Business\EventSphere.Business.csproj" />
+		<ProjectReference Include="..\EventSphere.Domain\EventSphere.Domain.csproj" />
+		<ProjectReference Include="..\EventSphere.Infrastructure\EventSphere.Infrastructure.csproj" />
+	</ItemGroup>
+
+</Project>

@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Serilog;
 using System;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using EventSphere.Business.Helper;
 
@@ -40,8 +41,9 @@ namespace EventSphere.API.Controllers
                 return StatusCode(500, new { Error = "An error occurred while processing your request." });
             }
         }
+       
 
-        [HttpGet("count")]
+    [HttpGet("count")]
         public async Task<ActionResult<int>> GetPaymentCount()
         {
             try
@@ -113,9 +115,11 @@ namespace EventSphere.API.Controllers
             }
         }
 
+
         [HttpPost]
         public async Task<IActionResult> Create(PaymentDTO paymentDTO)
         {
+            var userEmail = HttpContext.User.FindFirst(ClaimTypes.Email)?.Value;
             try
             {
                 var paymentResponse = await _paymentService.AddPaymentAsync(paymentDTO);
@@ -130,12 +134,12 @@ namespace EventSphere.API.Controllers
                 };
 
                 await _emailService.SendEmailAsync(mailRequest);
-                Log.Information("Payment created successfully: {@Payment}", paymentDTO);
+                Log.Information("Payment created successfully: by  {userEmail}", userEmail);
                 return CreatedAtAction(nameof(GetPaymentId), new { id = paymentDTO.ID }, paymentDTO);
             }
             catch (Exception ex)
             {
-                Log.Fatal("An error occurred while creating the payment: {@Error}", ex);
+                Log.Fatal("An error occurred while creating the payment: by  {userEmail}", userEmail);
                 return BadRequest(new { message = ex.Message });
             }
         }
@@ -143,6 +147,7 @@ namespace EventSphere.API.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> Update(int id, PaymentDTO paymentDTO)
         {
+            var userEmail = HttpContext.User.FindFirst(ClaimTypes.Email)?.Value;
             if (id != paymentDTO.ID)
             {
                 Log.Error("Invalid ID or payment data.");
@@ -152,12 +157,12 @@ namespace EventSphere.API.Controllers
             try
             {
                 await _paymentService.UpdatePaymentAsync(id, paymentDTO);
-                Log.Information("Payment updated successfully: {@Payment}", paymentDTO);
+                Log.Information("Payment updated successfully: by {userEmail}", userEmail);
                 return NoContent();
             }
             catch (Exception ex)
             {
-                Log.Fatal("An error occurred while updating the payment: {@Error}", ex);
+                Log.Fatal("An error occurred while updating the payment: by  {userEmail}", userEmail);
                 return StatusCode(500, new { Error = "An error occurred while processing your request." });
             }
         }
@@ -166,17 +171,28 @@ namespace EventSphere.API.Controllers
         [Authorize(Policy = "Admin")]
         public async Task<IActionResult> Delete(int id)
         {
+            var userEmail = HttpContext.User.FindFirst(ClaimTypes.Email)?.Value;
             try
             {
                 await _paymentService.DeletePaymentAsync(id);
-                Log.Information("Payment deleted successfully: {Id}", id);
+                Log.Information("Payment deleted successfully: {Id} by {userEmail}", id, userEmail); ;
                 return NoContent();
             }
             catch (Exception ex)
             {
-                Log.Fatal("An error occurred while deleting the payment: {@Error}", ex);
+                Log.Fatal("An error occurred while deleting the payment: by  {userEmail}", userEmail);
                 return StatusCode(500, new { Error = "An error occurred while processing your request." });
             }
+        }
+        [HttpPost("validatePromoCode")]
+        public async Task<IActionResult> ValidatePromoCode([FromBody] PromoCodeDTO request)
+        {
+            var discount = await _paymentService.ValidatePromoCodeAsync(request.Code);
+            if (discount != null)
+            {
+                return Ok(new { Discount = discount });
+            }
+            return BadRequest("Invalid or expired promo code.");
         }
     }
 }

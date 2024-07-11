@@ -1,4 +1,6 @@
-﻿using EventSphere.Business.Services.Interfaces;
+﻿using EventSphere.Business.Helper;
+using EventSphere.Business.Services;
+using EventSphere.Business.Services.Interfaces;
 using EventSphere.Business.Validator;
 using EventSphere.Domain.DTOs;
 using EventSphere.Domain.DTOs.EventSphere.API.DTOs;
@@ -9,6 +11,7 @@ using Microsoft.EntityFrameworkCore;
 using Serilog;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace EventSphere.API.Controllers
@@ -19,13 +22,14 @@ namespace EventSphere.API.Controllers
     {
         private readonly IEventService _eventService;
         private readonly EventValidator _validator;
-      
-
-        public EventController(IEventService eventService)
+        private readonly IEmailService _emailService;
+        
+        public EventController(IEventService eventService, IEmailService emailService)
         {
             _eventService = eventService;
             _validator = new EventValidator();
-     
+            _emailService = emailService;
+
         }
 
         [HttpGet]
@@ -85,9 +89,12 @@ namespace EventSphere.API.Controllers
         [Authorize(Policy = "AdminOrOrganizer")]
         public async Task<ActionResult<Event>> CreateEvent([FromForm] EventDTO eventDto, IFormFile image)
         {
+            
+            var userEmail = HttpContext.User.FindFirst(ClaimTypes.Email)?.Value; 
+            
             if (eventDto == null || image == null || image.Length == 0)
             {
-                Log.Error("Invalid event data or image.");
+                Log.Error("Invalid event data or image:.");
                 return BadRequest(new { Error = "Invalid event data or image." });
             }
 
@@ -104,12 +111,12 @@ namespace EventSphere.API.Controllers
             try
             {
                 var createdEvent = await _eventService.CreateEventsAsync(eventDto, image);
-                Log.Information("Event created successfully: {@Event}", createdEvent);
+                Log.Information("Event created successfully: {@Event} by {userEmail}", createdEvent, userEmail);
                 return CreatedAtAction(nameof(GetEventName), new { id = createdEvent.ID }, createdEvent);
             }
             catch (Exception ex)
             {
-                Log.Fatal("An error occurred while creating the event: {@Error}", ex);
+                Log.Fatal("An error occurred while creating the event:  by {userEmail} ", userEmail);
                 return StatusCode(StatusCodes.Status500InternalServerError, new { Error = "Error occurred while creating the event." });
             }
         }
@@ -118,16 +125,17 @@ namespace EventSphere.API.Controllers
         [Authorize(Policy = "AdminOrOrganizer")]
         public async Task<ActionResult> UpdateEvent(int id, [FromForm] EventDTO eventDto, IFormFile newImage)
         {
+            var userEmail = HttpContext.User.FindFirst(ClaimTypes.Email)?.Value; 
             if (id == 0 || eventDto == null)
             {
-                Log.Error("Invalid ID or event data.");
+                Log.Error("Invalid ID or event data:");
                 return BadRequest(new { Error = "Invalid ID or event data." });
             }
 
             try
             {
                 await _eventService.UpdateEventsAsync(id, eventDto, newImage);
-                Log.Information("Event updated successfully: {@Event}", eventDto);
+                Log.Information("Event updated successfully: {@Event} by {userEmail}", eventDto , userEmail);
                 return NoContent();
             }
             catch (ArgumentException ex)
@@ -137,7 +145,7 @@ namespace EventSphere.API.Controllers
             }
             catch (Exception ex)
             {
-                Log.Fatal("An error occurred while updating the event: {@Error}", ex);
+                Log.Fatal("An error occurred while updating the event:  by {userEmail} ", userEmail);
                 return StatusCode(500, new { Error = "An error occurred while updating the event. Please try again later." });
             }
         }
@@ -146,25 +154,26 @@ namespace EventSphere.API.Controllers
         [Authorize(Policy = "AdminOrOrganizer")]
         public async Task<ActionResult> DeleteCategory(int id)
         {
+            var userEmail = HttpContext.User.FindFirst(ClaimTypes.Email)?.Value; 
             try
             {
                 await _eventService.DeleteEventsAsync(id);
-                Log.Information("Event deleted successfully: {Id}", id);
+                Log.Information("Event deleted successfully: {Id}  by {userEmail}", id , userEmail);
                 return NoContent();
             }
             catch (Exception ex)
             {
-                Log.Fatal("An error occurred while deleting the event: {@Error}", ex);
+                Log.Fatal("An error occurred while deleting the event: by {userEmail} ", userEmail);
                 return StatusCode(500, new { Error = "An error occurred while processing your request." });
             }
         }
 
         [HttpGet("{id}/eventCategory")]
-        public async Task<ActionResult<IEnumerable<Event>>> GetEventByCategoryIdAsync(int id)
+        public async Task<ActionResult<IEnumerable<Event>>> GetEventByCategory(int id)
         {
             try
             {
-                var events = await _eventService.GetEventByCategoryId(id);
+                var events = await _eventService.GetEventByCategoryIdAsync(id);
                
                 return Ok(events);
             }
@@ -177,11 +186,11 @@ namespace EventSphere.API.Controllers
 
         [HttpGet("{id}/organizer")]
         [Authorize(Policy = "AdminOrOrganizer")]
-        public async Task<ActionResult<IEnumerable<Event>>> GetEventByOrganizerIdAsync(int id)
+        public async Task<ActionResult<IEnumerable<Event>>> GetEventByOrganizer(int id)
         {
             try
             {
-                var events = await _eventService.GetEventByOrganizerId(id);
+                var events = await _eventService.GetEventByOrganizerIdAsync(id);
             
                 return Ok(events);
             }
@@ -193,11 +202,11 @@ namespace EventSphere.API.Controllers
         }
 
         [HttpGet("{city}/city")]
-        public async Task<ActionResult<IEnumerable<Event>>> GetEventsByCityAsync(string city)
+        public async Task<ActionResult<IEnumerable<Event>>> GetEventsByCity(string city)
         {
             try
             {
-                var events = await _eventService.GetEventsByCity(city);
+                var events = await _eventService.GetEventsByCityAsync(city);
            
                 return Ok(events);
             }
@@ -209,11 +218,11 @@ namespace EventSphere.API.Controllers
         }
 
         [HttpGet("{country}/country")]
-        public async Task<ActionResult<IEnumerable<Event>>> GetEventsByCountryAsync(string country)
+        public async Task<ActionResult<IEnumerable<Event>>> GetEventsByCountry(string country)
         {
             try
             {
-                var events = await _eventService.GetEventsByCountry(country);
+                var events = await _eventService.GetEventsByCountryAsync(country);
              
                 return Ok(events);
             }
@@ -244,9 +253,23 @@ namespace EventSphere.API.Controllers
         [Authorize(Policy = "Admin")]
         public async Task<IActionResult> ApproveEvent(int id)
         {
+            var userEmail = HttpContext.User.FindFirst(ClaimTypes.Email)?.Value; 
                 var approvedEvent = await _eventService.UpdateEventStatus(id);
-                return Ok(approvedEvent);
+                var email = await _eventService.GetOrganizerEmailAsync(id);
+                var eventById = await _eventService.GetEventsByIdAsync(id); 
+              
+
+                var mailRequest = new MailRequest
+            {
+                ToEmail = email,
+                Subject = "Event Approval Update",
+                Body = $"<p>Dear {eventById.OrganizerName},</p><p> Your event submission for {eventById.EventName} was approved.</p><p>Best regards, EventSphere Team</p>",
+            };
+            await _emailService.SendEmailAsync(mailRequest);
+            Log.Information("Event Approved successfully: {eventById}  by {userEmail}", eventById.EventName , userEmail);
+            return Ok(approvedEvent);
         }
+
         [HttpGet("date")]
         public async Task<IActionResult> GetEventsByDate()
         {
@@ -262,6 +285,28 @@ namespace EventSphere.API.Controllers
             var eventi = await _eventService.GetEventsByDateTime(data);
             return Ok(eventi);
 
+        }
+
+        [HttpPost("reject")]
+        [Authorize(Policy = "Admin")]
+        public async Task<IActionResult> RejectEvent([FromForm] int id, [FromForm] string message)
+        {
+            var userEmail = HttpContext.User.FindFirst(ClaimTypes.Email)?.Value; 
+            var email = await _eventService.GetOrganizerEmailAsync(id);
+            var eventById = await _eventService.GetEventsByIdAsync(id);
+
+            await _eventService.UpdateMessage(id, message);
+
+            var mailRequest = new MailRequest
+            {
+                ToEmail = email,
+                Subject = "Event Approval Update",
+                Body = $"<p>Dear {eventById.OrganizerName},</p><p>Unfortunately, your event submission for {eventById.EventName} was not approved for the following reason:</p><p>{message}</p><p>Best regards,</p><p>EventSphere Team</p>",
+            };
+            await _emailService.SendEmailAsync(mailRequest);
+            Log.Information("Event Rejected : {event}  by {userEmail}", eventById.EventName , userEmail);
+
+            return Ok();
         }
     }
 }

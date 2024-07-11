@@ -12,13 +12,18 @@ namespace EventSphere.Business.Services.Interfaces
         Task<Event> UpdateEventsAsync(int id, EventDTO eventDto, IFormFile newImage = null);
         Task DeleteEventsAsync(int id);
         Task<int> GetEventCountAsync();
-        Task<IEnumerable<Event>> GetEventByCategoryId(int id);
-        Task<IEnumerable<Event>> GetEventByOrganizerId(int id);
-        Task<IEnumerable<Event>> GetEventsByCity(string city);
-        Task<IEnumerable<Event>> GetEventsByCountry(string country);
+        Task<IEnumerable<Event>> GetEventByCategoryIdAsync(int id);
+        Task<IEnumerable<Event>> GetEventByOrganizerIdAsync(int id);
+        Task<IEnumerable<Event>> GetEventsByCityAsync(string city);
+        Task<IEnumerable<Event>> GetEventsByCountryAsync(string country);
         Task<IEnumerable<Event>> GetEventsByNameAsync(string name);
         Task<Event> UpdateEventStatus(int id);
+
         Task<IEnumerable<Event>> GetEventsByDate(DateTime date);
         Task<IEnumerable<Event>> GetEventsByDateTime(DateTime date);
+
+        Task<string> GetOrganizerEmailAsync(int id);
+        Task UpdateMessage(int id, string message);
+
     }
 }

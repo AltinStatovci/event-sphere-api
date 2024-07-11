@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Authorization;
 using Serilog;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using FluentValidation;
 using ValidationException = EventSphere.API.Filters.ValidationException;
@@ -90,7 +91,7 @@ namespace EventSphere.API.Controllers
             }
             catch (Exception ex)
             {
-                Log.Fatal("An error occurred while adding the event category: {@Error}", ex);
+                Log.Fatal("An error occurred while adding the event category ");
                 return StatusCode(500, new { Error = "An error occurred while processing your request." });
             }
         }
@@ -99,21 +100,22 @@ namespace EventSphere.API.Controllers
         [Authorize(Policy = "Admin")]
         public async Task<IActionResult> UpdateCategory(int id, EventCategoryDto categoryDTO)
         {
+            var userEmail = HttpContext.User.FindFirst(ClaimTypes.Email)?.Value; 
             try
             {
                 if (id != categoryDTO.ID)
                 {
-                    Log.Error("Mismatched ID in update request: {Id} != {CategoryId}", id, categoryDTO.ID);
+                    Log.Error("Mismatched ID in update request: {Id} != {CategoryId}  by {userEmail}", id, categoryDTO.ID , userEmail);
                     return BadRequest(new { Error = "ID mismatch." });
                 }
 
                 await _eventCategoryService.UpdateCategoryAsync(categoryDTO);
-                Log.Information("Event category updated successfully: {@Category}", categoryDTO);
+                Log.Information("Event category updated successfully: {@Category}  by {userEmail}", categoryDTO , userEmail);
                 return NoContent();
             }
             catch (Exception ex)
             {
-                Log.Fatal("An error occurred while updating the event category: {@Error}", ex);
+                Log.Fatal("An error occurred while updating the event category: by {userEmail} ",userEmail);
                 return StatusCode(500, new { Error = "An error occurred while processing your request." });
             }
         }
@@ -122,15 +124,19 @@ namespace EventSphere.API.Controllers
         [Authorize(Policy = "Admin")]
         public async Task<IActionResult> DeleteCategory(int id)
         {
+            var userEmail = HttpContext.User.FindFirst(ClaimTypes.Email)?.Value;  
+          
             try
             {
                 await _eventCategoryService.DeleteCategoryAsync(id);
-                Log.Information("Event category deleted successfully: {Id}", id);
+                  
+
+                Log.Information("Event category deleted successfully: {Id} by {userEmail}", id , userEmail);
                 return NoContent();
             }
             catch (Exception ex)
             {
-                Log.Fatal("An error occurred while deleting the event category: {@Error}", ex);
+                Log.Fatal("An error occurred while deleting the event category: by {userEmail} ",userEmail);
                 return StatusCode(500, new { Error = "An error occurred while processing your request." });
             }
         }

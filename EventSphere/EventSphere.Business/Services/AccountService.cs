@@ -1,7 +1,7 @@
 ﻿using EventSphere.Business.Helper;
 using EventSphere.Business.Services.Interfaces;
 using EventSphere.Domain.DTOs.User;
-﻿using EventSphere.Business.Services.Interfaces;
+using EventSphere.Business.Services.Interfaces;
 using EventSphere.Domain.Entities;
 using EventSphere.Infrastructure.Repositories.UserRepository;
 using MapsterMapper;

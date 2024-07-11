@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 using Serilog;
 using System;
 using System.Collections.Generic;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace EventSphere.API.Controllers
@@ -71,7 +72,7 @@ namespace EventSphere.API.Controllers
                 var user = await _userService.GetUserByIdAsync(id);
                 if (user == null)
                 {
-                    Log.Warning("User not found: {Id}", id);
+                    Log.Error("User not found: {Id}", id);
                     return NotFound();
                 }
                 var userDto = _mapper.Map<UpdateUserDTO>(user);
@@ -89,15 +90,16 @@ namespace EventSphere.API.Controllers
         [Authorize(Policy = "All")]
         public async Task<IActionResult> UpdateUser(UpdateUserDTO updateUserDto)
         {
+            var userEmail = HttpContext.User.FindFirst(ClaimTypes.Email)?.Value;
             try
             {
                 await _userService.UpdateUserAsync(updateUserDto);
-                Log.Information("User updated successfully: {@User}", updateUserDto);
+                Log.Information("User updated successfully: {@User} by {userEmail}", updateUserDto , userEmail);
                 return NoContent();
             }
             catch (Exception ex)
             {
-                Log.Fatal("An error occurred while updating the user: {@Error}", ex);
+                Log.Fatal("An error occurred while updating the user : by {userEmail} ", userEmail);
                 return StatusCode(500, new { Error = "An error occurred while processing your request." });
             }
         }
@@ -114,7 +116,7 @@ namespace EventSphere.API.Controllers
             }
             catch (Exception ex)
             {
-                Log.Fatal("An error occurred while updating user password: {@Error}", ex);
+                Log.Fatal("An error occurred while updating user password :");
                 return StatusCode(500, new { Error = "An error occurred while processing your request." });
             }
         }
@@ -123,15 +125,16 @@ namespace EventSphere.API.Controllers
         [Authorize(Policy = "Admin")]
         public async Task<IActionResult> DeleteUser(int id)
         {
+            var userEmail = HttpContext.User.FindFirst(ClaimTypes.Email)?.Value;
             try
             {
                 await _userService.DeleteUserAsync(id);
-                Log.Information("User deleted successfully: {Id}", id);
+                Log.Information("User deleted successfully: {Id} by {userEmail}", id , userEmail);
                 return NoContent();
             }
             catch (Exception ex)
             {
-                Log.Fatal("An error occurred while deleting the user: {@Error}", ex);
+                Log.Fatal("An error occurred while deleting the user: by {userEmail} ", userEmail);
                 return StatusCode(500, new { Error = "An error occurred while processing your request." });
             }
         }

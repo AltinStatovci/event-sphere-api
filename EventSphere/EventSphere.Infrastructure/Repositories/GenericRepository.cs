@@ -7,10 +7,12 @@ namespace EventSphere.Infrastructure.Repositories
     public class GenericRepository<TEntity> : IGenericRepository<TEntity> where TEntity : class
     {
         private readonly EventSphereDbContext _context;
+        private readonly DbSet<TEntity> _dbSet;
 
         public GenericRepository(EventSphereDbContext context)
         {
             _context = context;
+            _dbSet = _context.Set<TEntity>();
         }
 
         public async Task<IEnumerable<TEntity>> GetAllAsync()
@@ -61,6 +63,10 @@ namespace EventSphere.Infrastructure.Repositories
         public async Task<IEnumerable<TEntity>> FindByConditionAsync(Expression<Func<TEntity, bool>> expression) 
         {
             return await _context.Set<TEntity>().Where(expression).ToListAsync();
+        }
+        public async Task<TEntity> GetByCodeAsync(string code)
+        {
+            return await _dbSet.FirstOrDefaultAsync(e => EF.Property<string>(e, "Code") == code);
         }
 
     }

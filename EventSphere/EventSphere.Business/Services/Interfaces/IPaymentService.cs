@@ -18,6 +18,7 @@ namespace EventSphere.Business.Services.Interfaces
         Task<int> GetPaymentCountAsync();
         Task<IEnumerable<Payment>> GetPaymentsByUserIdAsync(int userId);
         Task<IEnumerable<Payment>> GetPaymentsByEventIdAsync(int eventId);
+        Task<int?> ValidatePromoCodeAsync(string code);
 
     }
 }
