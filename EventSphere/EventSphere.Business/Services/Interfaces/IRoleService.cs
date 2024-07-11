@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace EventSphere.Business.Services.Interfaces
 {
-    public interface IRoleServices
+    public interface IRoleService
     {
         Task<IEnumerable<Role>> GetAllRolesAsync();
         Task<Role> GetRoleByIdAsync(int roleId);

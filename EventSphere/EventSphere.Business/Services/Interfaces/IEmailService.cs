@@ -3,7 +3,7 @@ using EventSphere.Domain.Entities;
 
 namespace EventSphere.Business.Services.Interfaces;
 
-public interface IEmailServices
+public interface IEmailService
 {
     Task SendEmailAsync(MailRequest mailRequest );
 }

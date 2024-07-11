@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Http;
 
 namespace EventSphere.Business.Services.Interfaces
 {
-    public interface IEventServices
+    public interface IEventService
     {
         Task<IEnumerable<Event>> GetAllEventsAsync();
         Task<Event> GetEventsByIdAsync(int id);
@@ -12,13 +12,13 @@ namespace EventSphere.Business.Services.Interfaces
         Task<Event> UpdateEventsAsync(int id, EventDTO eventDto, IFormFile newImage = null);
         Task DeleteEventsAsync(int id);
         Task<int> GetEventCountAsync();
-        Task<IEnumerable<Event>> GetEventByCategoryId(int id);
-        Task<IEnumerable<Event>> GetEventByOrganizerId(int id);
-        Task<IEnumerable<Event>> GetEventsByCity(string city);
-        Task<IEnumerable<Event>> GetEventsByCountry(string country);
+        Task<IEnumerable<Event>> GetEventByCategoryIdAsync(int id);
+        Task<IEnumerable<Event>> GetEventByOrganizerIdAsync(int id);
+        Task<IEnumerable<Event>> GetEventsByCityAsync(string city);
+        Task<IEnumerable<Event>> GetEventsByCountryAsync(string country);
         Task<IEnumerable<Event>> GetEventsByNameAsync(string name);
         Task<Event> UpdateEventStatus(int id);
-        Task<string> GetOrganizerEmail(int id);
+        Task<string> GetOrganizerEmailAsync(int id);
         Task UpdateMessage(int id, string message);
     }
 }

@@ -10,26 +10,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="c85145b6-99f5-46d8-b5ce-9fdbb86b216d" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/EventSphere.Domain/Entities/Logg.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/EventSphere.Infrastructure/EntityFramework/LogConfiguration.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.EventSphere/.idea/dataSources.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.EventSphere/.idea/dataSources.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.EventSphere/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.EventSphere/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/EventSphere.API/Controllers/AccountController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/EventSphere.API/Controllers/AccountController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/EventSphere.API/Controllers/EventCategoryController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/EventSphere.API/Controllers/EventCategoryController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/EventSphere.API/Controllers/EventController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/EventSphere.API/Controllers/EventController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/EventSphere.API/Controllers/LocationController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/EventSphere.API/Controllers/LocationController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/EventSphere.API/Controllers/PaymentController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/EventSphere.API/Controllers/PaymentController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/EventSphere.API/Controllers/ReportController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/EventSphere.API/Controllers/ReportController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/EventSphere.API/Controllers/RoleController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/EventSphere.API/Controllers/RoleController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/EventSphere.API/Controllers/TicketController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/EventSphere.API/Controllers/TicketController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/EventSphere.API/Controllers/UserController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/EventSphere.API/Controllers/UserController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/EventSphere.API/EventSphere.API.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/EventSphere.API/EventSphere.API.csproj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/EventSphere.API/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/EventSphere.API/Program.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/EventSphere.Business/EventSphere.Business.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/EventSphere.Business/EventSphere.Business.csproj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/EventSphere.Domain/EventSphere.Domain.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/EventSphere.Domain/EventSphere.Domain.csproj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/EventSphere.Infrastructure/EventSphere.Infrastructure.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/EventSphere.Infrastructure/EventSphere.Infrastructure.csproj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/EventSphere.Infrastructure/EventSphereDbContext.cs" beforeDir="false" afterPath="$PROJECT_DIR$/EventSphere.Infrastructure/EventSphereDbContext.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/EventSphere.Infrastructure/Migrations/EventSphereDbContextModelSnapshot.cs" beforeDir="false" afterPath="$PROJECT_DIR$/EventSphere.Infrastructure/Migrations/EventSphereDbContextModelSnapshot.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/EventSphere.Business/Services/EventService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/EventSphere.Business/Services/EventService.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -43,10 +24,17 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
   </component>
   <component name="HighlightingSettingsPerFile">
-    <setting file="mock://C:/Users/hp/Desktop/event-sphere/EventSphere/EventSphere.API/Program.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://C:/Users/hp/Desktop/event-sphere/EventSphere/EventSphere.API/Program.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://C:/Users/hp/Desktop/event-sphere/EventSphere/EventSphere.API/appsettings.json" root0="FORCE_HIGHLIGHTING" />
-    <setting file="mock://C:/Users/hp/Desktop/event-sphere/EventSphere/EventSphere.API/appsettings.json" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$USER_HOME$/AppData/Local/Symbols/src/dotnet/runtime/1381d5ebd2ab1f292848d5b19b80cf71ac332508/src/libraries/System.Net.Http/src/System/Net/Http/HttpMethod.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/34e54cf52b4a4c2b82645ccc3a46837e5e000/10/6fd16ccf/ProxyGenerator.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/1456ea7878febf5e7b8f53a26e9137c821aeb8ba59fdd46ab4fa7538a173523/Service.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/2190b5136151c5ba8f96f96d7f96251c9d67aab6bad88b16299742e764a23a/ChargeService.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/38284ca4f4afe378f96fccac3e179f4bceda7a74eb151623b66d2dc3634d9b/ExceptionAggregator.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/3b92f859131bde25d0f7a63de08963e995d1e1426e584dfd4b8e833d2d3dba/ExecutionTimer.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/a81ee8c4b239a5f464b996b6cb5ab701e2bca7511eb164cb746c7590c3b6b1/Mock`1.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/f5545b2656401abe1a371ad2756d7d2328a38293f7ee8b163801bbf55cee8/TestInvoker.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/EventSphere.API/bin/Debug/net8.0/EventSphere.API.deps.json" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/EventSphere.API/bin/Debug/net8.0/EventSphere.API.runtimeconfig.json" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/EventSphere.Tests/bin/Debug/net8.0/EventSphere.Tests.deps.json" root0="SKIP_HIGHLIGHTING" />
   </component>
   <component name="KubernetesApiPersistence">{}</component>
   <component name="KubernetesApiProvider">{
@@ -60,27 +48,29 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;.NET Launch Settings Profile.EventSphere.API: http.executor&quot;: &quot;Run&quot;,
-    &quot;HTTP Request.EventSphere.API | #1.executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;logs-in-db&quot;,
-    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    ".NET Launch Settings Profile.EventSphere.API: http.executor": "Run",
+    "964a40a7-e4a6-4366-9ed4-c5c877407466.executor": "Debug",
+    "977f1560-df40-4254-b130-c9be1a683935.executor": "Debug",
+    "HTTP Request.EventSphere.API | #1.executor": "Run",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "git-widget-placeholder": "unit-testing-to-fix",
+    "ignore.virus.scanning.warn.message": "true",
+    "node.js.detected.package.eslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "vue.rearranger.settings.migration": "true"
   },
-  &quot;keyToStringList&quot;: {
-    &quot;rider.external.source.directories&quot;: [
-      &quot;C:\\Users\\hp\\AppData\\Roaming\\JetBrains\\Rider2024.1\\resharper-host\\DecompilerCache&quot;,
-      &quot;C:\\Users\\hp\\AppData\\Roaming\\JetBrains\\Rider2024.1\\resharper-host\\SourcesCache&quot;,
-      &quot;C:\\Users\\hp\\AppData\\Local\\Symbols\\src&quot;
+  "keyToStringList": {
+    "rider.external.source.directories": [
+      "C:\\Users\\hp\\AppData\\Roaming\\JetBrains\\Rider2024.1\\resharper-host\\DecompilerCache",
+      "C:\\Users\\hp\\AppData\\Roaming\\JetBrains\\Rider2024.1\\resharper-host\\SourcesCache",
+      "C:\\Users\\hp\\AppData\\Local\\Symbols\\src"
     ]
   }
-}</component>
+}]]></component>
   <component name="RunManager" selected=".NET Launch Settings Profile.EventSphere.API: http">
     <configuration name="EventSphere.API | #1" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" temporary="true" nameIsGenerated="true" path="$PROJECT_DIR$/EventSphere.API/EventSphere.API.http" requestIdentifier="#1" runType="Run single request">
       <method v="2" />
@@ -139,5 +129,24 @@
   <component name="UnityProjectConfiguration" hasMinimizedUI="false" />
   <component name="VcsManagerConfiguration">
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/EventSphere.Tests/Services/EventServiceTest.cs</url>
+          <line>40</line>
+          <properties documentPath="C:\Users\hp\Desktop\event-sphere\EventSphere\EventSphere.Tests\Services\EventServiceTest.cs" containingFunctionPresentation="Method 'CreateEventsAsync_OnImageNullOrEmpty_ShouldThrowArgumentException'">
+            <startOffsets>
+              <option value="1534" />
+            </startOffsets>
+            <endOffsets>
+              <option value="1602" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="7" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>

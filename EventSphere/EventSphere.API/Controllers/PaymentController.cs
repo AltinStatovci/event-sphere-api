@@ -14,11 +14,11 @@ namespace EventSphere.API.Controllers
     [ApiController]
     public class PaymentController : ControllerBase
     {
-        private readonly IPaymentServices _paymentService;
-        private readonly IEmailServices _emailService;
+        private readonly IPaymentService _paymentService;
+        private readonly IEmailService _emailService;
     
 
-        public PaymentController(IPaymentServices paymentService, IEmailServices emailService)
+        public PaymentController(IPaymentService paymentService, IEmailService emailService)
         {
             _paymentService = paymentService;
             _emailService = emailService;

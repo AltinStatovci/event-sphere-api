@@ -12,10 +12,10 @@ using System.Threading.Tasks;
 namespace EventSphere.Business.Services
 {
     
-    public class ReportServices : IReportServices
+    public class ReportService : IReportService
     {
         private readonly IGenericRepository<Report> _reportRepository;
-        public ReportServices(IGenericRepository<Report> reportRepository)
+        public ReportService(IGenericRepository<Report> reportRepository)
         {
             _reportRepository = reportRepository;
         }

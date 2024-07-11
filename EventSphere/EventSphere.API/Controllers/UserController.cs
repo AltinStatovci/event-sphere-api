@@ -18,11 +18,11 @@ namespace EventSphere.API.Controllers
     [ApiController]
     public class UserController : ControllerBase
     {
-        private readonly IUserServices _userService;
+        private readonly IUserService _userService;
         private readonly IMapper _mapper;
        
 
-        public UserController(IUserServices userService, IMapper mapper)
+        public UserController(IUserService userService, IMapper mapper)
         {
             _userService = userService;
             _mapper = mapper;

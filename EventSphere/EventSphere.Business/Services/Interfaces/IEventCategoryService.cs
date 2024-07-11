@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace EventSphere.Business.Services.Interfaces
 {
-    public interface IEventCategoryServices
+    public interface IEventCategoryService
     {
         Task<IEnumerable<EventCategoryDto>> GetAllCategoriesAsync();
         Task<EventCategoryDto> GetCategoryByIdAsync(int id);

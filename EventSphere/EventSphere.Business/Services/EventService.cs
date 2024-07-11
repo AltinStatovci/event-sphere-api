@@ -18,28 +18,19 @@ using Azure;
 
 namespace EventSphere.Business.Services
 {
-    public class EventServiceBase
-    {
-        protected readonly EventSphereDbContext _context;
 
-        public EventServiceBase(EventSphereDbContext context) 
-        {
-            _context = context;
-        }
-    }
-
-    public class EventServices : EventServiceBase, IEventServices
+    public class EventService : IEventService
     {
-        private readonly IGenericRepository<Event> _eventRepository;
         private readonly IGenericRepository<User> _userRepository;
         private readonly IGenericRepository<EventCategory> _eventCategoryRepository;
         private readonly IGenericRepository<Location> _locationRepository;
+        private readonly IEventRepository _eventRepository;
 
-        public EventServices(EventSphereDbContext context,
-            IGenericRepository<Event> eventRepository,
+        public EventService(
+            IEventRepository eventRepository,
             IGenericRepository<User> userRepository,
             IGenericRepository<EventCategory> eventCategoryRepository,
-            IGenericRepository<Location> locationRepository) : base(context)
+            IGenericRepository<Location> locationRepository)
         {
             _eventRepository = eventRepository;
             _userRepository = userRepository;
@@ -72,6 +63,7 @@ namespace EventSphere.Business.Services
             if (eventDto == null || image == null || image.Length == 0)
             {
                 throw new ArgumentException("Event DTO or image is null or empty.");
+                
             }
 
             try
@@ -208,24 +200,24 @@ namespace EventSphere.Business.Services
             return await _eventRepository.CountAsync();
         }
 
-        public async Task<IEnumerable<Event>> GetEventByCategoryId(int eventCategoryId)
+        public async Task<IEnumerable<Event>> GetEventByCategoryIdAsync(int eventCategoryId)
         {
-            return await _context.Events.Where(u => u.CategoryID == eventCategoryId).ToListAsync();
+            return await _eventRepository.GetEventByCategoryId(eventCategoryId);
         }
 
-        public async Task<IEnumerable<Event>> GetEventByOrganizerId(int organizerId)
+        public async Task<IEnumerable<Event>> GetEventByOrganizerIdAsync(int organizerId)
         {
-            return await _context.Events.Where(u => u.OrganizerID == organizerId).ToListAsync();
+            return await _eventRepository.GetEventByOrganizerId(organizerId);
         }
 
-        public async Task<IEnumerable<Event>> GetEventsByCity(string city)
+        public async Task<IEnumerable<Event>> GetEventsByCityAsync(string city)
         {
-            return await _context.Events.Include(e => e.Location).Where(e => e.Location.City == city).ToListAsync();
+            return await _eventRepository.GetEventsByCity(city);
         }
 
-        public async Task<IEnumerable<Event>> GetEventsByCountry(string country)
+        public async Task<IEnumerable<Event>> GetEventsByCountryAsync(string country)
         {
-            return await _context.Events.Include(e => e.Location).Where(e => e.Location.Country == country).ToListAsync();
+            return await _eventRepository.GetEventsByCountry(country);
         }
 
         public async Task<Event> UpdateEventStatus(int id)
@@ -245,14 +237,10 @@ namespace EventSphere.Business.Services
                 throw new Exception("Error occurred while approving the event.", ex);
             }
         }
-        public async Task<string> GetOrganizerEmail(int id)
+        public async Task<string> GetOrganizerEmailAsync(int id)
         {
-            var email = await _context.Events
-                .Where(e => e.ID == id)
-                .Select(e => e.Organizer.Email)
-                .FirstOrDefaultAsync();
-            
-            return email;
+            return await _eventRepository.GetOrganizerEmail(id);
+  
         }
 
         public async Task UpdateMessage(int id, string message)

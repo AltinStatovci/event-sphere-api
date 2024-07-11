@@ -4,11 +4,11 @@ using EventSphere.Infrastructure.Repositories;
 
 namespace EventSphere.Business.Services;
 
-public class LogServices :ILogServices
+public class LogService :ILogService
 {
     private readonly ILogRepository _logRepository;
 
-    public LogServices(ILogRepository logRepository)
+    public LogService(ILogRepository logRepository)
     {
         _logRepository = logRepository;
     }

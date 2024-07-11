@@ -7,15 +7,15 @@ using System.Threading.Tasks;
 
 namespace EventSphere.Business.Services.Interfaces
 {
-    public interface ILocationServices
+    public interface ILocationService
     {
         Task<Location> AddLocation(Location location);
         Task UpdateLocation(Location location);
         Task DeleteLocation(int id);
         Task<IEnumerable<Location>> GetAllLocations();
         Task<Location> GetLocationById(int id);
-        Task<IEnumerable<Location>> GetLocationsByCity(string city);
-        Task<IEnumerable<Location>> GetLocationsByCountry(string country);
+        Task<IEnumerable<Location>> GetLocationsByCityAsync(string city);
+        Task<IEnumerable<Location>> GetLocationsByCountryAsync(string country);
 
     }
 }

@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace EventSphere.Business.Services.Interfaces
 {
-    public interface ITicketServices
+    public interface ITicketService
     {
         Task<IEnumerable<Ticket>> GetAllTicketsAsync();
         Task<Ticket> GetTicketByIdAsync(int id);
@@ -18,7 +18,7 @@ namespace EventSphere.Business.Services.Interfaces
 
         Task<int> GetTicketCountAsync();
 
-        Task<IEnumerable<Ticket>> GetTicketByEventId(int eventId);
+        Task<IEnumerable<Ticket>> GetTicketByEventIdAsync(int eventId);
 
 
     }

@@ -13,28 +13,32 @@ using System.Threading.Tasks;
 
 namespace EventSphere.Business.Services
 {
-    public class PaymentServices : IPaymentServices
+    public class PaymentService : IPaymentService
     {
         private readonly IGenericRepository<Payment> _genericRepository;
         private readonly IGenericRepository<User> _userRepository;
         private readonly IGenericRepository<Domain.Entities.Event> _eventRepository;
         private readonly IGenericRepository<PromoCode> _promoCodeRepository;
-        private readonly StripeSettings _stripeSettings;
+      
         private readonly IGenericRepository<Ticket> _ticketRepository;
+        private readonly ChargeService _chargeService;
 
-        public PaymentServices(IGenericRepository<Payment> genericRepository,
+        public PaymentService(IGenericRepository<Payment> genericRepository,
             IGenericRepository<User> userRepository,
             IGenericRepository<Domain.Entities.Event> eventRepository,
-            IOptions<StripeSettings> stripeSettings,
+         
             IGenericRepository<Ticket> ticketRepository,
-            IGenericRepository<PromoCode> promoCodeRepository)
+            IGenericRepository<PromoCode> promoCodeRepository,
+            ChargeService chargeService
+            )
         {
             _genericRepository = genericRepository;
             _userRepository = userRepository;
             _eventRepository = eventRepository;
-            _stripeSettings = stripeSettings.Value;
+           
             _ticketRepository = ticketRepository;
             _promoCodeRepository = promoCodeRepository;
+            _chargeService = chargeService;
         }
 
         public async Task<int?> ValidatePromoCodeAsync(string code)
@@ -82,8 +86,8 @@ namespace EventSphere.Business.Services
             };
 
             var user = await _userRepository.GetByIdAsync(Pid.UserID);
-            var service = new ChargeService();
-            Charge charge = await service.CreateAsync(options);
+            
+            Charge charge = await _chargeService.CreateAsync(options);
 
             if (charge.Status == "succeeded")
             {

@@ -12,9 +12,9 @@ namespace EventSphere.API.Controllers
     [ApiController]
     public class LogController : ControllerBase
     {
-        private readonly ILogServices _logService;
+        private readonly ILogService _logService;
 
-        public LogController(ILogServices logService)
+        public LogController(ILogService logService)
         {
             _logService = logService;
         }
