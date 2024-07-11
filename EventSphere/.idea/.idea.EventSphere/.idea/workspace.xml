@@ -11,7 +11,6 @@
   <component name="ChangeListManager">
     <list default="true" id="c85145b6-99f5-46d8-b5ce-9fdbb86b216d" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/EventSphere.Business/Services/EventService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/EventSphere.Business/Services/EventService.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/EventSphere.Tests/Services/EventServiceTest.cs" beforeDir="false" afterPath="$PROJECT_DIR$/EventSphere.Tests/Services/EventServiceTest.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -142,10 +141,10 @@
               <option value="1534" />
             </startOffsets>
             <endOffsets>
-              <option value="1553" />
+              <option value="1602" />
             </endOffsets>
           </properties>
-          <option name="timeStamp" value="2" />
+          <option name="timeStamp" value="7" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

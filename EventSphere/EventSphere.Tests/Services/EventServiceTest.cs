@@ -32,18 +32,16 @@ public class EventServiceTest
     [Fact]
     public async Task CreateEventsAsync_OnImageNullOrEmpty_ShouldThrowArgumentException()
     {
-        //Arrange
+        // Arrange
         var eventDto = new EventDTO();
         IFormFile image = null;
-        
-        var exceptioMessage = "Event DTO or image is null or empty.";
-        //Act
-        var result = await _eventService.CreateEventsAsync(eventDto, image);
-        
+    
+        var exceptionMessage = "Event DTO or image is null or empty.";
 
-        //Assert
-        
-        Assert.Equal(exceptioMessage, result.Message);
+        // Act & Assert
+        var exception = await Assert.ThrowsAsync<ArgumentException>(() => _eventService.CreateEventsAsync(eventDto, image));
+    
+        Assert.Equal(exceptionMessage, exception.Message);
     }
     
     

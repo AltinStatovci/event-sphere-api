@@ -63,6 +63,7 @@ namespace EventSphere.Business.Services
             if (eventDto == null || image == null || image.Length == 0)
             {
                 throw new ArgumentException("Event DTO or image is null or empty.");
+                
             }
 
             try
