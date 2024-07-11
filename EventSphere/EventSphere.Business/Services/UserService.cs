@@ -11,11 +11,13 @@ namespace EventSphere.Business.Services
     {
         private readonly IUserRepository _userRepository;
         private readonly IMapper _mapper;
+        private readonly IPasswordGenerator _passwordGenerator;
 
-        public UserService(IUserRepository userRepository, IMapper mapper)
+        public UserService(IUserRepository userRepository, IMapper mapper, IPasswordGenerator passwordGenerator)
         {
             _userRepository = userRepository;
             _mapper = mapper;
+            _passwordGenerator = passwordGenerator;
         }
 
         public async Task<IEnumerable<User>> GetAllUsersAsync()
@@ -51,14 +53,14 @@ namespace EventSphere.Business.Services
             }
            
             
-            if (!PasswordGenerator.VerifyPassword(updatePasswordDto.CurrentPassword, existingUser.Password, existingUser.Salt))
+            if (!_passwordGenerator.VerifyPassword(updatePasswordDto.CurrentPassword, existingUser.Password, existingUser.Salt))
             {
                 throw new UnauthorizedAccessException("Current password is incorrect");
             }
 
            
-            var newSalt = PasswordGenerator.GenerateSalt();
-            var newHashedPassword = PasswordGenerator.GenerateHash(updatePasswordDto.NewPassword, newSalt);
+            var newSalt = _passwordGenerator.GenerateSalt();
+            var newHashedPassword = _passwordGenerator.GenerateHash(updatePasswordDto.NewPassword, newSalt);
             
             existingUser.Password = newHashedPassword;
             existingUser.Salt = newSalt;

@@ -1,3 +1,4 @@
+using EventSphere.Business.Helper;
 using EventSphere.Business.Services;
 using EventSphere.Business.Services.Interfaces;
 using EventSphere.Domain.DTOs.User;
@@ -14,13 +15,15 @@ public class UserServiceTest
     private readonly IUserService _userService;
     private readonly Mock<IUserRepository> _mockUserRepository;
     private readonly Mock<IMapper> _mockMapper;
+    private readonly Mock<IPasswordGenerator> _mockPasswordGenerator;
 
     public UserServiceTest()
     {
 
         _mockUserRepository = new Mock<IUserRepository>();
         _mockMapper = new Mock<IMapper>();
-        _userService = new UserService(_mockUserRepository.Object, _mockMapper.Object);
+        _mockPasswordGenerator = new Mock<IPasswordGenerator>();
+        _userService = new UserService(_mockUserRepository.Object, _mockMapper.Object , _mockPasswordGenerator.Object);
     }
 
     [Fact]
@@ -156,27 +159,127 @@ public class UserServiceTest
       
         //Assert
         Assert.Equal(exceptionMsg, exception.Message);
-       
-        
-        }
+    }
     
+    [Fact]
+    public async Task UpdateUserPasswordAsync_OnIncorrectCurrentPassword_ShouldThrowUnauthorizedAccessException()
+    {
+        // Arrange
+        var exceptionMsg = "Current password is incorrect";
+        var userId = 1;
+        var existingUser = new User
+        {
+            ID = 1,
+            Name = "User 1",
+            LastName = "User 1",
+            Email = "user1@gmail.com",
+            RoleID = 1,
+            Password = System.Text.Encoding.UTF8.GetBytes("hashedCurrentPassword"),
+            Salt = System.Text.Encoding.UTF8.GetBytes("salt")
+        };
+        var updatePasswordDto = new UpdatePasswordDto 
+        {
+            CurrentPassword = "incorrectCurrentPassword",
+            NewPassword = "newPassword"
+        };
+
+        _mockUserRepository.Setup(repo => repo.GetByIdAsync(userId)).ReturnsAsync(existingUser);
+        _mockPasswordGenerator.Setup(pg => pg.VerifyPassword(updatePasswordDto.CurrentPassword, existingUser.Password, existingUser.Salt)).Returns(false);
+
+        // Act
+        var exception = await Assert.ThrowsAsync<UnauthorizedAccessException>(() => _userService.UpdateUserPasswordAsync(userId, updatePasswordDto));
+
+        // Assert
+        Assert.Equal(exceptionMsg, exception.Message);
+    }
+
+    
+    
+   
     
     [Fact]
     public async Task UpdateUserPasswordAsync_OnSuccess_ShouldReturnUpdatedUser()
     {
         // Arrange
         var userId = 1;
-
+        var existingUser = new User
+        {
+            ID = 1,
+            Name = "User 1",
+            LastName = "User 1",
+            Email = "user1@gmail.com",
+            RoleID = 1,
+            Password = System.Text.Encoding.UTF8.GetBytes("hashedPassword"),
+            Salt = System.Text.Encoding.UTF8.GetBytes("salt")
+        };
         var updatePasswordDto = new UpdatePasswordDto
         {
-            CurrentPassword = "currentPassword",
+            CurrentPassword = "password",
             NewPassword = "newPassword"
         };
-        _mockUserRepository.Setup(repo => repo.GetByIdAsync(userId)).ReturnsAsync(It.IsAny<User>());
+
+        _mockUserRepository.Setup(repo => repo.GetByIdAsync(userId)).ReturnsAsync(existingUser);
+        _mockPasswordGenerator.Setup(pg => pg.VerifyPassword(updatePasswordDto.CurrentPassword, existingUser.Password, existingUser.Salt)).Returns(true);
+        _mockPasswordGenerator.Setup(pg => pg.GenerateSalt()).Returns(System.Text.Encoding.UTF8.GetBytes("newSalt"));
+        _mockPasswordGenerator.Setup(pg => pg.GenerateHash(updatePasswordDto.NewPassword, It.IsAny<byte[]>())).Returns(System.Text.Encoding.UTF8.GetBytes("hashedNewPassword"));
 
         // Act
         await _userService.UpdateUserPasswordAsync(userId, updatePasswordDto);
+
+        // Assert
+        Assert.Equal(System.Text.Encoding.UTF8.GetBytes("hashedNewPassword"), existingUser.Password);
+        Assert.Equal(System.Text.Encoding.UTF8.GetBytes("newSalt"), existingUser.Salt);
+    }
+
+    [Fact]
+    public async Task DeleteUserAsync_OnSuccess_ShouldDeleteUser()
+    {
+        //Arrange
+        var userId = 1;
+        
+        //Act
+        await _userService.DeleteUserAsync(userId);
+        
+        //Assert
+        
+    }
+
+
+    [Fact]
+    public async Task GetUserCountAsync_OnSuccess_ShouldReturnUserCount()
+    {
+        //Arrange 
+        var userCount = 4;
+        _mockUserRepository.Setup(repo => repo.CountAsync()).ReturnsAsync(userCount);
+        //Act
+        var result = await _userService.GetUserCountAsync();
+        //Assert
+        Assert.Equal(userCount, result);
+    }
+    
+    [Fact]
+    public async Task GetUsersByRoleAsync_OnSuccess_ShouldReturnUsersByRole()
+    {
+        // Arrange
+        var role = "Admin"; 
+        var expectedUsers = new List<User>
+        {
+            new User { ID = 1, Name = "User 1", LastName = "User 1", Email = "user1@gmail.com", RoleID = 1 },
+            new User { ID = 2, Name = "User 2", LastName = "User 2", Email = "user2@gmail.com", RoleID = 1 }
+        };
+
+        _mockUserRepository.Setup(repo => repo.GetUsersByRoleAsync(role)).ReturnsAsync(expectedUsers);
+
+        // Act
+        var result = await _userService.GetUsersByRoleAsync(role);
+
+        // Assert
+        Assert.NotNull(result);
+        Assert.Equal(expectedUsers.Count, result.Count()); 
+        Assert.Equal(expectedUsers, result);
+      
     }
         
+    
 
 }
