@@ -52,6 +52,7 @@ namespace EventSphere.API
             services.AddScoped<IGenericRepository<Role>, GenericRepository<Role>>();
 
             services.AddTransient<IEmailService, EmailService>();
+            services.AddTransient<IPasswordGenerator, PasswordGenerator>();
 
 
 

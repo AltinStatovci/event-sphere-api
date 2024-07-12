@@ -10,7 +10,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="c85145b6-99f5-46d8-b5ce-9fdbb86b216d" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/EventSphere.Business/Services/EventService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/EventSphere.Business/Services/EventService.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/EventSphere.Tests/Services/UserServiceTest.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -28,6 +28,7 @@
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/34e54cf52b4a4c2b82645ccc3a46837e5e000/10/6fd16ccf/ProxyGenerator.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/1456ea7878febf5e7b8f53a26e9137c821aeb8ba59fdd46ab4fa7538a173523/Service.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/2190b5136151c5ba8f96f96d7f96251c9d67aab6bad88b16299742e764a23a/ChargeService.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/34f6ffc9abebdc1d21d2faf5b14a4c459c43c2781afc3eea5127f4510f0c642/ChargeCreateOptions.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/38284ca4f4afe378f96fccac3e179f4bceda7a74eb151623b66d2dc3634d9b/ExceptionAggregator.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/3b92f859131bde25d0f7a63de08963e995d1e1426e584dfd4b8e833d2d3dba/ExecutionTimer.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/a81ee8c4b239a5f464b996b6cb5ab701e2bca7511eb164cb746c7590c3b6b1/Mock`1.cs" root0="SKIP_HIGHLIGHTING" />
@@ -55,7 +56,7 @@
     "977f1560-df40-4254-b130-c9be1a683935.executor": "Debug",
     "HTTP Request.EventSphere.API | #1.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "unit-testing-to-fix",
+    "git-widget-placeholder": "main",
     "ignore.virus.scanning.warn.message": "true",
     "node.js.detected.package.eslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -120,6 +121,7 @@
       <workItem from="1720085043364" duration="689000" />
       <workItem from="1720086043293" duration="2177000" />
       <workItem from="1720092657372" duration="1315000" />
+      <workItem from="1720695954811" duration="6214000" />
     </task>
     <servers />
   </component>
@@ -134,17 +136,17 @@
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/EventSphere.Tests/Services/EventServiceTest.cs</url>
-          <line>40</line>
-          <properties documentPath="C:\Users\hp\Desktop\event-sphere\EventSphere\EventSphere.Tests\Services\EventServiceTest.cs" containingFunctionPresentation="Method 'CreateEventsAsync_OnImageNullOrEmpty_ShouldThrowArgumentException'">
+          <url>file://$PROJECT_DIR$/EventSphere.Tests/Services/UserServiceTest.cs</url>
+          <line>58</line>
+          <properties documentPath="C:\Users\hp\Desktop\event-sphere\EventSphere\EventSphere.Tests\Services\UserServiceTest.cs" containingFunctionPresentation="Method 'GetAllUsersAsync_OnSuccess_ShouldReturnAllUsers'">
             <startOffsets>
-              <option value="1534" />
+              <option value="1723" />
             </startOffsets>
             <endOffsets>
-              <option value="1602" />
+              <option value="1774" />
             </endOffsets>
           </properties>
-          <option name="timeStamp" value="7" />
+          <option name="timeStamp" value="9" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

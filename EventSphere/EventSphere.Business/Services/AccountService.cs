@@ -21,15 +21,16 @@ namespace EventSphere.Business.Services
         private readonly IMapper _mapper;
         private readonly IConfiguration _config;
         private readonly IGenericRepository<Role> _roleRepository;
+        private readonly IPasswordGenerator _passwordGenexrator;
      
 
-        public AccountService(IUserRepository userRepository, IConfiguration config, IMapper mapper, IGenericRepository<Role> roleRepository)
+        public AccountService(IUserRepository userRepository, IConfiguration config, IMapper mapper, IGenericRepository<Role> roleRepository, IPasswordGenerator passwordGenexrator)
         {
             _userRepository = userRepository;
             _config = config;
             _mapper = mapper;
             _roleRepository = roleRepository;
-        
+            _passwordGenexrator = passwordGenexrator;
         }
 
         public async Task<UserDTO> AddUserAsync(CreateUserDTO createUserDto)
@@ -42,8 +43,8 @@ namespace EventSphere.Business.Services
             }
             
             var user = _mapper.Map<User>(createUserDto);
-            var passwordSalt = PasswordGenerator.GenerateSalt();
-            var passwordHash = PasswordGenerator.GenerateHash(createUserDto.Password, passwordSalt);
+            var passwordSalt = _passwordGenexrator.GenerateSalt();
+            var passwordHash = _passwordGenexrator.GenerateHash(createUserDto.Password, passwordSalt);
             user.Salt = passwordSalt;
             user.Password = passwordHash;
 
@@ -61,7 +62,7 @@ namespace EventSphere.Business.Services
             try
             {
                 var user = await _userRepository.GetUserByEmailAsync(loginDto.Email);
-                if (user == null || !PasswordGenerator.VerifyPassword(loginDto.Password, user.Password, user.Salt))
+                if (user == null || !_passwordGenexrator.VerifyPassword(loginDto.Password, user.Password, user.Salt))
                 {
                     return null;
                 }
