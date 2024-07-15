@@ -26,7 +26,14 @@ namespace EventSphere.Business.Services
 
         public async Task<Ticket> CreateAsync(TicketDTO Tid)
         {
+            if (Tid == null || Tid.Price <= 0)
+            {
+                throw new ArgumentException("Price cannot be equal to or less then 0");
+            }
+
             var events = await _eventRepository.GetByIdAsync(Tid.EventID);
+
+
             var eventsName = events.EventName;
 
             var totalTickets = await _ticketRepository.GetTotalTicketsAsync(Tid.EventID);
