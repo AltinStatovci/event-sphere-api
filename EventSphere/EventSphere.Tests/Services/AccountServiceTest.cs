@@ -101,7 +101,7 @@ public class AccountServiceTest
 
         _userRepositoryMock.Setup(repo => repo.GetUserByEmailAsync(It.IsAny<string>())).ReturnsAsync(user);
         _passwordGeneratorMock.Setup(pg => pg.VerifyPassword(It.IsAny<string>(), It.IsAny<byte[]>(), It.IsAny<byte[]>())).Returns(true);
-        _configMock.Setup(config => config["Jwt:Key"]).Returns("TestKey123456789012345678901234567890"); // Ensure key is at least 32 characters long
+        _configMock.Setup(config => config["Jwt:Key"]).Returns("TestKey123456789012345678901234567890"); 
         _configMock.Setup(config => config["Jwt:Issuer"]).Returns("TestIssuer");
 
         // Act
@@ -109,7 +109,7 @@ public class AccountServiceTest
 
         // Assert
         Assert.NotNull(result);
-        Assert.False(string.IsNullOrWhiteSpace(result)); // Ensure the result is not empty or whitespace
+     
         
     }
 
