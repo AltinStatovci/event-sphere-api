@@ -10,7 +10,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="c85145b6-99f5-46d8-b5ce-9fdbb86b216d" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/EventSphere.Tests/Services/UserServiceTest.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/EventSphere.Tests/Services/AccountServiceTest.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.EventSphere/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.EventSphere/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -56,7 +57,7 @@
     "977f1560-df40-4254-b130-c9be1a683935.executor": "Debug",
     "HTTP Request.EventSphere.API | #1.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "main",
+    "git-widget-placeholder": "AccountService-unit-test",
     "ignore.virus.scanning.warn.message": "true",
     "node.js.detected.package.eslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -122,6 +123,7 @@
       <workItem from="1720086043293" duration="2177000" />
       <workItem from="1720092657372" duration="1315000" />
       <workItem from="1720695954811" duration="6214000" />
+      <workItem from="1721028961780" duration="2430000" />
     </task>
     <servers />
   </component>
@@ -136,17 +138,17 @@
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/EventSphere.Tests/Services/UserServiceTest.cs</url>
-          <line>58</line>
-          <properties documentPath="C:\Users\hp\Desktop\event-sphere\EventSphere\EventSphere.Tests\Services\UserServiceTest.cs" containingFunctionPresentation="Method 'GetAllUsersAsync_OnSuccess_ShouldReturnAllUsers'">
+          <url>file://$PROJECT_DIR$/EventSphere.Tests/Services/AccountServiceTest.cs</url>
+          <line>99</line>
+          <properties documentPath="C:\Users\hp\Desktop\event-sphere\EventSphere\EventSphere.Tests\Services\AccountServiceTest.cs" containingFunctionPresentation="Method 'AuthenticateAsync_ShouldReturnToken_WhenCredentialsAreValid'">
             <startOffsets>
-              <option value="1723" />
+              <option value="4517" />
             </startOffsets>
             <endOffsets>
-              <option value="1774" />
+              <option value="4580" />
             </endOffsets>
           </properties>
-          <option name="timeStamp" value="9" />
+          <option name="timeStamp" value="1" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
