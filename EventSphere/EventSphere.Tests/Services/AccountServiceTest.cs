@@ -70,7 +70,7 @@ public class AccountServiceTest
         // Arrange
         var createUserDto = new CreateUserDTO { Email = "test@example.com", Password = "password123", RoleID = 1 };
         var existingUser = new User();
-        var exceptionMsg = "Email is already in use. (Parameter 'Email')"; 
+        var exceptionMsg = "Email is already in use. " + createUserDto.Email; 
 
         _userRepositoryMock.Setup(repo => repo.GetUserByEmailAsync(It.IsAny<string>())).ReturnsAsync(existingUser);
 
@@ -94,9 +94,9 @@ public class AccountServiceTest
             Email = loginDto.Email,
             Password = hash,
             Salt = salt,
-            ID = 1, // Generate a dummy ID
-            RoleID = 1, // Dummy RoleID
-            Name = "TestUser" // Dummy Name
+            ID = 1,
+            RoleID = 1, 
+            Name = "TestUser" 
         };
 
         _userRepositoryMock.Setup(repo => repo.GetUserByEmailAsync(It.IsAny<string>())).ReturnsAsync(user);
