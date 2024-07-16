@@ -38,7 +38,7 @@ namespace EventSphere.Business.Services
             var existingUser = await _userRepository.GetUserByEmailAsync(createUserDto.Email.Trim().ToLower());
             if (existingUser != null)
             {
-                throw new ArgumentException("Email is already in use.", nameof(createUserDto.Email));
+                throw new ArgumentException($"Email is already in use. {createUserDto.Email}");
                
             }
             
