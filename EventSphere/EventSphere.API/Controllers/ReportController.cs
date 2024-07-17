@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Serilog;
 using System;
+using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using EventSphere.Business.Helper;

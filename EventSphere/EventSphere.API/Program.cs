@@ -1,3 +1,4 @@
+using System;
 using EventSphere.API;
 using EventSphere.API.Filters;
 using EventSphere.Infrastructure;
@@ -11,6 +12,11 @@ using Serilog.Sinks.MSSqlServer;
 using Stripe;
 using System.Text;
 using System.Collections.ObjectModel;
+using EventSphere.API.Hubs;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -66,7 +72,7 @@ Log.Logger = new LoggerConfiguration()
 Serilog.Debugging.SelfLog.Enable(msg => Console.WriteLine($"Serilog diagnostic: {msg}"));
 
 
-
+builder.Services.AddSignalR();
 
 var app = builder.Build();
 
@@ -87,7 +93,13 @@ app.UseCors(options =>
     options.WithOrigins("http://localhost:5173")
            .AllowAnyMethod()
            .AllowAnyHeader();
+    options.AllowCredentials();
 });
+
+
+
+
+app.MapHub<NotificationHub>("/notificationHub");
 app.MapControllers();
 
 app.Run();

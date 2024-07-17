@@ -10,7 +10,32 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="c85145b6-99f5-46d8-b5ce-9fdbb86b216d" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/EventSphere.API/Controllers/NotificationController.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/EventSphere.Business/Hubs/NotificationHub.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/EventSphere.Business/Services/Interfaces/INotificationService.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/EventSphere.Business/Services/NotificationService.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/EventSphere.Domain/DTOs/SendNotificationRequest.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/EventSphere.Domain/Entities/Notification.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/EventSphere.Infrastructure/EntityFramework/NotificationConfiguration.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/EventSphere.Infrastructure/Repositories/INotificationRepository.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/EventSphere.Infrastructure/Repositories/NotificationRepository.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.EventSphere/.idea/dataSources.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.EventSphere/.idea/dataSources.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.EventSphere/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.EventSphere/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/EventSphere.API/ApplicationInjection.cs" beforeDir="false" afterPath="$PROJECT_DIR$/EventSphere.API/ApplicationInjection.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/EventSphere.API/Controllers/AccountController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/EventSphere.API/Controllers/AccountController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/EventSphere.API/Controllers/EventCategoryController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/EventSphere.API/Controllers/EventCategoryController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/EventSphere.API/Controllers/EventController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/EventSphere.API/Controllers/EventController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/EventSphere.API/Controllers/LogController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/EventSphere.API/Controllers/LogController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/EventSphere.API/Controllers/ReportController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/EventSphere.API/Controllers/ReportController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/EventSphere.API/EventSphere.API.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/EventSphere.API/EventSphere.API.csproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/EventSphere.API/Filters/ValidationException.cs" beforeDir="false" afterPath="$PROJECT_DIR$/EventSphere.API/Filters/ValidationException.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/EventSphere.API/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/EventSphere.API/Program.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/EventSphere.Business/EventSphere.Business.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/EventSphere.Business/EventSphere.Business.csproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/EventSphere.Domain/EventSphere.Domain.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/EventSphere.Domain/EventSphere.Domain.csproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/EventSphere.Infrastructure/EventSphere.Infrastructure.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/EventSphere.Infrastructure/EventSphere.Infrastructure.csproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/EventSphere.Infrastructure/EventSphereDbContext.cs" beforeDir="false" afterPath="$PROJECT_DIR$/EventSphere.Infrastructure/EventSphereDbContext.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/EventSphere.Infrastructure/Migrations/EventSphereDbContextModelSnapshot.cs" beforeDir="false" afterPath="$PROJECT_DIR$/EventSphere.Infrastructure/Migrations/EventSphereDbContextModelSnapshot.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/EventSphere.Tests/EventSphere.Tests.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/EventSphere.Tests/EventSphere.Tests.csproj" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -25,6 +50,8 @@
   </component>
   <component name="HighlightingSettingsPerFile">
     <setting file="file://$USER_HOME$/AppData/Local/Symbols/src/dotnet/runtime/1381d5ebd2ab1f292848d5b19b80cf71ac332508/src/libraries/System.Net.Http/src/System/Net/Http/HttpMethod.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/2451dad333024a5285658d6069b1a88178908/0f/f9e0a328/IHubContext`1.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/2451dad333024a5285658d6069b1a88178908/d4/8c5f42d1/IHubClients`1.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/34e54cf52b4a4c2b82645ccc3a46837e5e000/10/6fd16ccf/ProxyGenerator.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/1456ea7878febf5e7b8f53a26e9137c821aeb8ba59fdd46ab4fa7538a173523/Service.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/2190b5136151c5ba8f96f96d7f96251c9d67aab6bad88b16299742e764a23a/ChargeService.cs" root0="SKIP_HIGHLIGHTING" />
@@ -56,7 +83,7 @@
     &quot;977f1560-df40-4254-b130-c9be1a683935.executor&quot;: &quot;Debug&quot;,
     &quot;HTTP Request.EventSphere.API | #1.executor&quot;: &quot;Run&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;notification-signalR&quot;,
     &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
@@ -124,6 +151,12 @@
       <workItem from="1720695954811" duration="6214000" />
       <workItem from="1721028961780" duration="2430000" />
       <workItem from="1721034490778" duration="5289000" />
+      <workItem from="1721128342667" duration="1670000" />
+      <workItem from="1721131905809" duration="4985000" />
+      <workItem from="1721137130723" duration="128000" />
+      <workItem from="1721137575941" duration="1631000" />
+      <workItem from="1721202753457" duration="6322000" />
+      <workItem from="1721211609152" duration="2841000" />
     </task>
     <servers />
   </component>

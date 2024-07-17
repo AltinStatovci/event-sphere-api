@@ -1,4 +1,5 @@
-﻿using EventSphere.Business.Helper;
+﻿using System;
+using EventSphere.Business.Helper;
 using EventSphere.Business.Services;
 using EventSphere.Business.Services.Interfaces;
 using EventSphere.Business.Validator;
@@ -13,6 +14,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 
 namespace EventSphere.API.Controllers
 {
