@@ -31,6 +31,10 @@ public class NotificationConfiguration : IEntityTypeConfiguration<Notification>
             .IsRequired()
             .HasDefaultValueSql("GETDATE()"); 
 
+        builder.HasOne<User>(n => n.User)
+            .WithMany()
+            .HasForeignKey(n => n.UserId)
+            .OnDelete(DeleteBehavior.Restrict);
        
     }
 }

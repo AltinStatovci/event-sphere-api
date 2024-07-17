@@ -22,8 +22,8 @@ public class NotificationService : INotificationService
     {
         var notification = new Notification { UserId = userId, Message = message, IsRead = false };
         await _repository.AddNotification(notification);
-        await _hubContext.Clients.All.SendAsync("ReceiveNotification", message);
-      //  await _hubContext.Clients.User(userId.ToString()).SendAsync("ReceiveNotification", message);
+       await _hubContext.Clients.All.SendAsync("ReceiveNotification", message);
+     //  await _hubContext.Clients.User(userId.ToString()).SendAsync("ReceiveNotification", message);
     }
 
     public async Task MarkAsReadAsync(int notificationId)
