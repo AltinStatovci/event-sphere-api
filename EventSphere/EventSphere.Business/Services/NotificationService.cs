@@ -22,8 +22,14 @@ public class NotificationService : INotificationService
     {
         var notification = new Notification { UserId = userId, Message = message, IsRead = false };
         await _repository.AddNotification(notification);
-       await _hubContext.Clients.All.SendAsync("ReceiveNotification", message);
-     //  await _hubContext.Clients.User(userId.ToString()).SendAsync("ReceiveNotification", message);
+            
+        // Find all connection IDs associated with the user
+        var connectionIds = NotificationHub._connections.Where(x => x.Value == userId.ToString()).Select(x => x.Key);
+            
+        foreach (var connectionId in connectionIds)
+        {
+            await _hubContext.Clients.Client(connectionId).SendAsync("ReceiveNotification", message);
+        }
     }
 
     public async Task MarkAsReadAsync(int notificationId)

@@ -11,10 +11,9 @@
   <component name="ChangeListManager">
     <list default="true" id="c85145b6-99f5-46d8-b5ce-9fdbb86b216d" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.EventSphere/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.EventSphere/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/EventSphere.API/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/EventSphere.API/Program.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/EventSphere.Business/Hubs/NotificationHub.cs" beforeDir="false" afterPath="$PROJECT_DIR$/EventSphere.Business/Hubs/NotificationHub.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/EventSphere.Business/Services/NotificationService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/EventSphere.Business/Services/NotificationService.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/EventSphere.Domain/Entities/Notification.cs" beforeDir="false" afterPath="$PROJECT_DIR$/EventSphere.Domain/Entities/Notification.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/EventSphere.Infrastructure/EntityFramework/NotificationConfiguration.cs" beforeDir="false" afterPath="$PROJECT_DIR$/EventSphere.Infrastructure/EntityFramework/NotificationConfiguration.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/EventSphere.Infrastructure/Migrations/EventSphereDbContextModelSnapshot.cs" beforeDir="false" afterPath="$PROJECT_DIR$/EventSphere.Infrastructure/Migrations/EventSphereDbContextModelSnapshot.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -57,7 +56,7 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
-    ".NET Launch Settings Profile.EventSphere.API: http.executor": "Debug",
+    ".NET Launch Settings Profile.EventSphere.API: http.executor": "Run",
     "964a40a7-e4a6-4366-9ed4-c5c877407466.executor": "Debug",
     "977f1560-df40-4254-b130-c9be1a683935.executor": "Debug",
     "HTTP Request.EventSphere.API | #1.executor": "Run",
