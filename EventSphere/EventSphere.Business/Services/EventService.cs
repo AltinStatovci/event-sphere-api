@@ -107,7 +107,7 @@ namespace EventSphere.Business.Services
         }
 
 
-        public static async Task<string> ResizeAndConvertToBase64Async(IFormFile image)
+        public async Task<string> ResizeAndConvertToBase64Async(IFormFile image)
         {
             if (image == null || image.Length == 0)
             {

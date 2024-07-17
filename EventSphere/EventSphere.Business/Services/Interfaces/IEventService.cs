@@ -9,6 +9,7 @@ namespace EventSphere.Business.Services.Interfaces
         Task<IEnumerable<Event>> GetAllEventsAsync();
         Task<Event> GetEventsByIdAsync(int id);
         Task<Event> CreateEventsAsync(EventDTO eventDto, IFormFile image);
+        Task<string> ResizeAndConvertToBase64Async(IFormFile image);
         Task<Event> UpdateEventsAsync(int id, EventDTO eventDto, IFormFile newImage = null);
         Task DeleteEventsAsync(int id);
         Task<int> GetEventCountAsync();
