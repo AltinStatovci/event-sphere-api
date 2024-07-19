@@ -50,4 +50,9 @@ public class NotificationService : INotificationService
     {
         return await _repository.GetUnReadNotificationsByUserId(userId);
     }
+    
+    public async Task MarkAllAsReadAsync(int userId)
+    {
+        await _repository.MarkAllAsReadAsync(userId);
+    }
 }

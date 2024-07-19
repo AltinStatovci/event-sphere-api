@@ -7,4 +7,5 @@
         Task SendNotificationAsync(int userId, string message);
         Task MarkAsReadAsync(int notificationId);
         Task<IEnumerable<Notification>> GetUnreadNotificationsAsync(int userId);
+        Task MarkAllAsReadAsync(int userId);
     }

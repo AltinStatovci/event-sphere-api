@@ -10,10 +10,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="c85145b6-99f5-46d8-b5ce-9fdbb86b216d" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/EventSphere.Tests/Services/NotificationServiceTest.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.EventSphere/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.EventSphere/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/EventSphere.API/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/EventSphere.API/Program.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/EventSphere.Business/Hubs/NotificationHub.cs" beforeDir="false" afterPath="$PROJECT_DIR$/EventSphere.Business/Hubs/NotificationHub.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/EventSphere.API/Controllers/NotificationController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/EventSphere.API/Controllers/NotificationController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/EventSphere.Business/Services/Interfaces/INotificationService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/EventSphere.Business/Services/Interfaces/INotificationService.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/EventSphere.Business/Services/NotificationService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/EventSphere.Business/Services/NotificationService.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/EventSphere.Infrastructure/Repositories/INotificationRepository.cs" beforeDir="false" afterPath="$PROJECT_DIR$/EventSphere.Infrastructure/Repositories/INotificationRepository.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/EventSphere.Infrastructure/Repositories/NotificationRepository.cs" beforeDir="false" afterPath="$PROJECT_DIR$/EventSphere.Infrastructure/Repositories/NotificationRepository.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -61,6 +64,7 @@
     "977f1560-df40-4254-b130-c9be1a683935.executor": "Debug",
     "HTTP Request.EventSphere.API | #1.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
+    "ec00c5c4-3b1f-4d21-9385-71896cf7ef87.executor": "Debug",
     "git-widget-placeholder": "notification-signalR",
     "ignore.virus.scanning.warn.message": "true",
     "node.js.detected.package.eslint": "true",
@@ -135,6 +139,8 @@
       <workItem from="1721137575941" duration="1631000" />
       <workItem from="1721202753457" duration="6322000" />
       <workItem from="1721211609152" duration="2841000" />
+      <workItem from="1721389838265" duration="3618000" />
+      <workItem from="1721395586167" duration="3661000" />
     </task>
     <servers />
   </component>
@@ -149,14 +155,14 @@
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/EventSphere.API/Controllers/NotificationController.cs</url>
-          <line>25</line>
-          <properties documentPath="C:\Users\hp\Desktop\event-sphere\EventSphere\EventSphere.API\Controllers\NotificationController.cs" containingFunctionPresentation="Method 'SendNotification'">
+          <url>file://$PROJECT_DIR$/EventSphere.Tests/Services/NotificationServiceTest.cs</url>
+          <line>50</line>
+          <properties documentPath="C:\Users\hp\Desktop\event-sphere\EventSphere\EventSphere.Tests\Services\NotificationServiceTest.cs" containingFunctionPresentation="Method 'SendNotificationAsync_OnSuccess_ShouldSendNotificationToClient'">
             <startOffsets>
-              <option value="633" />
+              <option value="2070" />
             </startOffsets>
             <endOffsets>
-              <option value="715" />
+              <option value="2136" />
             </endOffsets>
           </properties>
           <option name="timeStamp" value="1" />

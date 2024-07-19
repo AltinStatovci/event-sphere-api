@@ -8,5 +8,6 @@ public interface INotificationRepository
  Task UpdateNotification(Notification notification);
  Task<Notification> GetNotificationById(int id);
  Task<IEnumerable<Notification>> GetUnReadNotificationsByUserId(int userId);
+ Task MarkAllAsReadAsync(int userId); 
  
 }

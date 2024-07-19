@@ -35,4 +35,14 @@ public class NotificationRepository : INotificationRepository
     {
         return await _context.Notifications.Where(n => n.UserId == userId && !n.IsRead).ToListAsync();
     }
+    
+    public async Task MarkAllAsReadAsync(int userId)
+    {
+        var notifications = _context.Notifications.Where(n => n.UserId == userId && !n.IsRead);
+        foreach (var notification in notifications)
+        {
+            notification.IsRead = true;
+        }
+        await _context.SaveChangesAsync();
+    }
 }
