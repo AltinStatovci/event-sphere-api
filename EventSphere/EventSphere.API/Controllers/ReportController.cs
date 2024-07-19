@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Serilog;
 using System;
+using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using EventSphere.Business.Helper;
@@ -17,13 +18,15 @@ namespace EventSphere.API.Controllers
         private readonly IReportService _reportService;
         private readonly IEmailService _emailService;
         private readonly IUserService _userService;
+        private readonly INotificationService _notificationService;
     
 
-        public ReportController(IReportService reportService, IEmailService emailService, IUserService userService)
+        public ReportController(IReportService reportService, IEmailService emailService, IUserService userService, INotificationService notificationService)
         {
             _reportService = reportService;
             _emailService = emailService;
             _userService = userService;
+            _notificationService = notificationService;
         }
 
         [HttpGet]
@@ -135,6 +138,7 @@ namespace EventSphere.API.Controllers
                         "
                     };
 
+                     _notificationService.SendNotificationAsync(user.ID, $"New Report was send from {report.userName} ");
                     return _emailService.SendEmailAsync(mailRequest);
                 });
 
