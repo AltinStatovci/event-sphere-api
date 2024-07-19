@@ -308,5 +308,11 @@ namespace EventSphere.API.Controllers
 
             return Ok();
         }
+        [HttpGet("nearby")]
+        public async Task<IActionResult> GetEventsNearby(double latitude, double longitude)
+        {
+            var events = await _eventService.GetEventsNearbyAsync(latitude, longitude);
+            return Ok(events);
+        }
     }
 }
