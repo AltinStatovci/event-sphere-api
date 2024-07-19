@@ -260,6 +260,10 @@ namespace EventSphere.Business.Services
             eventById.Message = message;
             await _eventRepository.UpdateAsync(eventById);
         }
+        public async Task<IEnumerable<Event>> GetEventsNearbyAsync(double latitude, double longitude)
+        {
+            return await _eventRepository.GetEventsNearbyAsync(latitude, longitude, 20);
+        }
     }  
 
 }

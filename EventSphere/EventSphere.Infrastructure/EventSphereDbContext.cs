@@ -48,13 +48,13 @@ namespace EventSphere.Infrastructure
             );
 
             modelBuilder.Entity<Location>().HasData(
-                new Location { Id = 1, Country = "Kosovo", City = "Prishtina" },
-                new Location { Id = 2, Country = "Kosovo", City = "Mitrovice" },
-                new Location { Id = 3, Country = "Kosovo", City = "Pejë" },
-                new Location { Id = 4, Country = "Kosovo", City = "Prizren" },
-                new Location { Id = 5, Country = "Kosovo", City = "Ferizaj" },
-                new Location { Id = 6, Country = "Kosovo", City = "Gjilan" },
-                new Location { Id = 7, Country = "Kosovo", City = "Gjakovë" }
+                new Location { Id = 1, Country = "Kosovo", City = "Prishtina", Latitude = 42.6629, Longitude = 21.1655 },
+                new Location { Id = 2, Country = "Kosovo", City = "Mitrovice", Latitude = 42.8914, Longitude = 20.866 },
+                new Location {Id = 3, Country = "Kosovo", City = "Pejë", Latitude = 42.2171, Longitude = 20.7436 },
+                new Location {Id = 4, Country = "Kosovo", City = "Prizren", Latitude = 42.4635, Longitude = 21.4694 },
+                new Location {Id = 5, Country = "Kosovo", City = "Ferizaj", Latitude = 42.3702, Longitude = 21.1483 },
+                new Location {Id = 6, Country = "Kosovo", City = "Gjilan", Latitude = 42.6593, Longitude = 20.2887 },
+                new Location {Id = 7, Country = "Kosovo", City = "Gjakovë", Latitude = 42.3844, Longitude = 20.4285 }
                 );
             modelBuilder.Entity<PromoCode>().HasData(
                 new PromoCode { ID = 1, Code = "B3LI3V3R", DiscountPercentage = 20, ExpiryDate = new DateTime(2024, 12, 31), IsValid = true },
