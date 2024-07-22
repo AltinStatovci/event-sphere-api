@@ -1,4 +1,5 @@
-﻿using EventSphere.Business.Helper;
+﻿using System;
+using EventSphere.Business.Helper;
 using EventSphere.Business.Services;
 using EventSphere.Business.Services.Interfaces;
 using EventSphere.Business.Validator;
@@ -13,6 +14,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 
 namespace EventSphere.API.Controllers
 {
@@ -23,13 +25,14 @@ namespace EventSphere.API.Controllers
         private readonly IEventService _eventService;
         private readonly EventValidator _validator;
         private readonly IEmailService _emailService;
+        private readonly INotificationService _notificationService;
         
-        public EventController(IEventService eventService, IEmailService emailService)
+        public EventController(IEventService eventService, IEmailService emailService, INotificationService notificationService)
         {
             _eventService = eventService;
             _validator = new EventValidator();
             _emailService = emailService;
-
+            _notificationService = notificationService;
         }
 
         [HttpGet]
@@ -266,6 +269,7 @@ namespace EventSphere.API.Controllers
                 Body = $"<p>Dear {eventById.OrganizerName},</p><p> Your event submission for {eventById.EventName} was approved.</p><p>Best regards, EventSphere Team</p>",
             };
             await _emailService.SendEmailAsync(mailRequest);
+            await _notificationService.SendNotificationAsync(eventById.OrganizerID, $"Event : {eventById.EventName} was approved ");
             Log.Information("Event Approved successfully: {eventById}  by {userEmail}", eventById.EventName , userEmail);
             return Ok(approvedEvent);
         }
@@ -304,6 +308,7 @@ namespace EventSphere.API.Controllers
                 Body = $"<p>Dear {eventById.OrganizerName},</p><p>Unfortunately, your event submission for {eventById.EventName} was not approved for the following reason:</p><p>{message}</p><p>Best regards,</p><p>EventSphere Team</p>",
             };
             await _emailService.SendEmailAsync(mailRequest);
+            await _notificationService.SendNotificationAsync(eventById.OrganizerID, $"Your Event: {eventById.EventName} was rejected ");
             Log.Information("Event Rejected : {event}  by {userEmail}", eventById.EventName , userEmail);
 
             return Ok();

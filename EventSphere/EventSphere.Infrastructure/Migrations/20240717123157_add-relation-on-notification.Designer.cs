@@ -4,6 +4,7 @@ using EventSphere.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EventSphere.Infrastructure.Migrations
 {
     [DbContext(typeof(EventSphereDbContext))]
-    partial class EventSphereDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240717123157_add-relation-on-notification")]
+    partial class addrelationonnotification
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -153,12 +156,6 @@ namespace EventSphere.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<double>("Latitude")
-                        .HasColumnType("float");
-
-                    b.Property<double>("Longitude")
-                        .HasColumnType("float");
-
                     b.HasKey("Id");
 
                     b.ToTable("Location", (string)null);
@@ -168,57 +165,43 @@ namespace EventSphere.Infrastructure.Migrations
                         {
                             Id = 1,
                             City = "Prishtina",
-                            Country = "Kosovo",
-                            Latitude = 0.0,
-                            Longitude = 0.0
+                            Country = "Kosovo"
                         },
                         new
                         {
                             Id = 2,
                             City = "Mitrovice",
-                            Country = "Kosovo",
-                            Latitude = 0.0,
-                            Longitude = 0.0
+                            Country = "Kosovo"
                         },
                         new
                         {
                             Id = 3,
                             City = "Pejë",
-                            Country = "Kosovo",
-                            Latitude = 0.0,
-                            Longitude = 0.0
+                            Country = "Kosovo"
                         },
                         new
                         {
                             Id = 4,
                             City = "Prizren",
-                            Country = "Kosovo",
-                            Latitude = 0.0,
-                            Longitude = 0.0
+                            Country = "Kosovo"
                         },
                         new
                         {
                             Id = 5,
                             City = "Ferizaj",
-                            Country = "Kosovo",
-                            Latitude = 0.0,
-                            Longitude = 0.0
+                            Country = "Kosovo"
                         },
                         new
                         {
                             Id = 6,
                             City = "Gjilan",
-                            Country = "Kosovo",
-                            Latitude = 0.0,
-                            Longitude = 0.0
+                            Country = "Kosovo"
                         },
                         new
                         {
                             Id = 7,
                             City = "Gjakovë",
-                            Country = "Kosovo",
-                            Latitude = 0.0,
-                            Longitude = 0.0
+                            Country = "Kosovo"
                         });
                 });
 

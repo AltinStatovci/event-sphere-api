@@ -7,6 +7,8 @@ using EventSphere.Infrastructure.Repositories;
 using EventSphere.Infrastructure.Repositories.UserRepository;
 using Mapster;
 using MapsterMapper;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 using Stripe;
 using Event = EventSphere.Domain.Entities.Event;
 
@@ -62,6 +64,10 @@ namespace EventSphere.API
             services.AddScoped<ILogService, LogService>();
             services.AddScoped<ILogRepository, LogRepository>();
             services.AddScoped<ChargeService>();
+            
+            services.AddScoped<INotificationService, NotificationService>();
+            services.AddScoped<INotificationRepository, NotificationRepository>();
+            services.AddSignalR();
 
         }
     }

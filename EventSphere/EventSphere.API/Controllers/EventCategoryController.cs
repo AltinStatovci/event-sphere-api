@@ -1,4 +1,5 @@
-﻿using EventSphere.API.Filters;
+﻿using System;
+using EventSphere.API.Filters;
 using EventSphere.Business.Validator;
 using EventSphere.Business.Services.Interfaces;
 using EventSphere.Domain.DTOs.EventSphere.API.DTOs;
