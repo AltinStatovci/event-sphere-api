@@ -1,3 +1,4 @@
+using System;
 using EventSphere.API;
 using EventSphere.API.Filters;
 using EventSphere.Infrastructure;
@@ -11,6 +12,12 @@ using Serilog.Sinks.MSSqlServer;
 using Stripe;
 using System.Text;
 using System.Collections.ObjectModel;
+using EventSphere.API.Hubs;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Options;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -41,7 +48,22 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJw
         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"])),
         RoleClaimType = "Role"
     };
+    
+    o.Events = new JwtBearerEvents
+    {
+        OnMessageReceived = context =>
+        {
+            var accessToken = context.Request.Query["access_token"];
+            var path = context.HttpContext.Request.Path;
+            if (!string.IsNullOrEmpty(accessToken) && path.StartsWithSegments("/notificationHub"))
+            {
+                context.Token = accessToken;
+            }
+            return Task.CompletedTask;
+        }
+    };
 });
+
 builder.Services.AddAuthorization(options =>
 {
     options.AddPolicy("Admin", policy => policy.RequireRole("1"));
@@ -66,7 +88,7 @@ Log.Logger = new LoggerConfiguration()
 Serilog.Debugging.SelfLog.Enable(msg => Console.WriteLine($"Serilog diagnostic: {msg}"));
 
 
-
+builder.Services.AddSignalR();
 
 var app = builder.Build();
 
@@ -87,7 +109,13 @@ app.UseCors(options =>
     options.WithOrigins("http://localhost:5173")
            .AllowAnyMethod()
            .AllowAnyHeader();
+    options.AllowCredentials();
 });
+
+
+
+
+app.MapHub<NotificationHub>("/notificationHub");
 app.MapControllers();
 
 app.Run();

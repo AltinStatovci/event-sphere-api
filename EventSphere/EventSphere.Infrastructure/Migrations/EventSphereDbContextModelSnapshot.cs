@@ -153,6 +153,12 @@ namespace EventSphere.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<double>("Latitude")
+                        .HasColumnType("float");
+
+                    b.Property<double>("Longitude")
+                        .HasColumnType("float");
+
                     b.HasKey("Id");
 
                     b.ToTable("Location", (string)null);
@@ -162,43 +168,57 @@ namespace EventSphere.Infrastructure.Migrations
                         {
                             Id = 1,
                             City = "Prishtina",
-                            Country = "Kosovo"
+                            Country = "Kosovo",
+                            Latitude = 0.0,
+                            Longitude = 0.0
                         },
                         new
                         {
                             Id = 2,
                             City = "Mitrovice",
-                            Country = "Kosovo"
+                            Country = "Kosovo",
+                            Latitude = 0.0,
+                            Longitude = 0.0
                         },
                         new
                         {
                             Id = 3,
                             City = "Pejë",
-                            Country = "Kosovo"
+                            Country = "Kosovo",
+                            Latitude = 0.0,
+                            Longitude = 0.0
                         },
                         new
                         {
                             Id = 4,
                             City = "Prizren",
-                            Country = "Kosovo"
+                            Country = "Kosovo",
+                            Latitude = 0.0,
+                            Longitude = 0.0
                         },
                         new
                         {
                             Id = 5,
                             City = "Ferizaj",
-                            Country = "Kosovo"
+                            Country = "Kosovo",
+                            Latitude = 0.0,
+                            Longitude = 0.0
                         },
                         new
                         {
                             Id = 6,
                             City = "Gjilan",
-                            Country = "Kosovo"
+                            Country = "Kosovo",
+                            Latitude = 0.0,
+                            Longitude = 0.0
                         },
                         new
                         {
                             Id = 7,
                             City = "Gjakovë",
-                            Country = "Kosovo"
+                            Country = "Kosovo",
+                            Latitude = 0.0,
+                            Longitude = 0.0
                         });
                 });
 
@@ -231,6 +251,39 @@ namespace EventSphere.Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Logs", (string)null);
+                });
+
+            modelBuilder.Entity("EventSphere.Domain.Entities.Notification", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("CreatedAt")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValueSql("GETDATE()");
+
+                    b.Property<bool>("IsRead")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValue(false);
+
+                    b.Property<string>("Message")
+                        .IsRequired()
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Notifications", (string)null);
                 });
 
             modelBuilder.Entity("EventSphere.Domain.Entities.Payment", b =>
@@ -531,6 +584,17 @@ namespace EventSphere.Infrastructure.Migrations
                     b.Navigation("Location");
 
                     b.Navigation("Organizer");
+                });
+
+            modelBuilder.Entity("EventSphere.Domain.Entities.Notification", b =>
+                {
+                    b.HasOne("EventSphere.Domain.Entities.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("EventSphere.Domain.Entities.Payment", b =>

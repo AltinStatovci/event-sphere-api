@@ -16,13 +16,14 @@ namespace EventSphere.API.Controllers
     {
         private readonly IPaymentService _paymentService;
         private readonly IEmailService _emailService;
+        private readonly INotificationService _notificationService;
     
 
-        public PaymentController(IPaymentService paymentService, IEmailService emailService)
+        public PaymentController(IPaymentService paymentService, IEmailService emailService, INotificationService notificationService)
         {
             _paymentService = paymentService;
             _emailService = emailService;
-         
+            _notificationService = notificationService;
         }
 
         [HttpGet]
@@ -134,6 +135,8 @@ namespace EventSphere.API.Controllers
                 };
 
                 await _emailService.SendEmailAsync(mailRequest);
+                await _notificationService.SendNotificationAsync(paymentResponse.User.ID,
+                    $"Payment Confirmation with price {paymentResponse.Ticket.Price * paymentDTO.Amount:C} ");
                 Log.Information("Payment created successfully: by  {userEmail}", userEmail);
                 return CreatedAtAction(nameof(GetPaymentId), new { id = paymentDTO.ID }, paymentDTO);
             }

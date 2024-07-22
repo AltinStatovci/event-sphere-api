@@ -1,4 +1,7 @@
-﻿namespace EventSphere.API.Filters
+﻿using System;
+using System.Collections.Generic;
+
+namespace EventSphere.API.Filters
 {
     public class ValidationException : Exception
     {

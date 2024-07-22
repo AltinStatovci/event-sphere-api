@@ -9,6 +9,7 @@ namespace EventSphere.Business.Services.Interfaces
         Task<IEnumerable<Event>> GetAllEventsAsync();
         Task<Event> GetEventsByIdAsync(int id);
         Task<Event> CreateEventsAsync(EventDTO eventDto, IFormFile image);
+        Task<string> ResizeAndConvertToBase64Async(IFormFile image);
         Task<Event> UpdateEventsAsync(int id, EventDTO eventDto, IFormFile newImage = null);
         Task DeleteEventsAsync(int id);
         Task<int> GetEventCountAsync();
@@ -19,12 +20,10 @@ namespace EventSphere.Business.Services.Interfaces
         Task<IEnumerable<Event>> GetEventsByNameAsync(string name);
         Task<Event> UpdateEventStatus(int id);
         Task<Event> UpdateEventStatusToDisapproved(int id);
-
         Task<IEnumerable<Event>> GetEventsByDateAsync(DateTime date);
         Task<IEnumerable<Event>> GetEventsByDateTimeAsync(DateTime date);
-
         Task<string> GetOrganizerEmailAsync(int id);
         Task UpdateMessage(int id, string message);
-
+        Task<IEnumerable<Event>> GetEventsNearbyAsync(double latitude, double longitude);
     }
 }

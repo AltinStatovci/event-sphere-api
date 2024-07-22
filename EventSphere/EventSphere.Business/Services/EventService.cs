@@ -107,7 +107,7 @@ namespace EventSphere.Business.Services
         }
 
 
-        public static async Task<string> ResizeAndConvertToBase64Async(IFormFile image)
+        public async Task<string> ResizeAndConvertToBase64Async(IFormFile image)
         {
             if (image == null || image.Length == 0)
             {
@@ -275,6 +275,10 @@ namespace EventSphere.Business.Services
             var eventById = await _eventRepository.GetByIdAsync(id);
             eventById.Message = message;
             await _eventRepository.UpdateAsync(eventById);
+        }
+        public async Task<IEnumerable<Event>> GetEventsNearbyAsync(double latitude, double longitude)
+        {
+            return await _eventRepository.GetEventsNearbyAsync(latitude, longitude, 20);
         }
     }  
 

@@ -16,6 +16,6 @@ namespace EventSphere.Infrastructure.Repositories
         Task<string> GetOrganizerEmail(int id);
         Task<IEnumerable<Event>> GetEventsByDate(DateTime date);
         Task<IEnumerable<Event>> GetEventsByDateTime(DateTime date);
-
+        Task<IEnumerable<Event>> GetEventsNearbyAsync(double latitude, double longitude, double radiusInKm);
     }
 }

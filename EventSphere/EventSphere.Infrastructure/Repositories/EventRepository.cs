@@ -56,5 +56,25 @@ namespace EventSphere.Infrastructure.Repositories
 
             return email;
         }
+        public async Task<IEnumerable<Event>> GetEventsNearbyAsync(double latitude, double longitude, double radiusInKm)
+        {
+            var events = await _context.Events
+                .Include(e => e.Location)
+                .ToListAsync();
+
+            var nearbyEvents = events.Where(e =>
+                CalculateDistance(latitude, longitude, e.Location.Latitude, e.Location.Longitude) < radiusInKm
+            ).ToList();
+
+            return nearbyEvents;
+        }
+
+        private double CalculateDistance(double lat1, double lon1, double lat2, double lon2)
+        {
+            var dLat = lat2 - lat1;
+            var dLon = lon2 - lon1;
+            return Math.Sqrt(dLat * dLat + dLon * dLon) * 111; // Approximation: 1 degree ~ 111 km
+        }
+
     }
 }
