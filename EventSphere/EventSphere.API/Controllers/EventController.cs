@@ -269,6 +269,31 @@ namespace EventSphere.API.Controllers
             Log.Information("Event Approved successfully: {eventById}  by {userEmail}", eventById.EventName , userEmail);
             return Ok(approvedEvent);
         }
+       
+        [HttpPost("disapprove/{id}")]
+        [Authorize(Policy = "Admin")]
+        public async Task<IActionResult> DisapproveEvent(int id)
+        {
+            var userEmail = HttpContext.User.FindFirst(ClaimTypes.Email)?.Value;
+
+            // Update the event status to 'waiting for approval'
+            var disapprovedEvent = await _eventService.UpdateEventStatusToDisapproved(id);
+
+            var email = await _eventService.GetOrganizerEmailAsync(id);
+            var eventById = await _eventService.GetEventsByIdAsync(id);
+
+            var mailRequest = new MailRequest
+            {
+                ToEmail = email,
+                Subject = "Event Disapproval Update",
+                Body = $"<p>Dear {eventById.OrganizerName},</p><p>Your event submission for {eventById.EventName} was disapproved. It is now waiting for approval.</p><p>Best regards, EventSphere Team</p>",
+            };
+            await _emailService.SendEmailAsync(mailRequest);
+
+            Log.Information("Event Disapproved successfully: {eventById} by {userEmail}", eventById.EventName, userEmail);
+
+            return Ok(disapprovedEvent);
+        }
 
         [HttpGet("date")]
         public async Task<IActionResult> GetEventsByDate()

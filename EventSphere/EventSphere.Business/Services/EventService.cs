@@ -238,7 +238,23 @@ namespace EventSphere.Business.Services
                 throw new Exception("Error occurred while approving the event.", ex);
             }
         }
+        public async Task<Event> UpdateEventStatusToDisapproved(int id)
+        {
+            var eventById = await _eventRepository.GetByIdAsync(id);
+            try
+            {
+                eventById.IsApproved = false;
+                eventById.Message = "Disapproved";
 
+                await _eventRepository.UpdateAsync(eventById);
+
+                return eventById;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error occurred while disapproving the event.", ex);
+            }
+        }
         public async Task<IEnumerable<Event>> GetEventsByDateAsync(DateTime date)
         {
             return await _eventRepository.GetEventsByDate(date);
