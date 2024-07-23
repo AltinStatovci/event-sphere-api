@@ -1,7 +1,6 @@
 ﻿using EventSphere.Business.Helper;
 using EventSphere.Business.Services.Interfaces;
 using EventSphere.Domain.DTOs.User;
-using EventSphere.Business.Services.Interfaces;
 using EventSphere.Domain.Entities;
 using EventSphere.Infrastructure.Repositories.UserRepository;
 using MapsterMapper;
@@ -10,8 +9,11 @@ using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
+using System.Text.RegularExpressions;
+using EventSphere.Business.Validator.password;
 using EventSphere.Infrastructure.Repositories;
-using Serilog;
+using Microsoft.AspNetCore.Identity;
+
 
 namespace EventSphere.Business.Services
 {
@@ -22,15 +24,17 @@ namespace EventSphere.Business.Services
         private readonly IConfiguration _config;
         private readonly IGenericRepository<Role> _roleRepository;
         private readonly IPasswordGenerator _passwordGenexrator;
+        private readonly IPasswordValidator _passwordValidator;
      
 
-        public AccountService(IUserRepository userRepository, IConfiguration config, IMapper mapper, IGenericRepository<Role> roleRepository, IPasswordGenerator passwordGenexrator)
+        public AccountService(IUserRepository userRepository, IConfiguration config, IMapper mapper, IGenericRepository<Role> roleRepository, IPasswordGenerator passwordGenexrator, IPasswordValidator passwordValidator)
         {
             _userRepository = userRepository;
             _config = config;
             _mapper = mapper;
             _roleRepository = roleRepository;
             _passwordGenexrator = passwordGenexrator;
+            _passwordValidator = passwordValidator;
         }
 
         public async Task<UserDTO> AddUserAsync(CreateUserDTO createUserDto)
@@ -42,6 +46,7 @@ namespace EventSphere.Business.Services
                
             }
             
+            _passwordValidator.ValidatePassword(createUserDto.Password);
             var user = _mapper.Map<User>(createUserDto);
             var passwordSalt = _passwordGenexrator.GenerateSalt();
             var passwordHash = _passwordGenexrator.GenerateHash(createUserDto.Password, passwordSalt);
