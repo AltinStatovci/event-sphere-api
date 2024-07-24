@@ -2,6 +2,7 @@
 using EventSphere.Business.Mappings;
 using EventSphere.Business.Services;
 using EventSphere.Business.Services.Interfaces;
+using EventSphere.Business.Validator.password;
 using EventSphere.Domain.Entities;
 using EventSphere.Infrastructure.Repositories;
 using EventSphere.Infrastructure.Repositories.UserRepository;
@@ -68,6 +69,8 @@ namespace EventSphere.API
             services.AddScoped<INotificationService, NotificationService>();
             services.AddScoped<INotificationRepository, NotificationRepository>();
             services.AddSignalR();
+            
+            services.AddScoped<IPasswordValidator, PasswordValidator>();
 
         }
     }

@@ -10,13 +10,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="c85145b6-99f5-46d8-b5ce-9fdbb86b216d" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/EventSphere.Tests/Services/NotificationServiceTest.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.EventSphere/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.EventSphere/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/EventSphere.API/Controllers/NotificationController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/EventSphere.API/Controllers/NotificationController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/EventSphere.Business/Services/Interfaces/INotificationService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/EventSphere.Business/Services/Interfaces/INotificationService.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/EventSphere.Business/Services/NotificationService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/EventSphere.Business/Services/NotificationService.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/EventSphere.Infrastructure/Repositories/INotificationRepository.cs" beforeDir="false" afterPath="$PROJECT_DIR$/EventSphere.Infrastructure/Repositories/INotificationRepository.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/EventSphere.Infrastructure/Repositories/NotificationRepository.cs" beforeDir="false" afterPath="$PROJECT_DIR$/EventSphere.Infrastructure/Repositories/NotificationRepository.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/EventSphere.Business/Validator/password/IPasswordValidator.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/EventSphere.Business/Validator/password/PasswordValidator.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/EventSphere.Business/Services/AccountService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/EventSphere.Business/Services/AccountService.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/EventSphere.Business/Services/UserService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/EventSphere.Business/Services/UserService.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/EventSphere.Tests/Services/AccountServiceTest.cs" beforeDir="false" afterPath="$PROJECT_DIR$/EventSphere.Tests/Services/AccountServiceTest.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/EventSphere.Tests/Services/UserServiceTest.cs" beforeDir="false" afterPath="$PROJECT_DIR$/EventSphere.Tests/Services/UserServiceTest.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -65,7 +64,7 @@
     "HTTP Request.EventSphere.API | #1.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "ec00c5c4-3b1f-4d21-9385-71896cf7ef87.executor": "Debug",
-    "git-widget-placeholder": "notification-signalR",
+    "git-widget-placeholder": "validate-password",
     "ignore.virus.scanning.warn.message": "true",
     "node.js.detected.package.eslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",

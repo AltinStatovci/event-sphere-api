@@ -1,9 +1,11 @@
 ﻿using EventSphere.Business.Helper;
 using EventSphere.Business.Services.Interfaces;
+using EventSphere.Business.Validator.password;
 using EventSphere.Domain.DTOs.User;
 using EventSphere.Domain.Entities;
 using EventSphere.Infrastructure.Repositories.UserRepository;
 using MapsterMapper;
+using Microsoft.AspNetCore.Identity;
 
 namespace EventSphere.Business.Services
 {
@@ -12,12 +14,14 @@ namespace EventSphere.Business.Services
         private readonly IUserRepository _userRepository;
         private readonly IMapper _mapper;
         private readonly IPasswordGenerator _passwordGenerator;
+        private readonly IPasswordValidator _passwordValidator;
 
-        public UserService(IUserRepository userRepository, IMapper mapper, IPasswordGenerator passwordGenerator)
+        public UserService(IUserRepository userRepository, IMapper mapper, IPasswordGenerator passwordGenerator, IPasswordValidator passwordValidator)
         {
             _userRepository = userRepository;
             _mapper = mapper;
             _passwordGenerator = passwordGenerator;
+            _passwordValidator = passwordValidator;
         }
 
         public async Task<IEnumerable<User>> GetAllUsersAsync()
@@ -58,7 +62,7 @@ namespace EventSphere.Business.Services
                 throw new UnauthorizedAccessException("Current password is incorrect");
             }
 
-           
+            _passwordValidator.ValidatePassword(updatePasswordDto.NewPassword);
             var newSalt = _passwordGenerator.GenerateSalt();
             var newHashedPassword = _passwordGenerator.GenerateHash(updatePasswordDto.NewPassword, newSalt);
             
