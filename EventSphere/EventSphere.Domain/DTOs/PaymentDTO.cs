@@ -10,7 +10,6 @@ namespace EventSphere.Domain.DTOs
 {
     public class PaymentDTO
     {
-        [Required(ErrorMessage = "ID is required.")]
         public int ID { get; set; }
 
         [Required(ErrorMessage = "User ID is required.")]

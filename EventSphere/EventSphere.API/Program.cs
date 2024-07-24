@@ -18,6 +18,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
+using EventSphere.Business.Hubs;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -116,6 +117,7 @@ app.UseCors(options =>
 
 
 app.MapHub<NotificationHub>("/notificationHub");
+app.MapHub<TicketHub>("/ticketHub");
 app.MapControllers();
 
 app.Run();

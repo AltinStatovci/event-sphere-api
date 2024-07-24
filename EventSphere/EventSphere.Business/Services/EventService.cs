@@ -15,6 +15,8 @@ using SixLabors.ImageSharp.PixelFormats;
 using Microsoft.Extensions.Logging;
 using EventSphere.Business.Helper;
 using Azure;
+using EventSphere.Business.Hubs;
+using Microsoft.AspNetCore.SignalR;
 
 namespace EventSphere.Business.Services
 {
@@ -25,17 +27,20 @@ namespace EventSphere.Business.Services
         private readonly IGenericRepository<EventCategory> _eventCategoryRepository;
         private readonly IGenericRepository<Location> _locationRepository;
         private readonly IEventRepository _eventRepository;
+        private readonly IHubContext<TicketHub> _hubContext;
 
         public EventService(
             IEventRepository eventRepository,
             IGenericRepository<User> userRepository,
             IGenericRepository<EventCategory> eventCategoryRepository,
-            IGenericRepository<Location> locationRepository)
+            IGenericRepository<Location> locationRepository,
+            IHubContext<TicketHub> hubContext)
         {
             _eventRepository = eventRepository;
             _userRepository = userRepository;
             _eventCategoryRepository = eventCategoryRepository;
             _locationRepository = locationRepository;
+            _hubContext = hubContext;
         }
 
         public async Task<IEnumerable<Event>> GetEventsByNameAsync(string name)
@@ -279,6 +284,10 @@ namespace EventSphere.Business.Services
         public async Task<IEnumerable<Event>> GetEventsNearbyAsync(double latitude, double longitude)
         {
             return await _eventRepository.GetEventsNearbyAsync(latitude, longitude, 20);
+        }
+        public async Task UpdateAvailableTickets(int eventId, int newTicketCount)
+        {
+            await _hubContext.Clients.All.SendAsync("ReceiveTicketCountUpdate", eventId, newTicketCount);
         }
     }  
 
