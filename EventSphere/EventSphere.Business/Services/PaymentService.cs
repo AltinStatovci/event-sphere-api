@@ -1,8 +1,10 @@
-﻿using EventSphere.Business.Services.Interfaces;
+﻿using EventSphere.Business.Hubs;
+using EventSphere.Business.Services.Interfaces;
 using EventSphere.Domain.DTOs;
 using EventSphere.Domain.Entities;
 using EventSphere.Infrastructure.Repositories;
 using EventSphere.Infrastructure.Settings;
+using Microsoft.AspNetCore.SignalR;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Stripe;
@@ -22,6 +24,7 @@ namespace EventSphere.Business.Services
       
         private readonly IGenericRepository<Ticket> _ticketRepository;
         private readonly ChargeService _chargeService;
+        private readonly IHubContext<TicketHub> _hubContext;
 
         public PaymentService(IGenericRepository<Payment> genericRepository,
             IGenericRepository<User> userRepository,
@@ -29,7 +32,8 @@ namespace EventSphere.Business.Services
          
             IGenericRepository<Ticket> ticketRepository,
             IGenericRepository<PromoCode> promoCodeRepository,
-            ChargeService chargeService
+            ChargeService chargeService,
+            IHubContext<TicketHub> hubContext
             )
         {
             _genericRepository = genericRepository;
@@ -39,6 +43,7 @@ namespace EventSphere.Business.Services
             _ticketRepository = ticketRepository;
             _promoCodeRepository = promoCodeRepository;
             _chargeService = chargeService;
+            _hubContext = hubContext;
         }
 
         public async Task<int?> ValidatePromoCodeAsync(string code)
@@ -125,6 +130,7 @@ namespace EventSphere.Business.Services
                 };
 
                 await _genericRepository.AddAsync(payment);
+                await _hubContext.Clients.All.SendAsync("ReceiveTicketCountUpdate", ticket.EventID, availableTick.AvailableTickets);
                 return response;
             }
             else

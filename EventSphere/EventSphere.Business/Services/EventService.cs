@@ -15,6 +15,8 @@ using SixLabors.ImageSharp.PixelFormats;
 using Microsoft.Extensions.Logging;
 using EventSphere.Business.Helper;
 using Azure;
+using EventSphere.Business.Hubs;
+using Microsoft.AspNetCore.SignalR;
 
 namespace EventSphere.Business.Services
 {
