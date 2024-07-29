@@ -28,7 +28,7 @@ public class EventServiceTest
     private readonly Mock<IGenericRepository<User>> _mockUserRepository;
     private readonly Mock<IGenericRepository<EventCategory>> _mockEventCategoryRepository;
     private readonly Mock<IGenericRepository<Location>> _mockLocationRepository;
-    private readonly Mock<IHubContext<TicketHub>> _mockTicketHub;
+
 
     public EventServiceTest()
     {
@@ -37,7 +37,7 @@ public class EventServiceTest
         _mockUserRepository = new Mock<IGenericRepository<User>>();
         _mockEventCategoryRepository = new Mock<IGenericRepository<EventCategory>>();
         _mockLocationRepository = new Mock<IGenericRepository<Location>>();
-        _eventService = new EventService( _mockEventRepository.Object, _mockUserRepository.Object, _mockEventCategoryRepository.Object, _mockLocationRepository.Object, _mockTicketHub.Object);
+        _eventService = new EventService( _mockEventRepository.Object, _mockUserRepository.Object, _mockEventCategoryRepository.Object, _mockLocationRepository.Object);
     }
     [Theory]
     [InlineData(null)]

@@ -1,8 +1,10 @@
+using EventSphere.Business.Hubs;
 using EventSphere.Business.Services;
 using EventSphere.Business.Services.Interfaces;
 using EventSphere.Domain.DTOs;
 using EventSphere.Domain.Entities;
 using EventSphere.Infrastructure.Repositories;
+using Microsoft.AspNetCore.SignalR;
 using Moq;
 using Stripe;
 using Xunit;
@@ -19,6 +21,7 @@ namespace EventSphere.Tests.Services
         private readonly Mock<IGenericRepository<Ticket>> _mockTicketRepository;
         private readonly Mock<IGenericRepository<PromoCode>> _mockPromoCodeRepository;
         private readonly Mock<ChargeService> _mockChargeService;
+        private readonly Mock<IHubContext<TicketHub>> _mockTicketHub;
         
         public PaymentServiceTest()
         {
@@ -28,7 +31,8 @@ namespace EventSphere.Tests.Services
             _mockTicketRepository = new Mock<IGenericRepository<Ticket>>();
             _mockPromoCodeRepository = new Mock<IGenericRepository<PromoCode>>();
             _mockChargeService = new Mock<ChargeService>();
-            _paymentServices = new PaymentService(_mockPaymentRepository.Object, _mockUserRepository.Object, _mockEventRepository.Object,_mockTicketRepository.Object,_mockPromoCodeRepository.Object,_mockChargeService.Object);
+            _mockTicketHub = new Mock<IHubContext<TicketHub>>();
+            _paymentServices = new PaymentService(_mockPaymentRepository.Object, _mockUserRepository.Object, _mockEventRepository.Object,_mockTicketRepository.Object,_mockPromoCodeRepository.Object,_mockChargeService.Object, _mockTicketHub.Object);
         }
         
         [Fact]
