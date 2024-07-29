@@ -170,6 +170,8 @@ namespace EventSphere.Business.Services
                 eventById.MaxAttendance = eventDto.MaxAttendance;
                 eventById.AvailableTickets = eventDto.AvailableTickets;
                 eventById.DateCreated = eventDto.DateCreated;
+                eventById.ScheduleDate = eventDto.ScheduleDate;
+                eventById.IsApproved = eventDto.IsApproved;
 
                 if (newImage != null)
                 {
