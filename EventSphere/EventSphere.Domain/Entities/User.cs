@@ -1,4 +1,6 @@
-﻿namespace EventSphere.Domain.Entities
+﻿using Stripe;
+
+namespace EventSphere.Domain.Entities
 {
     public class User
     {
@@ -14,5 +16,6 @@
         public DateTime DateCreated { get; set; }
        // public ICollection<Ticket> Tickets { get; set; }
         public ICollection<Payment> Payments { get; set; }
+        public ICollection<Review> Reviews { get; set; }
     }
 }
