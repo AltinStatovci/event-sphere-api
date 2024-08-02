@@ -4,6 +4,7 @@ using EventSphere.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EventSphere.Infrastructure.Migrations
 {
     [DbContext(typeof(EventSphereDbContext))]
-    partial class EventSphereDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240730181903_AddRCEventToDatabase")]
+    partial class AddRCEventToDatabase
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -460,40 +463,6 @@ namespace EventSphere.Infrastructure.Migrations
                     b.ToTable("Report", (string)null);
                 });
 
-            modelBuilder.Entity("EventSphere.Domain.Entities.Review", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("OrganizerId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Rating")
-                        .HasColumnType("int");
-
-                    b.Property<string>("ReviewText")
-                        .IsRequired()
-                        .HasMaxLength(1000)
-                        .HasColumnType("nvarchar(1000)");
-
-                    b.Property<int>("ReviewerId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("OrganizerId");
-
-                    b.HasIndex("ReviewerId");
-
-                    b.ToTable("Review", (string)null);
-                });
-
             modelBuilder.Entity("EventSphere.Domain.Entities.Role", b =>
                 {
                     b.Property<int>("ID")
@@ -672,25 +641,6 @@ namespace EventSphere.Infrastructure.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("EventSphere.Domain.Entities.Review", b =>
-                {
-                    b.HasOne("EventSphere.Domain.Entities.User", "Organizer")
-                        .WithMany()
-                        .HasForeignKey("OrganizerId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("EventSphere.Domain.Entities.User", "Reviewer")
-                        .WithMany("Reviews")
-                        .HasForeignKey("ReviewerId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("Organizer");
-
-                    b.Navigation("Reviewer");
-                });
-
             modelBuilder.Entity("EventSphere.Domain.Entities.Ticket", b =>
                 {
                     b.HasOne("EventSphere.Domain.Entities.Event", "Event")
@@ -726,8 +676,6 @@ namespace EventSphere.Infrastructure.Migrations
             modelBuilder.Entity("EventSphere.Domain.Entities.User", b =>
                 {
                     b.Navigation("Payments");
-
-                    b.Navigation("Reviews");
                 });
 #pragma warning restore 612, 618
         }

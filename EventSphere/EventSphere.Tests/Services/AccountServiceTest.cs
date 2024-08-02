@@ -1,6 +1,7 @@
 using EventSphere.Business.Helper;
 using EventSphere.Business.Services;
 using EventSphere.Business.Services.Interfaces;
+using EventSphere.Business.Validator.password;
 using EventSphere.Domain.DTOs.User;
 using EventSphere.Domain.Entities;
 using EventSphere.Infrastructure.Repositories;
@@ -20,6 +21,7 @@ public class AccountServiceTest
     private readonly Mock<IConfiguration> _configMock;
     private readonly Mock<IGenericRepository<Role>> _roleRepositoryMock;
     private readonly Mock<IPasswordGenerator> _passwordGeneratorMock;
+    private readonly Mock<IPasswordValidator> _passwordValidatorMock;
 
     public AccountServiceTest()
     {
@@ -28,13 +30,15 @@ public class AccountServiceTest
         _configMock = new Mock<IConfiguration>();
         _roleRepositoryMock = new Mock<IGenericRepository<Role>>();
         _passwordGeneratorMock = new Mock<IPasswordGenerator>();
+        _passwordValidatorMock = new Mock<IPasswordValidator>();
 
         _accountService = new AccountService(
             _userRepositoryMock.Object,
             _configMock.Object,
             _mapperMock.Object,
             _roleRepositoryMock.Object,
-            _passwordGeneratorMock.Object
+            _passwordGeneratorMock.Object,
+            _passwordValidatorMock.Object
         );
     }
 

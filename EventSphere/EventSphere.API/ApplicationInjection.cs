@@ -2,6 +2,7 @@
 using EventSphere.Business.Mappings;
 using EventSphere.Business.Services;
 using EventSphere.Business.Services.Interfaces;
+using EventSphere.Business.Validator.password;
 using EventSphere.Domain.Entities;
 using EventSphere.Domain.Repositories;
 using EventSphere.Infrastructure.Repositories;
@@ -43,8 +44,10 @@ namespace EventSphere.API
             services.AddScoped<IEventRepository, EventRepository>();
             services.AddScoped<ILocationRepository, LocationRepository>();
             services.AddScoped<ITicketRepository, TicketRepository>();
+
             services.AddScoped<IReviewRepository, ReviewRepository>();
             services.AddScoped<IReviewService, Business.Services.ReviewService>();
+
 
             var config = TypeAdapterConfig.GlobalSettings;
             config.Scan(typeof(Program).Assembly);
@@ -71,6 +74,11 @@ namespace EventSphere.API
             services.AddScoped<INotificationService, NotificationService>();
             services.AddScoped<INotificationRepository, NotificationRepository>();
             services.AddSignalR();
+            
+            services.AddScoped<IPasswordValidator, PasswordValidator>();
+
+            services.AddScoped<IRCEventService, RCEventService>();
+            services.AddScoped<IGenericRepository<RCEvent>, GenericRepository<RCEvent>>();
 
         }
     }

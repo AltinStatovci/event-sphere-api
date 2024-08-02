@@ -15,6 +15,8 @@ using SixLabors.ImageSharp.PixelFormats;
 using Microsoft.Extensions.Logging;
 using EventSphere.Business.Helper;
 using Azure;
+using EventSphere.Business.Hubs;
+using Microsoft.AspNetCore.SignalR;
 
 namespace EventSphere.Business.Services
 {
@@ -168,6 +170,8 @@ namespace EventSphere.Business.Services
                 eventById.MaxAttendance = eventDto.MaxAttendance;
                 eventById.AvailableTickets = eventDto.AvailableTickets;
                 eventById.DateCreated = eventDto.DateCreated;
+                eventById.ScheduleDate = eventDto.ScheduleDate;
+                eventById.IsApproved = eventDto.IsApproved;
 
                 if (newImage != null)
                 {

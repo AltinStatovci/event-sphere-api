@@ -1,10 +1,12 @@
 using EventSphere.Business.Helper;
 using EventSphere.Business.Services;
 using EventSphere.Business.Services.Interfaces;
+using EventSphere.Business.Validator.password;
 using EventSphere.Domain.DTOs.User;
 using EventSphere.Domain.Entities;
 using EventSphere.Infrastructure.Repositories.UserRepository;
 using MapsterMapper;
+using Microsoft.AspNetCore.Identity;
 using Moq;
 using Xunit;
 
@@ -16,6 +18,7 @@ public class UserServiceTest
     private readonly Mock<IUserRepository> _mockUserRepository;
     private readonly Mock<IMapper> _mockMapper;
     private readonly Mock<IPasswordGenerator> _mockPasswordGenerator;
+    private readonly Mock<IPasswordValidator> _mockPasswordValidator;
 
     public UserServiceTest()
     {
@@ -23,7 +26,8 @@ public class UserServiceTest
         _mockUserRepository = new Mock<IUserRepository>();
         _mockMapper = new Mock<IMapper>();
         _mockPasswordGenerator = new Mock<IPasswordGenerator>();
-        _userService = new UserService(_mockUserRepository.Object, _mockMapper.Object , _mockPasswordGenerator.Object);
+        _mockPasswordValidator = new Mock<IPasswordValidator>();
+        _userService = new UserService(_mockUserRepository.Object, _mockMapper.Object , _mockPasswordGenerator.Object, _mockPasswordValidator.Object);
     }
 
     [Fact]

@@ -14,6 +14,9 @@ using SixLabors.ImageSharp.Formats.Jpeg;
 using SixLabors.ImageSharp.PixelFormats;
 using SixLabors.ImageSharp.Processing;
 using EventSphere.Business.Validator;
+using Microsoft.AspNetCore.SignalR.Client;
+using EventSphere.Business.Hubs;
+using Microsoft.AspNetCore.SignalR;
 
 namespace EventSphere.Tests.Services;
 
@@ -25,6 +28,7 @@ public class EventServiceTest
     private readonly Mock<IGenericRepository<User>> _mockUserRepository;
     private readonly Mock<IGenericRepository<EventCategory>> _mockEventCategoryRepository;
     private readonly Mock<IGenericRepository<Location>> _mockLocationRepository;
+
 
     public EventServiceTest()
     {
