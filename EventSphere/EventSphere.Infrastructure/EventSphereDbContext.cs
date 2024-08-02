@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using EventSphere.Domain.Entities;
 using EventSphere.Infrastructure.EntityFramework;
+using EventSphere.Infrastructure.EntityFramework.Configurations;
 
 namespace EventSphere.Infrastructure
 {
@@ -22,7 +23,11 @@ namespace EventSphere.Infrastructure
         public DbSet<Logg>Logs { get; set; }
         public DbSet<PromoCode>PromoCodes { get; set; }
         public DbSet<Notification> Notifications { get; set; }
+
+        public DbSet<Review> Reviews { get; set; }
+
         public DbSet<RCEvent> RCEvents { get; set; }
+
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -37,7 +42,11 @@ namespace EventSphere.Infrastructure
             modelBuilder.ApplyConfiguration(new LocationConfiguration());
             modelBuilder.ApplyConfiguration(new LogConfiguration());
             modelBuilder.ApplyConfiguration(new NotificationConfiguration());
+
+            modelBuilder.ApplyConfiguration(new ReviewConfiguration());
+
             modelBuilder.ApplyConfiguration(new RCEventConfiguration());
+
 
             modelBuilder.Entity<Role>().HasData(
             new Role { ID = 1, RoleName = "Admin" },

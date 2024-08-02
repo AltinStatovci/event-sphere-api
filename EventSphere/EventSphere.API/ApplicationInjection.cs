@@ -4,6 +4,7 @@ using EventSphere.Business.Services;
 using EventSphere.Business.Services.Interfaces;
 using EventSphere.Business.Validator.password;
 using EventSphere.Domain.Entities;
+using EventSphere.Domain.Repositories;
 using EventSphere.Infrastructure.Repositories;
 using EventSphere.Infrastructure.Repositories.UserRepository;
 using Mapster;
@@ -43,8 +44,9 @@ namespace EventSphere.API
             services.AddScoped<IEventRepository, EventRepository>();
             services.AddScoped<ILocationRepository, LocationRepository>();
             services.AddScoped<ITicketRepository, TicketRepository>();
-            
-            
+
+            services.AddScoped<IReviewRepository, ReviewRepository>();
+            services.AddScoped<IReviewService, Business.Services.ReviewService>();
 
 
             var config = TypeAdapterConfig.GlobalSettings;
