@@ -97,6 +97,8 @@ namespace EventSphere.API.Controllers
             }
         }
 
+
+
         [HttpPut("{id}")]
         [Authorize(Policy = "Admin")]
         public async Task<IActionResult> UpdateCategory(int id, EventCategoryDto categoryDTO)

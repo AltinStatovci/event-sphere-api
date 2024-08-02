@@ -43,6 +43,9 @@ namespace EventSphere.API
             services.AddScoped<IEventRepository, EventRepository>();
             services.AddScoped<ILocationRepository, LocationRepository>();
             services.AddScoped<ITicketRepository, TicketRepository>();
+            
+            
+
 
             var config = TypeAdapterConfig.GlobalSettings;
             config.Scan(typeof(Program).Assembly);
@@ -71,6 +74,9 @@ namespace EventSphere.API
             services.AddSignalR();
             
             services.AddScoped<IPasswordValidator, PasswordValidator>();
+
+            services.AddScoped<IRCEventService, RCEventService>();
+            services.AddScoped<IGenericRepository<RCEvent>, GenericRepository<RCEvent>>();
 
         }
     }
