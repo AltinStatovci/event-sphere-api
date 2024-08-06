@@ -47,6 +47,7 @@ namespace EventSphere.API
 
             services.AddScoped<IReviewRepository, ReviewRepository>();
             services.AddScoped<IReviewService, Business.Services.ReviewService>();
+            services.AddScoped<IPromoCodeService, PromoCodeService>();
 
 
             var config = TypeAdapterConfig.GlobalSettings;
