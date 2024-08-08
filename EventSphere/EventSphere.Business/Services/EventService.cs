@@ -259,13 +259,13 @@ namespace EventSphere.Business.Services
                 throw new Exception("Error occurred while disapproving the event.", ex);
             }
         }
-        public async Task<IEnumerable<Event>> GetEventsByDateAsync(DateTime date)
+        public async Task<IEnumerable<Event>> GetEventsByDateAsync(DateTime date, int id)
         {
-            return await _eventRepository.GetEventsByDate(date);
+            return await _eventRepository.GetEventsByDate(date, id);
         }
-        public async Task<IEnumerable<Event>> GetEventsByDateTimeAsync(DateTime date)
+        public async Task<IEnumerable<Event>> GetEventsByDateTimeAsync(DateTime date, int id)
         {
-            return await _eventRepository.GetEventsByDateTime(date);
+            return await _eventRepository.GetEventsByDateTime(date, id);
         }
 
         public async Task<string> GetOrganizerEmailAsync(int id)

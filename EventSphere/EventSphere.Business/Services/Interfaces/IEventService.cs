@@ -20,8 +20,8 @@ namespace EventSphere.Business.Services.Interfaces
         Task<IEnumerable<Event>> GetEventsByNameAsync(string name);
         Task<Event> UpdateEventStatus(int id);
         Task<Event> UpdateEventStatusToDisapproved(int id);
-        Task<IEnumerable<Event>> GetEventsByDateAsync(DateTime date);
-        Task<IEnumerable<Event>> GetEventsByDateTimeAsync(DateTime date);
+        Task<IEnumerable<Event>> GetEventsByDateAsync(DateTime date, int id);
+        Task<IEnumerable<Event>> GetEventsByDateTimeAsync(DateTime date, int id);
         Task<string> GetOrganizerEmailAsync(int id);
         Task UpdateMessage(int id, string message);
         Task<IEnumerable<Event>> GetEventsNearbyAsync(double latitude, double longitude);
