@@ -14,8 +14,8 @@ namespace EventSphere.Infrastructure.Repositories
         Task<IEnumerable<Event>> GetEventsByCity(string city);
         Task<IEnumerable<Event>> GetEventsByCountry(string country);
         Task<string> GetOrganizerEmail(int id);
-        Task<IEnumerable<Event>> GetEventsByDate(DateTime date);
-        Task<IEnumerable<Event>> GetEventsByDateTime(DateTime date);
+        Task<IEnumerable<Event>> GetEventsByDate(DateTime date, int id);
+        Task<IEnumerable<Event>> GetEventsByDateTime(DateTime date, int id);
         Task<IEnumerable<Event>> GetEventsNearbyAsync(double latitude, double longitude, double radiusInKm);
     }
 }

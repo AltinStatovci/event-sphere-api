@@ -299,19 +299,19 @@ namespace EventSphere.API.Controllers
             return Ok(disapprovedEvent);
         }
 
-        [HttpGet("date")]
-        public async Task<IActionResult> GetEventsByDate()
+        [HttpGet("date/{id}")]
+        public async Task<IActionResult> GetEventsByDate(int id)
         {
             var data = DateTime.Now;
-            var eventi = await _eventService.GetEventsByDateAsync(data);
+            var eventi = await _eventService.GetEventsByDateAsync(data, id);
             return Ok(eventi);
 
         }
-        [HttpGet("datetime")]
-        public async Task<IActionResult> GetEventsByDateTime()
+        [HttpGet("datetime/{id}")]
+        public async Task<IActionResult> GetEventsByDateTime(int id)
         {
             var data = DateTime.Now;
-            var eventi = await _eventService.GetEventsByDateTimeAsync(data);
+            var eventi = await _eventService.GetEventsByDateTimeAsync(data, id);
             return Ok(eventi);
 
         }
